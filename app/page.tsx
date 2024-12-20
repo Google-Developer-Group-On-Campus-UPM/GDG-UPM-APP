@@ -9,10 +9,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { toast } from "@/components/ui/use-toast"
+
 import Image from 'next/image';
+
+//firebase
+import { db } from "@/config/firebase-config"
+import { addDoc, collection } from "firebase/firestore"
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("future")
+
+  //contact form
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
@@ -23,6 +30,8 @@ export default function Home() {
   const teamRef = useRef<HTMLDivElement>(null)
   const eventsRef = useRef<HTMLDivElement>(null)
   const contactRef = useRef<HTMLDivElement>(null)
+
+  
 
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
@@ -35,16 +44,34 @@ export default function Home() {
     ref.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", { name, email, message })
-    toast({
-      title: "Feedback Submitted",
-      description: "Thank you for your feedback!",
-    })
-    setName("")
-    setEmail("")
-    setMessage("")
+
+    const dbref = collection(db, "feedback")
+
+    try {
+      await addDoc(dbref, {
+        Name:name,
+        Email:email,
+        Message:message,
+        Timestamp: new Date(),
+      })
+
+      toast({
+        title: "Feedback Submitted",
+        description: "Thank you for your feedback!",
+      })
+      
+      setName("")
+      setEmail("")
+      setMessage("")
+    } catch (error) {
+      console.error("Error submitting feedback:", error)
+      toast({
+        title: "Error Submitting Feedback",
+        description: "Something went wrong. Please try again.",
+      })
+    }
   }
 
   const activities = [
