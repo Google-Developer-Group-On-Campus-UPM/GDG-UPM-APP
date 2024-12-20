@@ -1,9 +1,13 @@
-import { useState} from "react"
-import { motion} from "framer-motion"
+import { useState } from "react"
+import { motion } from "framer-motion"
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import { toast } from "../../components/ui/use-toast"
+
+
+import { addDoc, collection } from "firebase/firestore"
+import { db } from "@/config/firebase-config"
 
 
 type GetInTouchProps = {
@@ -16,17 +20,37 @@ const GetInTouch = ({ contactRef }: GetInTouchProps) => {
     const [email, setEmail] = useState("")
     const [message, setMessage] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log("Form submitted:", { name, email, message })
-        toast({
-            title: "Feedback Submitted",
-            description: "Thank you for your feedback!",
-        })
-        setName("")
-        setEmail("")
-        setMessage("")
+
+        const dbref = collection(db, "feedback")
+
+        try {
+            await addDoc(dbref, {
+                Name: name,
+                Email: email,
+                Message: message,
+                Timestamp: new Date(),
+            })
+
+            toast({
+                title: "Feedback Submitted",
+                description: "Thank you for your feedback!",
+            })
+
+            setName("")
+            setEmail("")
+            setMessage("")
+        } catch (error) {
+            console.error("Error submitting feedback:", error)
+            toast({
+                title: "Error Submitting Feedback",
+                description: "Something went wrong. Please try again.",
+            })
+        }
     }
+
+
 
 
     return (
