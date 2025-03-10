@@ -6,251 +6,33 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
 import TeamCard from "./ui/TeamCard"
 import { useState } from "react"
 
-
-type OurTeam = {
+interface OurTeamProps {
     teamRef: React.RefObject<HTMLDivElement>;
+    team: {
+        [key: string]: {
+            name: string;
+            role: string;
+            image: string;
+            social: {
+                facebook: string;
+                twitter: string;
+                github: string;
+            };
+        }[];
+    };
 }
 
-const OurTeam = ({ teamRef }: OurTeam) => {
+
+const OurTeam: React.FC<OurTeamProps> = ({
+    teamRef,
+    team
+}) => {
 
     const [selectedTeam, setSelectedTeam] = useState<keyof typeof team>("topBoard");
 
     const handleSelectTeam = (teamName: keyof typeof team) => {
         setSelectedTeam(teamName);
     };
-
-
-    // Change team from an array to an object
-    const team = {
-        topBoard: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-
-
-        ],
-        webApp: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            }
-        ],
-        mobileApp: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        cloud: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        aiMl: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        cyberSecurity: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        uiUx: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        communitySocials: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        creatives: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ],
-        externalRelations: [
-            {
-                name: "Ngooi Xue Yang",
-                role: "Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Zikry Zaherman",
-                role: "Vice-Secretary",
-                image: "AJ"
-            },
-            {
-                name: "Lim Lizhe",
-                role: "Treasurer",
-                image: "AJ"
-            },
-        ]
-    };
-
 
 
     const buttons = [
@@ -280,9 +62,9 @@ const OurTeam = ({ teamRef }: OurTeam) => {
                     <div>
                         <h2 className="text-3xl font-bold text-center">Our Team</h2>
 
-                        <div className={"flex gap-x-16 justify-center py-10"}>
-                            <TeamCard />
-                            <TeamCard />
+                        <div className={"flex gap-x-10 justify-center py-10"}>
+                            <TeamCard ImageLink={"/images/team/dwight.webp"} MemberName={"Dwight Cutad"} MemberRole={"President of GDGoC UPM"} />
+                            <TeamCard ImageLink={"/images/team/dwight.webp"} MemberName={"Javan Herlambang"} MemberRole={"Vice President of GDGoC UPM"} />
                         </div>
 
                     </div>
@@ -294,7 +76,7 @@ const OurTeam = ({ teamRef }: OurTeam) => {
                         <h2 className="text-3xl font-bold text-center mt-4">Top Board</h2>
                         <div className="flex flex-wrap gap-x-16 gap-y-4 justify-center items-center px-20 py-10">
                             {team[selectedTeam].map((member: any, index: any) => (
-                                <TeamCard />
+                                <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role}/>
                             ))}
                             {/* {team.map((member, index) => (
                         <motion.div
@@ -320,6 +102,8 @@ const OurTeam = ({ teamRef }: OurTeam) => {
                     ))} */}
                         </div>
                     </div>
+
+                    
 
                     <div className={"flex flex-wrap gap-4 justify-center"}>
                         {buttons.map((btn, index) => (
