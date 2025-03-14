@@ -23,76 +23,118 @@ export default function App() {
   const contactRef = useRef<HTMLDivElement>(null)
 
   const team = {
+    lead: [
+      {
+        name: "Dwight Cutad",
+        role: "President of GDGoC UPM",
+        image: "/images/team/lead/dwight.jpg",
+        social: {
+          facebook: "",
+          twitter: "",
+          github: "",
+        },
+        imagePositions: "object-[50%_35%]"
+      },
+      {
+        name: "Javan Herlambang",
+        role: "Vice President of GDGoC UPM",
+        image: "/images/team/lead/javan.jpg",
+        social: {
+          facebook: "",
+          twitter: "",
+          github: "",
+        },
+        imagePositions: "object-[50%_26%]"
+      },
+    ],
     topBoard: [
       {
         name: "Ngooi Xue Yang",
         role: "Secretary",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/topboard/NgooiXueYang.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_30%]"
       },
       {
         name: "Zikry Zaherman",
         role: "Vice-Secretary",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/topboard/ZikryZaherman.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_39%]"
       },
       {
         name: "Lim Lizhe",
         role: "Treasurer",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/topboard/LimLizhe.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Ngooi Xue Yang",
-        role: "Secretary",
-        image: "/images/team/dwight.webp",
+        name: "Aminah Abujiya",
+        role: "Internal Relation Lead",
+        image: "/images/team/topboard/AminahAbujiya.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
         role: "Vice-Secretary",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/topboard/ZikryZaherman.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_39%]"
       },
       {
-        name: "Lim Lizhe",
-        role: "Treasurer",
-        image: "/images/team/dwight.webp",
+        name: "Francis Lim Beng Cong",
+        role: "TechOps 1",
+        image: "/images/team/topboard/FrancisLimBengCong.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_44%]"
       },
       {
-        name: "Ngooi Xue Yang",
-        role: "Secretary",
-        image: "/images/team/dwight.webp",
+        name: "Law Yee Qi",
+        role: "TechOps 2",
+        image: "/images/team/topboard/LawYeeQi.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_50%]"
+      },
+      {
+        name: "Yelilan Rajarajan",
+        role: "Postgraduate Representative",
+        image: "/images/team/topboard/Yelilan.jpg",
+        social: {
+          facebook: "",
+          twitter: "",
+          github: "",
+        },
+        imagePositions: "object-[50%_39%]"
       },
 
 
@@ -101,74 +143,81 @@ export default function App() {
       {
         name: "Muhammad Azzumar",
         role: "Web App Dev Lead",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/webapp/Azzumar.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Wan Hafizuddin",
         role: "Web App Dev Member",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/webapp/WanHafizuddin.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_37%]"
       },
       {
         name: "Athallah",
         role: "Web App Dev Member",
-        image: "/images/team/dwight.webp",
+        image: "/images/team/webapp/Athallah.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_26%]"
       },
     ],
     mobileApp: [
       {
-        name: "Ngooi Xue Yang",
-        role: "Secretary",
-        image: "AJ",
+        name: "Yang Zixun",
+        role: "Mobile App Lead",
+        image: "/images/team/mobileapp/YangZixun.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_39%]"
       },
       {
-        name: "Zikry Zaherman",
-        role: "Vice-Secretary",
-        image: "AJ",
+        name: "Muhammad Ilhand Naquib",
+        role: "Mobile App Member",
+        image: "/images/team/mobileapp/IlhanNaquib.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_24%]"
       },
       {
-        name: "Lim Lizhe",
-        role: "Treasurer",
-        image: "AJ",
+        name: "Ong Jia Yee",
+        role: "Mobile App Member",
+        image: "/images/team/mobileapp/OngJiaYee.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_48%]"
       },
       {
-        name: "Lim Lizhe",
-        role: "Treasurer",
-        image: "AJ",
+        name: "Oscar Chung",
+        role: "Mobile App Member",
+        image: "/images/team/mobileapp/OscarChung.jpg",
         social: {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     cloud: [
@@ -180,7 +229,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -190,7 +240,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -200,7 +251,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     aiMl: [
@@ -212,7 +264,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -222,7 +275,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -232,7 +286,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -242,7 +297,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     cyberSecurity: [
@@ -254,7 +310,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -264,7 +321,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -274,7 +332,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -284,7 +343,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     uiUx: [
@@ -296,7 +356,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -306,7 +367,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -316,7 +378,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -326,7 +389,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     communitySocials: [
@@ -338,7 +402,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -348,7 +413,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -358,7 +424,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -368,7 +435,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     creatives: [
@@ -380,7 +448,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Ngooi Xue Yang",
@@ -390,7 +459,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -400,7 +470,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -410,7 +481,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -420,7 +492,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
     ],
     externalRelations: [
@@ -432,7 +505,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Zikry Zaherman",
@@ -442,7 +516,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"
       },
       {
         name: "Lim Lizhe",
@@ -452,7 +527,8 @@ export default function App() {
           facebook: "",
           twitter: "",
           github: "",
-        }
+        },
+        imagePositions: "object-[50%_28%]"   
       },
     ]
   };
@@ -472,7 +548,7 @@ export default function App() {
       </main>
 
       <footer className="border-t py-4 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} GDG UPM. All rights reserved. Developed by Wong Yong Xi
+        © {new Date().getFullYear()} GDG UPM. All rights reserved. Developed by Wong Yong Xi and Google Developer Group on Campus UPM
       </footer>
     </div>
   )
