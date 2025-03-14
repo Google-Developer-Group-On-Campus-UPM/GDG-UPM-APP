@@ -1,8 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
 import TeamCard from "./ui/TeamCard"
 import { useState } from "react"
 
@@ -18,6 +16,7 @@ interface OurTeamProps {
                 twitter: string;
                 github: string;
             };
+            imagePositions: string;
         }[];
     };
 }
@@ -51,20 +50,22 @@ const OurTeam: React.FC<OurTeamProps> = ({
     return (
         <>
             <section>
-                <motion.section
+                <motion.div
                     ref={teamRef}
                     className="space-y-6"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
+                    layout
                     viewport={{ once: true }}
                 >
                     <div>
-                        <h2 className="text-3xl font-bold text-center">Our Team</h2>
+                        <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text">Our Team</h2>
 
                         <div className={"flex gap-x-10 justify-center py-10"}>
-                            <TeamCard ImageLink={"/images/team/dwight.webp"} MemberName={"Dwight Cutad"} MemberRole={"President of GDGoC UPM"} />
-                            <TeamCard ImageLink={"/images/team/dwight.webp"} MemberName={"Javan Herlambang"} MemberRole={"Vice President of GDGoC UPM"} />
+                            {team["lead"].map((member: any, index: any) => (
+                                <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role} imagePositions={member.imagePositions} />
+                            ))}
                         </div>
 
                     </div>
@@ -73,10 +74,13 @@ const OurTeam: React.FC<OurTeamProps> = ({
 
                     <div className={"bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4] border rounded-lg"}>
 
-                        <h2 className="text-3xl font-bold text-center mt-4">Top Board</h2>
+                        <h2 className="text-3xl font-bold text-center mt-4">
+                            {buttons.find((button) => button.team === selectedTeam)?.label}
+                        </h2>
+
                         <div className="flex flex-wrap gap-x-16 gap-y-4 justify-center items-center px-20 py-10">
                             {team[selectedTeam].map((member: any, index: any) => (
-                                <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role}/>
+                                <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role} imagePositions={member.imagePositions} />
                             ))}
                             {/* {team.map((member, index) => (
                         <motion.div
@@ -103,7 +107,7 @@ const OurTeam: React.FC<OurTeamProps> = ({
                         </div>
                     </div>
 
-                    
+
 
                     <div className={"flex flex-wrap gap-4 justify-center"}>
                         {buttons.map((btn, index) => (
@@ -116,7 +120,7 @@ const OurTeam: React.FC<OurTeamProps> = ({
                             </button>
                         ))}
                     </div>
-                </motion.section>
+                </motion.div>
             </section>
 
         </>
