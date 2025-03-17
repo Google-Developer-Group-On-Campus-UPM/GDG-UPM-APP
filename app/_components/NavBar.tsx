@@ -25,7 +25,7 @@ const NavBar = ({homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef}
     return (
         <>
             <motion.header
-                className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+                className="sticky top-0 z-50 min-w-screen border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -35,7 +35,7 @@ const NavBar = ({homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef}
                         <Image src="/images/logo_gdgupm.jpg" alt="GDG UPM Logo" width={32} height={32} />
                         <span className="font-bold">GDG UPM</span>
                     </div>
-                    <nav className="flex items-center space-x-4 lg:space-x-6 mx-6">
+                    <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 mx-6">
                         <Button variant="ghost" onClick={() => scrollToSection(homeRef)}>Home</Button>
                         <Button variant="ghost" onClick={() => scrollToSection(aboutRef)}>About Us</Button>
                         <Button variant="ghost" onClick={() => scrollToSection(whatWeDoRef)}>What We Do</Button>
