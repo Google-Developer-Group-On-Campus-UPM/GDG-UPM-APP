@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import TeamCard from "./ui/TeamCard"
 import { useState } from "react"
+import Link from "next/link"
 
 interface OurTeamProps {
     teamRef: React.RefObject<HTMLDivElement>;
@@ -49,20 +50,19 @@ const OurTeam: React.FC<OurTeamProps> = ({
 
     return (
         <>
-            <section>
+            <section className="scroll-smooth">
                 <motion.div
                     ref={teamRef}
                     className="space-y-6"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    layout
                     viewport={{ once: true }}
                 >
                     <div>
                         <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text">Our Team</h2>
 
-                        <div className={"flex gap-x-10 justify-center py-10"}>
+                        <div className={"flex gap-x-10 gap-y-4 justify-center py-10 flex-wrap sm:gap-y-0"}>
                             {team["lead"].map((member: any, index: any) => (
                                 <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role} imagePositions={member.imagePositions} />
                             ))}
@@ -72,11 +72,16 @@ const OurTeam: React.FC<OurTeamProps> = ({
 
 
 
-                    <div className={"bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4] border rounded-lg"}>
+                    <div className={"bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4] border rounded-lg relative"}>
 
+                        
                         <h2 className="text-3xl font-bold text-center mt-4">
                             {buttons.find((button) => button.team === selectedTeam)?.label}
                         </h2>
+
+                        <div id="ourTeam" className="absolute bg-transparent h-12 w-12 top-[-35px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            
+                        </div>
 
                         <div className="flex flex-wrap gap-x-16 gap-y-4 justify-center items-center px-20 py-10">
                             {team[selectedTeam].map((member: any, index: any) => (
@@ -116,7 +121,7 @@ const OurTeam: React.FC<OurTeamProps> = ({
                                 className={`px-4 py-2 rounded-full font-medium ${selectedTeam === btn.team ? btn.selectedColor : btn.color} shadow-md transition-transform transform hover:scale-105`}
                                 onClick={() => handleSelectTeam(btn.team as keyof typeof team)}
                             >
-                                {btn.label}
+                                <Link href="#ourTeam">{btn.label}</Link>
                             </button>
                         ))}
                     </div>

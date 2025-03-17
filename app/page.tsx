@@ -222,7 +222,7 @@ export default function App() {
     ],
     cloud: [
       {
-        name: "Muhammad Hanif Murtaza",
+        name: "Hanif Murtaza",
         role: "Cloud Lead",
         image: "/images/team/cloud/HanifMurtaza.jpg",
         social: {
@@ -230,10 +230,10 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_24%]"
       },
       {
-        name: "Muhammad Naufal Hartono",
+        name: "Naufal Hartono",
         role: "Cloud Member",
         image: "/images/team/cloud/MuhammadNaufalHartono.jpg",
         social: {
@@ -244,7 +244,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Ariff Danial bin Zabani",
+        name: "Ariff Danial",
         role: "Cloud Member",
         image: "/images/team/cloud/AriffDanial.jpg",
         social: {
@@ -252,7 +252,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_24%]"
       },
     ],
     aiMl: [
@@ -268,7 +268,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Muhammad Reza Husnayn Bin Mohd Ghouse ",
+        name: "Reza Husnayn",
         role: "AI/ML Member",
         image: "/images/team/aiml/MuhammadRezaHusnayn.jpg",
         social: {
@@ -276,7 +276,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_42%]"
       },
       {
         name: "Ong Yee Xuan",
@@ -287,10 +287,10 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_34%]"
       },
       {
-        name: "Muhammad Irfan Danish Bin Mohd Shamsuri",
+        name: "Irfan Danish",
         role: "AI/ML Member",
         image: "/images/team/aiml/MuhammadIrfanDanish.jpg",
         social: {
@@ -311,7 +311,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_34%]"
       },
       {
         name: "Ryan Iqbal Hermawan",
@@ -322,7 +322,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_22%]"
       },
       {
         name: "Zhong Zihang",
@@ -333,10 +333,10 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_38%]"
       },
       {
-        name: "Desmond Chew Boon Cong",
+        name: "Desmond Chew Boon",
         role: "Cybersecurity Member",
         image: "/images/team/cybersecurity/DesmondChewBoonCong.jpg",
         social: {
@@ -395,7 +395,7 @@ export default function App() {
     ],
     communitySocials: [
       {
-        name: "Alhasadi Taima Munthir Emran",
+        name: "Taima ",
         role: "Community & Socials Lead",
         image: "/images/team/communitysocials/TaimaAlhasadi.jpg",
         social: {
@@ -406,7 +406,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Muhammad Rafiq Zakwan Bin Mohd Raslan",
+        name: "Rafiq Zakwan",
         role: "Marketing Strategist",
         image: "/images/team/communitysocials/RafiqZakwan.jpg",
         social: {
@@ -441,7 +441,7 @@ export default function App() {
     ],
     creatives: [
       {
-        name: "Adam Amirudin Bin Mohammad Tony",
+        name: "Adam Amirudin",
         role: "Creative Lead",
         image: "/images/team/creatives/AdamAmirudin.jpg",
         social: {
@@ -452,7 +452,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Rawan Faris Aldoghachi",
+        name: "Rawan Faris",
         role: "Graphic Designer",
         image: "/images/team/creatives/RawanAldoghachi.jpg",
         social: {
@@ -463,7 +463,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Jewahra Ademosman Saleh",
+        name: "Jewahra Ademosman",
         role: "Graphic Designer",
         image: "/images/team/creatives/JewahraSaleh.jpg",
         social: {
@@ -474,7 +474,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Khalilah Binti Khairudin",
+        name: "Khalilah Khairudin",
         role: "Content Creator",
         image: "/images/team/creatives/KhalilahKhairudin.jpg",
         social: {
@@ -485,7 +485,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Sawda Zeynab Binti Said Toure",
+        name: "Sawda Zeynab",
         role: "Content Creator",
         image: "/images/team/creatives/SawdaZeynabToure.jpg",
         social: {
@@ -498,7 +498,7 @@ export default function App() {
     ],
     externalRelations: [
       {
-        name: "Muhammad Dhafa Warganegara ",
+        name: "Dhafa Warganegara",
         role: "External Relations Lead",
         image: "/images/team/externalrelations/DhafaWarganegara.jpg",
         social: {
@@ -509,7 +509,7 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Dzaky Keenan Ibrahim",
+        name: "Dzaky Keenan",
         role: "External Relations Member",
         image: "/images/team/externalrelations/DzakyKeenan.jpg",
         social: {
