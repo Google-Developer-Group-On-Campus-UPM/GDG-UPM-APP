@@ -60,9 +60,7 @@ const OurTeam: React.FC<OurTeamProps> = ({
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
                 >
-                    <div className={""}>
-                        <h1 className={"text-black"}>hello</h1>
-                    </div>
+                    
                     <div>
                         <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text">Our Team</h2>
 
