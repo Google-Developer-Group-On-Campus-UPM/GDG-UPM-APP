@@ -1,34 +1,95 @@
+"use client"
 
 import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui/avatar"
+import TeamCard from "./ui/TeamCard"
+import { useState } from "react"
+import Link from "next/link"
 
-
-type OurTeam = {
+interface OurTeamProps {
     teamRef: React.RefObject<HTMLDivElement>;
+    team: {
+        [key: string]: {
+            name: string;
+            role: string;
+            image: string;
+            social: {
+                facebook: string;
+                twitter: string;
+                github: string;
+            };
+            imagePositions: string;
+        }[];
+    };
 }
 
-const OurTeam = ({ teamRef }: OurTeam) => {
+// main -> dev-brach -> update/new-section 
 
-    const team = [
-        { name: "Alice Johnson", role: "Lead", avatar: "AJ" },
-        { name: "Bob Smith", role: "Technical Lead", avatar: "BS" },
-        { name: "Carol Williams", role: "Event Coordinator", avatar: "CW" },
-        { name: "David Brown", role: "Marketing Lead", avatar: "DB" },
-    ]
+const OurTeam: React.FC<OurTeamProps> = ({
+    teamRef,
+    team
+}) => {
+
+    const [selectedTeam, setSelectedTeam] = useState<keyof typeof team>("topBoard");
+
+    const handleSelectTeam = (teamName: keyof typeof team) => {
+        setSelectedTeam(teamName);
+    };
+
+
+    const buttons = [
+        { label: "Top Board", team: "topBoard", color: "bg-black text-yellow-400", selectedColor: "bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4]" },
+        { label: "Web App", team: "webApp", color: "bg-black text-yellow-400", selectedColor: "bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4]" },
+        { label: "Mobile App", team: "mobileApp", color: "bg-black text-green-400", selectedColor: "bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4]" },
+        { label: "Cloud", team: "cloud", color: "bg-black text-pink-400", selectedColor: "bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4]" },
+        { label: "AI/ML", team: "aiMl", color: "bg-black text-gray-300", selectedColor: "bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4]" },
+        { label: "Cyber-security", team: "cyberSecurity", color: "bg-black text-red-400", selectedColor: "bg-red-400 text-black" },
+        { label: "UI/UX", team: "uiUx", color: "bg-black text-yellow-400", selectedColor: "bg-yellow-400 text-black" },
+        { label: "Community & Socials", team: "communitySocials", color: "bg-black text-blue-300", selectedColor: "bg-blue-300 text-black" },
+        { label: "Creatives", team: "creatives", color: "bg-black text-purple-400", selectedColor: "bg-purple-400 text-black" },
+        { label: "External Relations", team: "externalRelations", color: "bg-black text-pink-300", selectedColor: "bg-pink-300 text-black" },
+    ];
+
     return (
         <>
-            <motion.section
-                ref={teamRef}
-                className="space-y-6"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-            >
-                <h2 className="text-3xl font-bold">Our Team</h2>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {team.map((member, index) => (
+            <section className="scroll-smooth">
+                <motion.div
+                    ref={teamRef}
+                    className="space-y-6"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                >
+                    
+                    <div>
+                        <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text">Our Team</h2>
+
+                        <div className={"flex gap-x-10 gap-y-4 justify-center py-10 flex-wrap sm:gap-y-0"}>
+                            {team["lead"].map((member: any, index: any) => (
+                                <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role} imagePositions={member.imagePositions} />
+                            ))}
+                        </div>
+
+                    </div>
+
+
+
+                    <div className={"bg-gradient-to-tr from-[#d596d9] to-[#fdc0c4] border rounded-lg relative"}>
+
+                        
+                        <h2 className="text-3xl font-bold text-center mt-4">
+                            {buttons.find((button) => button.team === selectedTeam)?.label}
+                        </h2>
+
+                        <div id="ourTeam" className="absolute bg-transparent h-12 w-12 top-[-35px] left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            
+                        </div>
+
+                        <div className="flex flex-wrap gap-x-16 gap-y-4 justify-center items-center px-20 py-10">
+                            {team[selectedTeam].map((member: any, index: any) => (
+                                <TeamCard ImageLink={member.image} MemberName={member.name} MemberRole={member.role} imagePositions={member.imagePositions} />
+                            ))}
+                            {/* {team.map((member, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -49,9 +110,25 @@ const OurTeam = ({ teamRef }: OurTeam) => {
                                 </CardContent>
                             </Card>
                         </motion.div>
-                    ))}
-                </div>
-            </motion.section>
+                    ))} */}
+                        </div>
+                    </div>
+
+
+
+                    <div className={"flex flex-wrap gap-4 justify-center"}>
+                        {buttons.map((btn, index) => (
+                            <button
+                                key={index}
+                                className={`px-4 py-2 rounded-full font-medium ${selectedTeam === btn.team ? btn.selectedColor : btn.color} shadow-md transition-transform transform hover:scale-105`}
+                                onClick={() => handleSelectTeam(btn.team as keyof typeof team)}
+                            >
+                                <Link href="#ourTeam">{btn.label}</Link>
+                            </button>
+                        ))}
+                    </div>
+                </motion.div>
+            </section>
 
         </>
     )
