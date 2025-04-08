@@ -93,17 +93,6 @@ export default function App() {
         imagePositions: "object-[50%_28%]"
       },
       {
-        name: "Zikry Zaherman",
-        role: "Vice-Secretary",
-        image: "/images/team/topboard/ZikryZaherman.jpg",
-        social: {
-          facebook: "",
-          twitter: "",
-          github: "",
-        },
-        imagePositions: "object-[50%_39%]"
-      },
-      {
         name: "Francis Lim Beng Cong",
         role: "TechOps 1",
         image: "/images/team/topboard/FrancisLimBengCong.jpg",
