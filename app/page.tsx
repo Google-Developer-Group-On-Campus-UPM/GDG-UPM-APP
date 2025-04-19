@@ -533,7 +533,7 @@ export default function App() {
         <main className="">
           <Header homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} />
 
-          <div className={"space-y-20"}>
+          <div className={"space-y-20 relative"}>
             <Home homeRef={homeRef} aboutRef={aboutRef} />
 
             <div className={"container space-y-20"}>
