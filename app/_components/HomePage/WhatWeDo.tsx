@@ -1,6 +1,6 @@
 
 import { motion} from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
 
 
 type WhatWeDoProps = {
