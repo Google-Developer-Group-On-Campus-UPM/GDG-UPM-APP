@@ -60,7 +60,7 @@ type SubEvent = {
 type EventContent = {
     title: string;
     href: string;
-    subEvents?: SubEvent[]; // Allow subEvents to be undefined
+    subEvents?: SubEvent[]; 
 };
 
 
@@ -126,7 +126,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
     const [show, setShow] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
-    const { toggleSidebar, open } = useSidebar(); // Using `open` from context
+    const { toggleSidebar, open } = useSidebar(); 
 
     useEffect(() => {
         const handleScroll = () => {
@@ -135,11 +135,11 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
             if (currentScrollY > lastScrollY && show && !isAnimating) {
                 if (open) {
                     setIsAnimating(true);
-                    toggleSidebar(); // Close sidebar first
+                    toggleSidebar(); 
                     setTimeout(() => {
                         setShow(false);
                         setIsAnimating(false);
-                    }, 400); // Slightly longer delay for a smoother effect
+                    }, 400); 
                 } else {
                     setShow(false);
                 }
@@ -330,15 +330,13 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                 transition={{ duration: 0.5 }}
             >
                 {/* <nav className="mx-6 lg:ml-24 lg:mr-12 flex justify-center items-center h-full min-w-screen"> */}
-                <nav className="mx-6 lg:ml-24 lg:mr-24 flex items-center h-full min-w-screen">
+                <nav className="lg:ml-24 lg:mr-24 flex items-center justify-between h-full min-w-screen">
 
                     <div className="">
-                        <Link href={"/"} className={"block md:hidden"}>
-                            <Image src="/images/GDG_Logo.svg" alt="" width={200} height={300} className="max-h-[100px] max-w-[100px] cursor-pointer" />
+                        <Link href={"/"} className={""}>
+                            <Image src="/images/GDG_Logo.svg" alt="" width={200} height={300} className="max-h-[100px] max-w-[100px] md:max-h-[120px] md:max-w-[120px] cursor-pointer" />
                         </Link>
-                        <Link href={"/"} className={"hidden md:block"}>
-                            <Image src="/images/GDG_Logo.svg" alt="" width={200} height={300} className="md:max-h-[120px] md:max-w-[120px] cursor-pointer" />
-                        </Link>
+                        
                     </div>
 
                     <div className={"hidden xl:flex xl:items-center xl:mr-auto xl:ml-10"}>
@@ -380,10 +378,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                     </div>
 
 
-
-                    <div className={"flex gap-4 items-center ml-auto"}>
-
-
+                    {/* <div className={"flex gap-4 items-center ml-auto"}>
 
                         <Menubar className={"bg-transparent border-none active:bg-transparent focus:bg-transparent focus-visible:bg-transparent data-[state=open]:bg-transparent aria-selected:bg-transparent group-active:bg-transparent shadow-md"}>
                             <MenubarMenu>
@@ -407,15 +402,15 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
 
                         </Menubar>
 
-                        {/* Shadcn for nav links */}
+                      
 
-                    </div>
+                    </div> */}
 
 
 
-                    <SidebarTrigger className={"xl:hidden text-white bg-transparent border-none active:bg-transparent focus:bg-transparent focus-visible:bg-transparent data-[state=open]:bg-transparent aria-selected:bg-transparent group-active:bg-transparent data-[state=open]:text-black aria-selected:text-black group-active:text-black flex items-center space-x-1 rounded-md border shadow-md ml-3 h-[36px] w-[36px]"} />
+                    <SidebarTrigger className={"xl:hidden text-white bg-transparent border-none active:bg-transparent focus:bg-transparent focus-visible:bg-transparent data-[state=open]:bg-transparent aria-selected:bg-transparent group-active:bg-transparent data-[state=open]:text-black aria-selected:text-black group-active:text-black flex items-center space-x-1 rounded-md border shadow-md ml-auto mr-6 md:mr-0 h-[36px] w-[36px]"} />
 
-                    <div className={"xl:hidden z-50"}>
+                    <div className={"z-50"}>
                         <Sidebar
                             side="right"
                             collapsible="offcanvas"
@@ -430,7 +425,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                                                 <SidebarMenuItem>
                                                     <CollapsibleTrigger asChild>
                                                         <SidebarMenuButton>
-                                                            KitaHack 2025 Info
+                                                            GDGoC UPM Info
 
                                                             <ChevronsUpDown className="h-4 w-4" />
 

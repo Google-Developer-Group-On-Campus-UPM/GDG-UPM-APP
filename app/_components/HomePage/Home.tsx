@@ -34,7 +34,7 @@ const Home = ({ homeRef, aboutRef }: HomeProps) => {
                 const nextIndex = (prevIndex + 1) % images.length;
                 return [nextIndex, 1]; // direction 1 = forward
             });
-        }, 3000);
+        }, 10000);
 
         return () => clearTimeout(timer);
     }, [currentIndex]);
@@ -85,46 +85,63 @@ const Home = ({ homeRef, aboutRef }: HomeProps) => {
                                 height={200}
                                 className="block lg:hidden max-h-[400px] max-w-[400px] cursor-pointer"
                             />
-                            <div className="text-white text-center">
-                                <h1 className="md:text-2xl lg:text-4xl">Google Developer Groups</h1>
-                                <h4 className="md:text-xl lg:text-2xl">
-                                    on Campus. Universiti Putra Malaysia
-                                </h4>
+                            <div className="text-white text-center space-y-10">
+                                <div>
+                                    <h1 className="md:text-2xl lg:text-4xl">Google Developer Groups</h1>
+                                    <h4 className="md:text-xl lg:text-2xl">
+                                        on Campus. Universiti Putra Malaysia
+                                    </h4>
+                                </div>
+
+                                <div className={"flex justify-center gap-4"}>
+                                    <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer">
+                                        <img src="images/hero/Instagram.svg" className={"cursor-pointer max-h-[38px] max-w-[38px] md:max-h-[55px] md:max-w-[55px]"} alt="Instagram" />
+                                    </a>
+                                    <a href="https://www.facebook.com/yourprofile" target="_blank" rel="noopener noreferrer">
+                                        <img src="images/hero/Facebook.svg" className={"cursor-pointer max-h-[38px] max-w-[38px] md:max-h-[55px] md:max-w-[55px]"} alt="Facebook" />
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">
+                                        <img src="images/hero/LinkedIn.svg" className={"cursor-pointer max-h-[38px] max-w-[38px] md:max-h-[55px] md:max-w-[55px]"} alt="LinkedIn" />
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                     {/* Right Grid Item */}
-                    <div className="min-h-screen relative">
+                    <div className="min-h-screen relative hidden md:block">
+                        <div className={""}>
 
-                        <img className="absolute top-0 left-0 z-10 h-[100%] opacity-70" src="images/hero/Gradient.png" alt="" />
+                            <img className="absolute top-0 left-0 z-10 h-[100%] opacity-70" src="images/hero/Gradient.png" alt="" />
 
-                        <div
-                            className={"min-h-screen min-w-screen"}
-                            style={{
-                                position: 'relative',
-                                overflow: 'hidden',
-                            }}
-                        >
-                            <AnimatePresence custom={direction}>
-                                <motion.img
-                                    key={currentIndex}
-                                    src={images[currentIndex].imageUrl}
-                                    alt={`Image ${currentIndex}`}
-                                    custom={direction}
-                                    variants={variants}
-                                    initial="enter"
-                                    animate="center"
-                                    exit="exit"
-                                    transition={{ duration: 0.8 }}
-                                    style={{
-                                        position: 'absolute',
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                    }}
-                                />
-                            </AnimatePresence>
+                            <div
+                                className={"min-h-screen min-w-screen"}
+                                style={{
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                <AnimatePresence custom={direction}>
+                                    <motion.img
+                                        key={currentIndex}
+                                        src={images[currentIndex].imageUrl}
+                                        alt={`Image ${currentIndex}`}
+                                        custom={direction}
+                                        variants={variants}
+                                        initial="enter"
+                                        animate="center"
+                                        exit="exit"
+                                        transition={{ duration: 0.8 }}
+                                        style={{
+                                            position: 'absolute',
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                </AnimatePresence>
+                            </div>
                         </div>
                     </div>
                 </div>
