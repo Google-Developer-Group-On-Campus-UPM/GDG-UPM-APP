@@ -344,7 +344,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                             <MenubarMenu>
                                 <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
                                     <Link href={"/#faqs-section"}>
-                                        FAQs
+                                        Home
                                     </Link>
 
                                 </MenubarTrigger>
@@ -353,7 +353,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                             <MenubarMenu>
                                 <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
                                     <Link href={"/#about-section"}>
-                                        About
+                                        Events
                                     </Link>
                                 </MenubarTrigger>
                             </MenubarMenu>
@@ -361,7 +361,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                             <MenubarMenu>
                                 <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
                                     <Link href={"/#sdg-ai"}>
-                                        AI Tools
+                                        Teams
                                     </Link>
                                 </MenubarTrigger>
                             </MenubarMenu>
@@ -369,7 +369,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                             <MenubarMenu>
                                 <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
                                     <Link href={"/#criteria"}>
-                                        Criteria
+                                        Contacts
                                     </Link>
                                 </MenubarTrigger>
                             </MenubarMenu>
