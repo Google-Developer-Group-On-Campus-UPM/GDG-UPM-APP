@@ -4,14 +4,16 @@ import { useRef } from "react"
 
 
 //Components
-import NavBar from "./_components/NavBar"
-import Home from "./_components/Home"
-import About from "./_components/About"
-import WhatWeDo from "./_components/WhatWeDo"
-import OurTeam from "./_components/OurTeam"
-import Events from "./_components/Events"
-import GetInTouch from "./_components/GetInTouch"
 
+import Home from "./_components/HomePage/Home"
+import About from "./_components/HomePage/About"
+import WhatWeDo from "./_components/HomePage/WhatWeDo"
+import OurTeam from "./_components/HomePage/OurTeam"
+import Events from "./_components/HomePage/Events"
+import GetInTouch from "./_components/HomePage/GetInTouch"
+import Header from "./_components/Layout/Header"
+
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function App() {
 
@@ -517,28 +519,38 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"   
+        imagePositions: "object-[50%_28%]"
       },
     ]
   };
 
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <NavBar homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} />
+    <SidebarProvider className={"block"} defaultOpen={false}>
+      <div className="">
 
-      <main className="flex-1 container py-6 space-y-20">
-        <Home homeRef={homeRef} aboutRef={aboutRef} />
-        <About aboutRef={aboutRef} />
-        <WhatWeDo whatWeDoRef={whatWeDoRef} />
-        <OurTeam team={team} teamRef={teamRef} />
-        <Events eventsRef={eventsRef} />
-        <GetInTouch contactRef={contactRef} />
-      </main>
 
-      <footer className="border-t py-4 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} GDG UPM. All rights reserved. Developed by Wong Yong Xi and Google Developer Group on Campus UPM
-      </footer>
-    </div>
+        <main className="">
+          <Header homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} />
+
+          <div className={"space-y-20 relative"}>
+            <Home homeRef={homeRef} aboutRef={aboutRef} />
+
+            <div className={"container space-y-20"}>
+              {/* <About aboutRef={aboutRef} />
+              <WhatWeDo whatWeDoRef={whatWeDoRef} /> */}
+              <OurTeam team={team} teamRef={teamRef} />
+              <Events eventsRef={eventsRef} />
+              <GetInTouch contactRef={contactRef} />
+            </div>
+
+          </div>
+        </main>
+
+        <footer className="border-t py-4 text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} GDG UPM. All rights reserved. Developed by Wong Yong Xi and Google Developer Group on Campus UPM
+        </footer>
+      </div >
+    </SidebarProvider >
   )
 }
