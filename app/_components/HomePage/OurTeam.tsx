@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import TeamCard from "./ui/TeamCard"
+import TeamCard from "../ui/TeamCard"
 import { useState } from "react"
 import Link from "next/link"
 
