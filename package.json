@@ -23,6 +23,7 @@
     "@shadcn/ui": "^0.0.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.6.0",
     "firebase": "^11.0.2",
     "framer-motion": "^11.11.9",
     "lucide-react": "^0.453.0",
