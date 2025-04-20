@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion, useScroll, useSpring } from "framer-motion"
 import Image from 'next/image';
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { useTheme } from "next-themes"
+
 import { Moon, Sun } from "lucide-react"
 
 import {
@@ -154,7 +154,6 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
         return () => window.removeEventListener("scroll", handleScroll);
     }, [show, lastScrollY, open, toggleSidebar, isAnimating]);
 
-    const { setTheme } = useTheme()
 
 
     const MoreMobileItem = forwardRef<
