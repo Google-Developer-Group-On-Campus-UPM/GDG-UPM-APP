@@ -407,7 +407,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
 
 
 
-                    <SidebarTrigger className={"xl:hidden text-white bg-transparent border-none active:bg-transparent focus:bg-transparent focus-visible:bg-transparent data-[state=open]:bg-transparent aria-selected:bg-transparent group-active:bg-transparent data-[state=open]:text-black aria-selected:text-black group-active:text-black flex items-center space-x-1 rounded-md border shadow-md ml-auto mr-6 md:mr-0 h-[36px] w-[36px]"} />
+                    <SidebarTrigger className={"xl:hidden text-white bg-transparent border-none active:bg-transparent focus:bg-transparent focus-visible:bg-transparent data-[state=open]:bg-transparent aria-selected:bg-transparent group-active:bg-transparent data-[state=open]:text-black aria-selected:text-black group-active:text-black flex items-center space-x-1 rounded-md border shadow-md ml-auto mr-6 h-[36px] w-[36px]"} />
 
                     <div className={"z-50"}>
                         <Sidebar

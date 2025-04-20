@@ -17,20 +17,36 @@ const Events = ({ eventsRef }: EventsProps) => {
 
     const eventList = [
         {
-            title: "Web Development Workshop",
-            date: "2024-03-15",
-            description: "Learn the basics of web development",
+            title: "Building AI-Powered Image Processing Apps",
+            date: "2025-04-25",
+            description: "",
             image: "/images/test.png",
             link: "/test",
-            dark_bg: false, 
+            dark_bg: false,
         },
         {
-            title: "AI/ML Hackathon",
-            date: "2024-04-22",
-            description: "Build innovative AI solutions",
+            title: "KitaHack 2025 Kickoff Session",
+            date: "2025-02-22",
+            description: "",
             image: "/images/test.png",
             link: "/test",
-            dark_bg: true, 
+            dark_bg: true,
+        },
+        {
+            title: "CSS Tailwind : From Basics to Frameworks",
+            date: "2025-01-25",
+            description: "",
+            image: "/images/test.png",
+            link: "/test",
+            dark_bg: true,
+        },
+        {
+            title: "Exploring UI/UX Design: Tools and Prototyping with Figma",
+            date: "2025-01-11",
+            description: "",
+            image: "/images/test.png",
+            link: "/test",
+            dark_bg: true,
         },
     ]
 
@@ -44,9 +60,11 @@ const Events = ({ eventsRef }: EventsProps) => {
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
             >
-                <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text">Our Events</h2>
-                <div className="max-w-full xl:w-[1280px] mx-auto">
-                    <Carousel slides={eventList} options={OPTIONS} />
+                <div className={"space-y-6"}>
+                    <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text relative z-10">Our Events</h2>
+                    <div className="max-w-full xl:w-[1280px] mx-auto">
+                        <Carousel slides={eventList} options={OPTIONS} />
+                    </div>
                 </div>
             </motion.section>
 

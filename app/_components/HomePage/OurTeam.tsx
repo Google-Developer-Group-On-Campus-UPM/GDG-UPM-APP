@@ -62,7 +62,7 @@ const OurTeam: React.FC<OurTeamProps> = ({
                 >
                     
                     <div>
-                        <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text relative z-50">Our Team</h2>
+                        <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text relative z-10">Our Team</h2>
 
                         <div className={"flex gap-x-10 gap-y-4 justify-center py-10 flex-wrap sm:gap-y-0"}>
                             {team["lead"].map((member: any, index: any) => (

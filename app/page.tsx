@@ -539,8 +539,8 @@ export default function App() {
             <div className={"container space-y-20"}>
               {/* <About aboutRef={aboutRef} />
               <WhatWeDo whatWeDoRef={whatWeDoRef} /> */}
-              <OurTeam team={team} teamRef={teamRef} />
               <Events eventsRef={eventsRef} />
+              <OurTeam team={team} teamRef={teamRef} />
               <GetInTouch contactRef={contactRef} />
             </div>
 
