@@ -17,38 +17,47 @@ const Events = ({ eventsRef }: EventsProps) => {
 
     const eventList = [
         {
-            title: "Building AI-Powered Image Processing Apps",
+            title: "",
             date: "2025-04-25",
             description: "",
-            image: "/images/test.png",
-            link: "/test",
+            image: "/images/events/uiux.png",
+            link: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-mastering-uiux-design-industry-insights-with-figma-1/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
             dark_bg: false,
         },
         {
-            title: "KitaHack 2025 Kickoff Session",
-            date: "2025-02-22",
+            title: "",
+            date: "2025-04-25",
             description: "",
-            image: "/images/test.png",
-            link: "/test",
-            dark_bg: true,
+            image: "/images/events/mobileAI.png",
+            link: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-building-ai-powered-image-processing-apps/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+            dark_bg: false,
         },
         {
-            title: "CSS Tailwind : From Basics to Frameworks",
+            title: "",
+            date: "2025-04-25",
+            description: "",
+            image: "/images/events/flutter.png",
+            link: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-building-ai-powered-image-processing-apps/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+            dark_bg: false,
+        },
+        {
+            title: "",
             date: "2025-01-25",
             description: "",
-            image: "/images/test.png",
-            link: "/test",
+            image: "/images/events/tailwindcss.png",
+            link: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-css-tailwind-from-basics-to-frameworks/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
             dark_bg: true,
         },
         {
-            title: "Exploring UI/UX Design: Tools and Prototyping with Figma",
+            title: "",
             date: "2025-01-11",
             description: "",
-            image: "/images/test.png",
-            link: "/test",
+            image: "/images/events/figma.png",
+            link: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-exploring-uiux-design-tools-and-prototyping-with-figma/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
             dark_bg: true,
         },
-    ]
+    ];
+
 
     return (
         <>
@@ -59,6 +68,7 @@ const Events = ({ eventsRef }: EventsProps) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
+                id="events-section"
             >
                 <div className={"space-y-6"}>
                     <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text relative z-10">Our Events</h2>

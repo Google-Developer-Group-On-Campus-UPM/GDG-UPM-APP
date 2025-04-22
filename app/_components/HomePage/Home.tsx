@@ -58,10 +58,11 @@ const Home = ({ homeRef, aboutRef }: HomeProps) => {
         <>
             <motion.section
                 ref={homeRef}
-                className="min-h-screen min-w-screen"
+                className="min-h-screen min-w-screen relative z-10"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
+                id="home-section"
             >
                 <div className="grid xl:grid-cols-[0.7fr_1fr] lg:grid-cols-2">
                     {/* Left Grid Item with Background + Blur Mask */}
