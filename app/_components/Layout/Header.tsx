@@ -60,18 +60,33 @@ type SubEvent = {
 type EventContent = {
     title: string;
     href: string;
-    subEvents?: SubEvent[]; 
+    subEvents?: SubEvent[];
 };
 
 
 const eventsContents: EventContent[] = [
-
     {
-        title: "CSS Workshops: From Basics To Frameworks",
-        href: "",  
-    }
-    
+        title: "Mastering UI/UX Design: Industry Insights with Figma",
+        href: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-mastering-uiux-design-industry-insights-with-figma-1/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+    },
+    {
+        title: "Building AI-Powered Image Processing Apps",
+        href: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-building-ai-powered-image-processing-apps/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+    },
+    {
+        title: "PocketAI: Building Gemini Chatbots With Flutter",
+        href: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-building-ai-powered-image-processing-apps/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+    },
+    {
+        title: "CSS Tailwind: From Basics to Frameworks",
+        href: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-css-tailwind-from-basics-to-frameworks/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+    },
+    {
+        title: "Exploring UI/UX Design: Tools and Prototyping with Figma",
+        href: "https://gdg.community.dev/events/details/google-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia-presents-exploring-uiux-design-tools-and-prototyping-with-figma/cohost-gdg-on-campus-universiti-putra-malaysia-selangor-malaysia",
+    },
 ];
+
 
 const moreContents: { title: string; href: string; description: string; src: string }[] = [
     {
@@ -88,13 +103,13 @@ const moreContents: { title: string; href: string; description: string; src: str
     },
     {
         title: "Teams",
-        href: "/#faqs-section",
+        href: "/#teams-section",
         description: "",
         src: ""
     },
     {
-        title: "Contact",
-        href: "/#faqs-section",
+        title: "Contacts",
+        href: "/#contacts-section",
         description: "",
         src: ""
     },
@@ -126,7 +141,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
     const [show, setShow] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
-    const { toggleSidebar, open } = useSidebar(); 
+    const { toggleSidebar, open } = useSidebar();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -135,11 +150,11 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
             if (currentScrollY > lastScrollY && show && !isAnimating) {
                 if (open) {
                     setIsAnimating(true);
-                    toggleSidebar(); 
+                    toggleSidebar();
                     setTimeout(() => {
                         setShow(false);
                         setIsAnimating(false);
-                    }, 400); 
+                    }, 400);
                 } else {
                     setShow(false);
                 }
@@ -321,7 +336,7 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
 
 
             <motion.header
-                className={`h-16 xl:h-16 text-[15px] fixed top-0 left-0 right-0 z-20 transition-transform duration-300 ease-in-out
+                className={`h-16 xl:h-16 text-[15px] fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out
     ${show ? "translate-y-0" : "-translate-y-full"}
     bg-black/60 backdrop-blur-md backdrop-saturate-150 shadow-lg border-b border-white/10`}
                 initial={{ opacity: 0, y: -50 }}
@@ -335,46 +350,26 @@ const Header = ({ homeRef, aboutRef, whatWeDoRef, teamRef, eventsRef, contactRef
                         <Link href={"/"} className={""}>
                             <Image src="/images/GDG_Logo.svg" alt="" width={200} height={300} className="max-h-[100px] max-w-[100px] md:max-h-[120px] md:max-w-[120px] cursor-pointer" />
                         </Link>
-                        
+
                     </div>
 
-                    <div className={"hidden xl:flex xl:items-center xl:mr-auto xl:ml-10"}>
-                        <Menubar className={"bg-transparent border-none shadow-none data-[state=open]:bg-transparent  text-white data-[state=open]:text-white aria-selected:text-white group-active:text-white space-x-10"}>
-                            <MenubarMenu>
-                                <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
-                                    <Link href={"/#faqs-section"}>
-                                        Home
-                                    </Link>
-
-                                </MenubarTrigger>
-                            </MenubarMenu>
-
-                            <MenubarMenu>
-                                <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
-                                    <Link href={"/#about-section"}>
-                                        Events
-                                    </Link>
-                                </MenubarTrigger>
-                            </MenubarMenu>
-
-                            <MenubarMenu>
-                                <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
-                                    <Link href={"/#sdg-ai"}>
-                                        Teams
-                                    </Link>
-                                </MenubarTrigger>
-                            </MenubarMenu>
-
-                            <MenubarMenu>
-                                <MenubarTrigger className={"bg-transparent border-none  data-[state=open]:bg-white/10 text-white  data-[state=open]:text-black aria-selected:text-black group-active:text-black"}>
-                                    <Link href={"/#criteria"}>
-                                        Contacts
-                                    </Link>
-                                </MenubarTrigger>
-                            </MenubarMenu>
-
-                        </Menubar>
+                    <div className="hidden xl:flex xl:items-center xl:mr-auto xl:ml-10 relative z-30">
+                        <nav className="bg-transparent space-x-20">
+                            <Link href="/#home-section" className="text-white hover:text-gray-100 cursor-pointer">
+                                Home
+                            </Link>
+                            <Link href="/#events-section" className="text-white hover:text-gray-100 cursor-pointer">
+                                Events
+                            </Link>
+                            <Link href="/#teams-section" className="text-white hover:text-gray-100 cursor-pointer">
+                                Teams
+                            </Link>
+                            <Link href="/#contacts-section" className="text-white hover:text-gray-100 cursor-pointer">
+                                Contacts
+                            </Link>
+                        </nav>
                     </div>
+
 
 
                     {/* <div className={"flex gap-4 items-center ml-auto"}>

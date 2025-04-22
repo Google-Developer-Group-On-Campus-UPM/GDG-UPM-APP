@@ -64,8 +64,9 @@ const GetInTouch = ({ contactRef }: GetInTouchProps) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
+                id="contacts-section"
             >
-                <h2 className="text-3xl font-bold">Get in Touch</h2>
+                <h2 className="text-3xl font-bold text-center bg-gradient-to-b from-[#ffa1a3] via-[#ff888a] to-[#ff6164] text-transparent bg-clip-text relative z-10">Get in Touch</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700">

@@ -153,35 +153,40 @@ const TeamCard: React.FC<TeamCardProps> = ({ ImageLink, MemberName, MemberRole, 
                         exit={{ opacity: 0, scale: 0.8 }}
                         transition={{ duration: 0.3 }}
                         ref={dialogRef}
-                        className="relative w-[80%] max-w-4xl h-[60vh] bg-white shadow-lg flex rounded-md overflow-hidden"
+                        className="relative w-[90%] max-w-4xl h-[70vh] bg-white shadow-lg flex flex-col md:flex-row rounded-md overflow-hidden"
                     >
-
-                        <div className={"relative w-3/5 h-full z-[0]"}>
+                        {/* Image Section */}
+                        <div className="relative flex-1 h-full group">
                             <Image
                                 src={ImageLink}
                                 alt={MemberName}
                                 layout="fill"
-                                className={`object-cover ${imagePositions !== "" ? imagePositions : "object-[50%_28%]"} translate-x-[-40px]`}
+                                className={`object-cover transition-all duration-300 ease-in-out 
+                      ${imagePositions !== "" ? imagePositions : "object-[50%_28%]"} 
+                      blur-md md:blur-none`}
                             />
+
+                            {/* Description Overlay (only on hover) */}
+                            <div className="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center opacity-100 md:opacity-0 transition-opacity duration-300 text-white text-center p-4">
+                                <p className="text-sm sm:text-base italic">Full-time wizard, part-time coffee enthusiast. Can code a website faster than you can say 'debug' and hopefully won't break it too.</p>
+                            </div>
                         </div>
 
-                        {/* Right Side - Content */}
-                        <div className="relative w-1/2 bg-white flex flex-col justify-center px-8 z-30">
-                            <h2 className="text-2xl font-bold">{MemberName}</h2>
+                        {/* Diagonal Effect (only on desktop) */}
+                        <div className="hidden md:block absolute inset-y-0 left-[40%] w-2/12 bg-white transform -skew-x-12 origin-left z-10"></div>
+
+                        {/* Right Side Content (only on desktop) */}
+                        <div className="hidden md:flex flex-col justify-center items-start flex-1 p-6 z-20">
+                            <h2 className="text-2xl font-semibold mb-2">{MemberName}</h2>
                             <p className="text-gray-600">{MemberRole}</p>
-                            <button
-                                className="absolute top-4 right-4 text-gray-500 hover:text-black"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                ✕
-                            </button>
+                            {/* Add more details if needed */}
                         </div>
-
-                        {/* Diagonal Effect */}
-                        <div className="absolute inset-y-0 left-[43%] w-2/12 bg-white transform -skew-x-12 origin-left z-10"></div>
                     </motion.div>
                 </div>
             )}
+
+
+
         </>
     );
 };
