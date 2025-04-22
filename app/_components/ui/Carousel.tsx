@@ -9,6 +9,7 @@ import {
   usePrevNextButtons
 } from './CarouselArrowButton'
 import useEmblaCarousel from 'embla-carousel-react'
+import Link from 'next/link'
 
 
 
@@ -52,10 +53,10 @@ const Carousel: React.FC<PropType> = (props) => {
                   if (window.innerWidth < 640) window.location.href = event.link;
                 }}
               />
-              <div className="sm:p-4 row-start-1 col-start-1 flex flex-grow-0 items-end">
-                <a href={event.link} className="flex-grow-0 hidden sm:inline">
-                  <div className="p-4 pl-8 pr-8 bg-white rounded-3xl font-bold text-sm leading-5">Details</div>
-                </a>
+              <div className="sm:pl-12 sm:pb-4 row-start-1 col-start-1 flex flex-grow-0 items-end">
+                <Link href={event.link} className="flex-grow-0 hidden sm:inline">
+                  <div className="p-4 pl-8 pr-8 bg-white rounded-3xl font-bold text-sm leading-5 relative z-10">Details</div>
+                </Link>
                 <h3 className="pb-2 sm:pl-8 w-full flex-grow-0 text-center sm:text-left font-bold sm:text-2xl inline z-10 sm:z-0">{event.title}</h3>
               </div>
             </div>

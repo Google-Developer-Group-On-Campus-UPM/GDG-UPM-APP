@@ -54,11 +54,12 @@ const OurTeam: React.FC<OurTeamProps> = ({
             <section className="scroll-smooth">
                 <motion.div
                     ref={teamRef}
-                    className="space-y-6"
+                    className="space-y-6 relative z-30"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
+                    id="teams-section"
                 >
                     
                     <div>

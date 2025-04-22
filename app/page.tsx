@@ -359,7 +359,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_40%]"
       },
       {
         name: "Te Yuen Bing",
@@ -370,7 +370,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_40%]"
       },
       {
         name: "Mah Cai Ying ",
@@ -381,7 +381,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_35%]"
       },
     ],
     communitySocials: [
@@ -405,7 +405,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_40%]"
       },
       {
         name: "Zhang Yifei",
@@ -440,7 +440,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_45%]"
       },
       {
         name: "Rawan Faris",
@@ -451,7 +451,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_40%]"
       },
       {
         name: "Jewahra Ademosman",
@@ -462,7 +462,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_36%]"
       },
       {
         name: "Khalilah Khairudin",
@@ -473,7 +473,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_40%]"
       },
       {
         name: "Sawda Zeynab",
@@ -497,7 +497,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_20%]"
       },
       {
         name: "Dzaky Keenan",
@@ -508,7 +508,7 @@ export default function App() {
           twitter: "",
           github: "",
         },
-        imagePositions: "object-[50%_28%]"
+        imagePositions: "object-[50%_40%]"
       },
       {
         name: "Sin Zi Yu",
@@ -530,7 +530,7 @@ export default function App() {
       <div className="">
 
 
-        <main className="">
+        <main className="pb-20">
           <Header homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} />
 
           <div className={"space-y-20 relative"}>
@@ -539,16 +539,16 @@ export default function App() {
             <div className={"container space-y-20"}>
               {/* <About aboutRef={aboutRef} />
               <WhatWeDo whatWeDoRef={whatWeDoRef} /> */}
-              <Events eventsRef={eventsRef} />
               <OurTeam team={team} teamRef={teamRef} />
+              <Events eventsRef={eventsRef} />
               <GetInTouch contactRef={contactRef} />
             </div>
 
           </div>
         </main>
 
-        <footer className="border-t py-4 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} GDG UPM. All rights reserved. Developed by Wong Yong Xi and Google Developer Group on Campus UPM
+        <footer className="border-t py-4 text-center text-sm text-muted-foreground px-10">
+          © {new Date().getFullYear()} GDGoC UPM. All rights reserved. Developed by Wong Yong Xi and Google Developer Group on Campus UPM
         </footer>
       </div >
     </SidebarProvider >
