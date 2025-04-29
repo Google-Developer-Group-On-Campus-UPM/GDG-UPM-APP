@@ -1,30 +1,32 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your Firebase configuration
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID", // Required for Analytics
+  apiKey: "AIzaSyD65w9AxhzVSLTIyUWM0WlXzSp3Sjru23Y",
+  authDomain: "gdgoc-upm-website.firebaseapp.com",
+  projectId: "gdgoc-upm-website",
+  storageBucket: "gdgoc-upm-website.firebasestorage.app",
+  messagingSenderId: "962251099610",
+  appId: "1:962251099610:web:6d13ca4195895ce12984e3",
+  measurementId: "G-0JPRDM9KX8"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+let analytics = null;
 
-// Initialize Analytics only if supported and in browser
-let analytics;
-if (typeof window !== "undefined") {
-  isSupported().then((supported) => {
-    if (supported) {
+isSupported().then((result) => {
+  if (result) {
       analytics = getAnalytics(app);
-    }
-  });
-}
+  }
+})
 
 export { db, analytics };
+export default firebaseConfig;
