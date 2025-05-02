@@ -524,6 +524,7 @@ export default function App() {
     ]
   };
 
+
   return (
     <SidebarProvider className={"block"} defaultOpen={false}>
       <div className="">
@@ -546,7 +547,7 @@ export default function App() {
           </div>
         </main>
 
-        <footer className="border-t py-4 text-center text-sm text-muted-foreground px-10 dark:border-gray-600">
+        <footer className="border-t py-4 text-center text-sm text-muted-foreground px-10">
           © {new Date().getFullYear()} GDGoC UPM. All rights reserved. Developed by Wong Yong Xi and Google Developer Group on Campus UPM
         </footer>
       </div >
