@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Sun, Moon } from 'lucide-react';
 
 const DarkModeToggle = () => {
 	const [theme, setTheme] = useState(() => {
@@ -20,8 +21,13 @@ const DarkModeToggle = () => {
 	};
 
 	return (
-		<button className="dark-mode-button" onClick={toggleTheme}>
-			Toggle Dark Mode
+		<button className="px-4 py-2 border rounded" onClick={toggleTheme}>
+			{theme === "dark" ? (
+				<Sun className="w-6 h-6" />
+			) : (
+				<Moon className="w-6 h-6" />
+			)}
+			<span className="sr-only">Toggle dark mode</span>
 		</button>
 	);
 };
