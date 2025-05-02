@@ -12,7 +12,7 @@ import OurTeam from "./_components/HomePage/OurTeam"
 import Events from "./_components/HomePage/Events"
 import GetInTouch from "./_components/HomePage/GetInTouch"
 import Header from "./_components/Layout/Header"
-import Footer from "./_components/HomePage/Footer"
+import Footer from "./_components/Layout/Footer"
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 
