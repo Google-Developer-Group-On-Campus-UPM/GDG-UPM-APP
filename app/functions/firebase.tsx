@@ -29,6 +29,16 @@ async function addMemberToTeam(teamId: string, data: TeamMember): Promise<void> 
 	return;
 }
 
+async function updateMemberInTeam(teamId: string, memberId: string, data: TeamMember, merge?: boolean): Promise<void> {
+	try {
+		await setDoc(doc(db, "team", teamId, "members", memberId), data, { merge });
+		console.log("Member updated in team successfully.");
+	} catch (error) {
+		console.error("Error updating member in team: ", error);
+	}
+	return;
+}
+
 async function addTeam(data: TeamMember): Promise<void> {
 	try {
 		const teamRef = await collection(db, "team");
@@ -41,6 +51,16 @@ async function addTeam(data: TeamMember): Promise<void> {
 		console.log("Team added to database successfully.");
 	} catch (error) {
 		console.error("Error adding team to database: ", error);
+	}
+	return;
+}
+
+async function updateTeam(teamId: string, data: any, merge?: boolean): Promise<void> {
+	try {
+		await setDoc(doc(db, "team", teamId), data, { merge });
+		console.log("Team updated in database successfully.");
+	} catch (error) {
+		console.error("Error updating team in database: ", error);
 	}
 	return;
 }
