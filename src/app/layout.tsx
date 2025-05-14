@@ -14,6 +14,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter } from 'next/font/google'
+import Image from 'next/image'
+
+const inter = Inter({ subsets: ['latin'] })
 
 // Font configurations
 // Geist Sans - Primary font for headings and body text
@@ -101,8 +105,11 @@ export default function RootLayout({
 
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.className} dark:bg-black antialiased`}
       >
+        <div className="fixed w-full h-full top-0 left-0 -z-10 dark:bg-black">
+            <Image src="/images/Main.webp" alt="" layout="fill" objectFit="cover" objectPosition="center" priority></Image>
+        </div>
         {/* Global Error Boundary */}
         {/* 
         <ErrorBoundary onError={handleGlobalError}>
