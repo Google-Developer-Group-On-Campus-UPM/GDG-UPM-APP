@@ -159,7 +159,7 @@ function Partners() {
 						exit={{ opacity: 0, y: -20 }}
 						transition={{ duration: 0.5 }}
 					>
-						// TODO: Switch gradient colour depending on theme
+						{/* TODO: Switch gradient colour depending on theme  */}
 						<div className="m-5 p-5 max-w-md min-w-96 min-h-[27rem] rounded-lg flex flex-col border-gradient-to-r from-black dark:from-white to-[#4285F4] border-slice-1 border-repeat-stretch" aria-label="Partners Menu" style={{
 							backgroundImage: "linear-gradient(to right, #06233B, #1060A1), linear-gradient(to right, hsla(210, 91%, 17%, 0.24), hsla(215, 94%, 13%, 1))",
 							backgroundBlendMode: "screen"
