@@ -14,6 +14,7 @@ import GetInTouch from "./_components/HomePage/GetInTouch"
 import Header from "./_components/Layout/Header"
 
 import { SidebarProvider } from "@/components/ui/sidebar";
+import Partners from "./_components/HomePage/Partners"
 
 export default function App() {
 
@@ -540,6 +541,7 @@ export default function App() {
               {/* <About aboutRef={aboutRef} />
               <WhatWeDo whatWeDoRef={whatWeDoRef} /> */}
               <OurTeam team={team} teamRef={teamRef} />
+              <Partners></Partners>
               <Events eventsRef={eventsRef} />
               <GetInTouch contactRef={contactRef} />
             </div>
