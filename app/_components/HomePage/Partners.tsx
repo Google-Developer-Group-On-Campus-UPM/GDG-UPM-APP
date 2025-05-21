@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Poppins, Inter } from "next/font/google";
-import { User, Users, Building2 } from "lucide-react";
+import { User, Users, Building2, ChevronDown } from "lucide-react";
 import { SiGoogle } from "@icons-pack/react-simple-icons";
 import { PartnerCard, type partnerCardProps } from "../ui/PartnerCard";
 import { motion } from "framer-motion";
 
-const poppins = Poppins({ weight: "500", subsets: ["latin"]});
-const inter = Inter({ weight: "400", subsets: ["latin"]});
+const poppins = Poppins({ weight: "400", subsets: ["latin"]});
+const inter = Inter({ weight: ["400", "500"], subsets: ["latin"]});
 
 interface partnersPillProps {
 	partnersPill: {
@@ -24,9 +24,7 @@ function Partners() {
 		setActiveTab(index);
 	}
 
-	function PartnersPill({ partnersPill }: partnersPillProps) {
-		const basis = "sm:basis-1/4 md:basis-1/2 lg:basis-full"
-	
+	function PartnersPill({ partnersPill }: partnersPillProps) {	
 		return (
 			<div className={`flex gap-3`}>
 				<div className="flex justify-center items-center w-6 h-6">{ partnersPill.icon }</div>
@@ -129,10 +127,12 @@ function Partners() {
 		<section className="partner-section" aria-label="Partners Section">
 			<div className={"flex flex-col items-center"}>
 				<div className="text-center my-5">
-					<h1 className="font-medium tracking-tight  bg-gradient-to-l from-[#d596d9] to-[#fdc0c4]/80 dark:from-white dark:to-[#ececec]/45 min-h-[5.5rem] max-w-6xl gap-[0.625rem] bg-clip-text text-transparent text-[5.5rem] mx-auto">Our Partners</h1>
-					<p className="font-normal text-xl leading-[130%] m-auto bg-gradient-to-r from-[#d592d9] to-[#efadb2] bg-clip-text text-transparent dark:text-[#ececec]/65" aria-hidden>From global companies to student clubs,
-					<br />
-					we came together as one</p>
+					<h1 className="font-medium tracking-tight  bg-gradient-to-l from-[#d596d9] to-[#fdc0c4]/80 dark:from-white dark:to-[#ececec]/45 min-h-[5.5rem] max-w-6xl gap-[0.625rem] bg-clip-text text-transparent text-7xl md:text-8xl mx-auto mb-3">Our Partners</h1>
+					<p className="font-normal text-xl leading-[1.3] m-auto bg-gradient-to-r from-[#d592d9] to-[#efadb2] bg-clip-text text-transparent dark:text-[#ececec]/65 dark:bg-none" aria-hidden>
+						From global companies to student clubs,
+						<br />
+						we came together as one
+					</p>
 				</div>
 				<div className="my-5">
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -140,7 +140,7 @@ function Partners() {
 							<button key={index} onClick={() => handleClick(index)} aria-label={`${partner.text} tab`} className={`flex justify-center items-center gap-2 px-5 py-3 rounded-3xl border-2 border-gradient-to-r from-black dark:from-white to-[#4285F4] border-slice-1 border-repeat-stretch ${
 								activeTab === index
 								? `bg-[#0056B3] dark:bg-black`
-								: ` bg-[#C62828]`}`}>
+								: ` bg-[#C62828] dark:bg-white/30`}`}>
 								<PartnersPill partnersPill={partner} />
 							</button>
 						))}
@@ -170,7 +170,19 @@ function Partners() {
 						</div>
 					</motion.div>
 				</motion.div>
-				<div></div>
+				<div className="self-stretch">
+					<ChevronDown width={48} height={48} className="mx-auto my-4" aria-hidden></ChevronDown>
+					<div className="my-6 flex-wrap flex gap-10 justify-center min-h-[4rem]">
+						<p className={`text-center font-normal text-xl leading-[1.3] text-black/95 dark:text-[#ECECEC]/65 ${poppins.className}`}>
+							Interested in Partnering with Us ?
+							<br />
+							<i>Let's create something impactful together</i>
+						</p>
+						<a href="/" className="p-4 flex flex-col justify-center rounded-full bg-[#0056B3] dark:bg-black border-2 border-black dark:border-white" aria-label="Go to become GDG Partner link">
+							<p className={`text-center font-medium text-white ${inter.className}`}>Become GDG Partner</p>
+						</a>
+					</div>
+				</div>
 			</div>
 		</section>
 	)

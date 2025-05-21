@@ -18,7 +18,7 @@ interface partnerCardProps {
 function PartnerCard({ text, images }: partnerCardProps) {
 	return (
 		<div className="flex-grow">
-			<p className={`max-w-[50ch] text-sm p-2 leading-[1.3] text-center flex-1 text-[#ECECEC]/95 font-normal mb-5  ${poppins.className}`} aria-label="Partner Description">{ text }</p>
+			<p className={`max-w-[50ch] text-sm p-2 leading-[1.3] text-center flex-1 text-white dark:text-[#ECECEC]/95 font-normal mb-5  ${poppins.className}`} aria-label="Partner Description">{ text }</p>
 			<div className="flex justify-center flex-wrap gap-8">
 			{images.map((image, index) => {
 				if (image.alt) {
