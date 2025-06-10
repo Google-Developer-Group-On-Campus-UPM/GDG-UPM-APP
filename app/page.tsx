@@ -15,6 +15,7 @@ import Header from "./_components/Layout/Header"
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Partners from "./_components/HomePage/Partners"
+import Hero from "./_components/HomePage/Hero"
 
 export default function App() {
 
@@ -535,7 +536,8 @@ export default function App() {
           <Header homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} />
 
           <div className={"space-y-20 relative"}>
-            <Home homeRef={homeRef} aboutRef={aboutRef} />
+            <Hero />
+            {/* <Home homeRef={homeRef} aboutRef={aboutRef} /> */}
 
             <div className={"container space-y-20"}>
               {/* <About aboutRef={aboutRef} />
