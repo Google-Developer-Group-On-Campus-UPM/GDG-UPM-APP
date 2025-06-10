@@ -21,6 +21,7 @@ const config: Config = {
         "dark-gold-gradient":
           "linear-gradient(to right, #000000, #1a130d, #3b2a18, #5c3f1e, #7a5525)",
       },
+
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -102,7 +103,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('tailwindcss-border-image')],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-border-image"),
+  ],
 };
 
 export default config;

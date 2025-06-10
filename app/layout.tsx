@@ -21,7 +21,15 @@ export default function RootLayout({
       <>
         <body className={inter.className + " dark:bg-black"}>
           <div className="fixed w-full h-full top-0 left-0 -z-10 dark:bg-black">
-            <Image src="/images/Main.webp" alt="" layout="fill" objectFit="cover" objectPosition="center" priority></Image>
+            <Image
+              src="/images/Main.webp"
+              alt=""
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+              priority
+              style={{ filter: 'brightness(1.2)' }} 
+            ></Image>
           </div>
           {children}
 
