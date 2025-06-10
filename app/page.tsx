@@ -16,6 +16,7 @@ import Header from "./_components/Layout/Header"
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Partners from "./_components/HomePage/Partners"
 import Hero from "./_components/HomePage/Hero"
+import Nav from "./_components/Layout/Nav"
 
 export default function App() {
 
@@ -533,7 +534,9 @@ export default function App() {
 
 
         <main className="pb-20">
-          <Header homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} />
+          {/* <Header homeRef={homeRef} aboutRef={aboutRef} whatWeDoRef={whatWeDoRef} teamRef={teamRef} eventsRef={eventsRef} contactRef={contactRef} /> */}
+
+          <Nav />
 
           <div className={"space-y-20 relative"}>
             <Hero />
