@@ -68,13 +68,22 @@ const Hero = () => {
 
         <div className={"space-y-10"}>
           <div className={"flex justify-center w-full"}>
-            <div className={`${styles.gradientBorder} mt-52`}>
-              <div className={"backdrop-blur-md rounded-full py-2 px-6 bg-gray-300/20 flex items-center justify-center"}>
-                <div className={"flex items-center justify-center gap-2"}>
-                  <img src="/images/hero/hat-icon.svg" alt="" />
-                  <span>Student Developer Club</span>
-                  <span>-</span>
-                  <Link href={"/"} className={"text-white italic hover:underline"}>
+            <div className={`${styles.gradientBorder} mt-32 sm:mt-40 md:mt-48 lg:mt-52`}>
+              <div className={"backdrop-blur-md rounded-full py-1.5 sm:py-2 md:py-2.5 px-4 sm:px-6 md:px-8 bg-gray-300/20 flex items-center justify-center"}>
+                <div className={"flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3"}>
+                  <img
+                    src="/images/hero/hat-icon.svg"
+                    alt=""
+                    className="w-4 sm:w-5 md:w-6"
+                  />
+                  <span className="text-sm sm:text-base md:text-lg">
+                    Student Developer Club
+                  </span>
+                  <span className="text-sm sm:text-base md:text-lg">-</span>
+                  <Link
+                    href={"/"}
+                    className={"text-white italic hover:underline text-sm sm:text-base md:text-lg"}
+                  >
                     Learn More
                   </Link>
                 </div>
@@ -82,15 +91,16 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className={"space-y-3"}>
+          <div className={"space-y-3 mx-5"}>
 
-            <h1 className={`${poppins.className} text-white text-[5rem] leading-none text-center font-medium`}>
+            <h1 className={`${poppins.className} text-white text-[2.6rem] xm:text-[2.5rem] sm:text-[3rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-none text-center font-medium`}>
               <span
                 className="inline-block relative
                    [mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
                    [-webkit-mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
-                   [mask-mode:alpha] [-webkit-mask-mode:alpha]"
+                   [mask-mode:alpha] [-webkit-mask-mode:alpha] text-wrap"
               >
+
                 Your #1 Tech Community
               </span>
               <br />
@@ -101,17 +111,17 @@ const Hero = () => {
              [-webkit-mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
              [mask-mode:alpha] [-webkit-mask-mode:alpha]"
               >
-                for <span className={"italic"}>{displayed}<span className="border-r-2 border-white animate-pulse ml-1" /></span>
+                for <br className={"hidden"}/> <span className={"italic"}>{displayed}<span className="border-r-2 border-white animate-pulse ml-1" /></span>
               </span>
             </h1>
 
-            <p className={"text-lg text-gray-400 font-light text-center"}>An open-space community where ideas thrive, skills grow, and <br />everyone belongs — welcome to GDGoC UPM.</p>
+            <p className={"text-sm sm:text-base lg:text-lg xl:text-lg text-gray-400 font-light text-center text-wrap"}>An open-space community where ideas thrive, skills grow, and everyone belongs — welcome to GDGoC UPM.</p>
 
           </div>
         </div>
 
         {/* Cards */}
-        <div className={"mx-12 sm:mx-14 md:mx-20 lg:mx-64 grid grid-cols-1 md:grid-cols-3 gap-4"}>
+        <div className={"mx-12 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-64 grid grid-cols-1 lg:grid-cols-3 gap-4"}>
           {cards.map((card, idx) => (
             <div
               key={card.title}
@@ -126,7 +136,7 @@ const Hero = () => {
                     <img src={card.icon} alt="" />
                     <span className={"text-xl ml-2"}>{card.title}</span>
                   </div>
-                  <p className={"text-gray-400 font-light text-lg"}>{card.description}</p>
+                  <p className={"text-gray-400 font-light lg:text-base xl:text-lg"}>{card.description}</p>
                 </div>
               </div>
             </div>
