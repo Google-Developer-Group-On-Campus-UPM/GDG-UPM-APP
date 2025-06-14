@@ -1,0 +1,22 @@
+.gradientBorder {
+    position: relative;
+    display: inline-block;
+}
+
+.gradientBorder::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    padding: 4px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #FFFFFF, #4286f42c);
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+}
