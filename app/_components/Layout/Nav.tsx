@@ -16,7 +16,7 @@ const Nav = () => {
 
     return (
         <>
-            <nav className={`${poppins.className} sticky top-4 sm:top-6 md:top-8 lg:top-10 z-50 flex justify-center font-light`}>
+            <nav className={`${poppins.className} sticky top-4 sm:top-6 md:top-8 lg:top-10 z-40 flex justify-center font-light`}>
                 <div className="absolute z-50 h-12 sm:h-14 md:h-16 px-3 sm:px-4 md:px-6 py-2 backdrop-blur-md bg-gray-800/50 border border-gray-400 rounded-full w-[95%] sm:w-[90%] md:w-auto">
                     <div className={"flex items-center justify-between md:justify-center h-full gap-4 sm:gap-8 md:gap-14"}>
                         {/* Logo */}
