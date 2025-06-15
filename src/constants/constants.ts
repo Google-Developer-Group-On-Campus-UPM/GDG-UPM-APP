@@ -56,13 +56,12 @@ export const ROUTES = {
 };
 
 // Firebase Collection Names
-// TODO: Update these based on your Firestore structure
 export const COLLECTIONS = {
-  TEAMS: "teams",
   EVENTS: "events",
   PARTNERS: "partners",
   USERS: "users",
-  SETTINGS: "settings",
+  ROLES: "roles",
+  DEPARTMENTS: "departments",
 } as const;
 
 // Team Departments

@@ -1,41 +1,12 @@
-// TODO: Add function for simple get team by department
-
 import { db } from "../firebase/firebase";
 import { doc, collection, getDoc, getDocs, setDoc, addDoc, deleteDoc, updateDoc, 
 	DocumentData, CollectionReference, WithFieldValue,
 	DocumentReference,
 	query,
-	QueryConstraint} from "firebase/firestore"
+	QueryConstraint,
+	where} from "firebase/firestore"
 
-
-
-
-
-interface DataWithId extends DocumentData {
-	id?: string;
-}
-interface TeamMember extends DataWithId {
-	name: string | null;
-	role: string | null;
-	image: string | null;
-	interest: string | null;
-	social: {
-		linkedin: string;
-		[key: string]: string;
-	};
-	isActive: boolean;
-	currentRoleID?: string;
-	currentDepartmentID?: string;
-}
-
-interface Role extends DataWithId {
-	title: string;
-}
-
-interface Department extends DataWithId {
-	name: string;
-	description?: string;
-}
+import { DataWithId, TeamMember, Role, Department } from "@/constants/types/team.type";
 
 class TeamService {
 	private usersCollection: CollectionReference<DocumentData>;
@@ -86,6 +57,24 @@ class TeamService {
 			return (await this.getData(this.usersCollection, query)) as TeamMember[];
 		} catch (error) {
 			console.error("Failed to get users: ", error);
+			throw error;
+		}
+	}
+	
+	async getActiveUsers(active: boolean): Promise<TeamMember[]> {
+		try {
+			return (await this.getUsers([where("isActive", "==", active),]));
+		} catch (error) {
+			console.error("Failed to get active users: ", error);
+			throw error;
+		}
+	}
+
+	async getUsersByDepartment(department: string): Promise<TeamMember[]> {
+		try {
+			return (await this.getUsers([where("departmentID", "==", department),]));
+		} catch (error) {
+			console.error("Failed to get users by department: ", error);
 			throw error;
 		}
 	}

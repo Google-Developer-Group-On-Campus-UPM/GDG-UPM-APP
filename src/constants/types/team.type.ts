@@ -12,36 +12,34 @@
  * Represents a single team member in the GDG UPM organization.
  * Used for displaying team members on the website and managing member data.
  */
-export interface TeamMember {
-  /** Unique identifier for the team member */
-  id: string;
 
-  /** Full name of the team member */
+import { DocumentData } from "firebase/firestore";
+
+export interface DataWithId extends DocumentData {
+  id?: string;
+}
+
+export interface Role extends DataWithId {
+  title: string;
+}
+
+export interface Department extends DataWithId {
+  id: DepartmentList;
   name: string;
-
-  /** Profile photo filename */
-  image: string;
-
-  /** Interest */
-  interests: string;
-
-  /** Social links */
-  socialLinks: string[];
-
-  /** Role/position within the department */
-  currentRoleId: string;
-
-  /** Department/team the member belongs to */
-  currentDepartmentId: Department;
-
-  /** Whether the member is currently active */
-  isActive: boolean;
-
-  /** Timestamp when the member was added */
-  createdAt?: Date;
-
-  /** Timestamp when the member info was last updated */
-  updatedAt?: Date;
+  description?: string;
+}
+export interface TeamMember extends DataWithId {
+  name: string | null;
+	role: string | null;
+	image: string | null;
+	interest: string | null;
+	social: {
+		linkedin: string;
+		[key: string]: string;
+	};
+	isActive: boolean;
+	currentRoleID?: string;
+	currentDepartmentID?: string;
 }
 
 /**
@@ -50,7 +48,7 @@ export interface TeamMember {
  * Defines all the departments/teams within GDG UPM.
  * TODO: Must match the constants defined in constants.ts
  */
-export type Department =
+export type DepartmentList =
   | "lead"
   | "topboard"
   | "aiml"
@@ -69,19 +67,6 @@ export type Department =
  * Represents the entire team organization with members grouped by department.
  */
 export type TeamStructure = {
-  [key in Department]: TeamMember[];
+  [key in DepartmentList]: TeamMember[];
 };
 
-/**
- * Department Info
- *
- * Additional information about each department.
- */
-export interface DepartmentInfo {
-  id: Department;
-  name: string;
-  description?: string;
-  memberCount?: number;
-  color?: string; // For UI theming
-  icon?: string; // Icon name or path
-}
