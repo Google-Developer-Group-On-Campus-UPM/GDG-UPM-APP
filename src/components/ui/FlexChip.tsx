@@ -24,6 +24,7 @@ interface FlexChipProps {
   paddingY?: number;
   marginX?: number;
   marginY?: number;
+  backgroundColor?: string;
 }
 
 /**
@@ -59,7 +60,6 @@ interface FlexChipProps {
  *   logo={<CustomIcon />}
  *   logoPosition="top"
  * />
- *
  * @example
  * // Multiple links in one chip
  * <FlexChip
@@ -73,6 +73,13 @@ interface FlexChipProps {
  *   paddingX={16}
  *   paddingY={10}
  * />
+ *
+ * @example
+ * // With subtle background color
+ * <FlexChip
+ *   content={[{ text: "Highlighted chip" }]}
+ *   backgroundColor="rgba(255, 255, 255, 0.1)"
+ * />
  */
 export default function FlexChip({
   content,
@@ -82,6 +89,7 @@ export default function FlexChip({
   paddingY = 8,
   marginX = 1,
   marginY = 1,
+  backgroundColor,
 }: FlexChipProps) {
   const defaultLogo = (
     <Image
@@ -152,6 +160,7 @@ export default function FlexChip({
         borderRadius: "20px",
         border: "1px solid white",
         color: "white",
+        backgroundColor: backgroundColor || "transparent",
         boxShadow: "0 0 8px rgba(255, 255, 255, 0.3)",
         fontFamily: poppins.style.fontFamily,
         fontWeight: 400,
