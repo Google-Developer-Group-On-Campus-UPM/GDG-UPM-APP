@@ -1,26 +1,16 @@
-// eslint.config.mjs
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
 
-import eslintPluginTypescript from '@typescript-eslint/eslint-plugin';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-export default [
-  {
-    ignores: ['node_modules'],
-  },
-  {
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: {
-        browser: true, // You can list specific global variables like "window", "document"
-        es2021: true, // Use the appropriate ECMAScript version globals
-      },
-    },
-    plugins: {
-      '@typescript-eslint': eslintPluginTypescript,
-    },
-    rules: {
-      '@typescript-eslint/no-empty-interface': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-    },
-  },
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
 ];
+
+export default eslintConfig;
