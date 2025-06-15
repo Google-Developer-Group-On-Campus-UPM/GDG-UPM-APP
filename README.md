@@ -47,21 +47,21 @@ A modern web app showcasing team members, events, and partners. Features an admi
 
 ```
 src/
-├── app/                    # Next.js App Router pages
+├── app/                   # Next.js App Router pages
 │   ├── page.tsx           # Homepage with all sections
 │   ├── layout.tsx         # Root layout and providers
 │   └── admin/             # Admin dashboard
 ├── components/            # React components
-│   ├── layout/           # Navbar, Footer
-│   ├── sections/         # Homepage sections
-│   └── ui/              # Reusable UI components
-├── services/             # External service integrations
-│   ├── auth/            # Authentication service
-│   ├── events/          # Events service
-│   ├── firebase/        # Firebase configuration
-│   └── team/           # Team management service
-├── constants/           # App constants and types
-└── hooks/              # Custom React hooks
+│   ├── layout/            # Navbar, Footer
+│   ├── sections/          # Homepage sections
+│   └── ui/                # Reusable UI components
+├── services/              # External service integrations
+│   ├── auth/              # Authentication service
+│   ├── events/            # Events service
+│   ├── firebase/          # Firebase configuration
+│   └── team/              # Team management service
+├── constants/             # App constants and types
+└── hooks/                 # Custom React hooks
 ```
 
 ## Scripts
