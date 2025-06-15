@@ -4,35 +4,80 @@
  * Simple service to fetch events data from Firebase
  */
 
-// Your events service logic goes here
+import { Event } from "@/constants/types/events.type";
+import { FirebaseApp } from "firebase/app";
+import {
+  collection,
+  Firestore,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
 
-/**
- * Event Service Logic:
- * 1. Fetch all events from Firebase
- * 2. Add new event (admin only)
- * 3. Update event (admin only)
- * 4. Delete event (admin only)
- */
+export class EventService {
+  private db: Firestore;
 
-// Get all events function
-// - Fetch events collection from Firebase
-// - Return array of events data
+  constructor(firebaseApp: FirebaseApp) {
+    this.db = getFirestore(firebaseApp);
+  }
 
-// Get events by status (upcoming, past)
-// - Filter events by date
-// - Return filtered events data
+  /**
+   * Get events by status (upcoming or past)
+   */
+  async getEventsByStatus(status: "upcoming" | "past"): Promise<Event[]> {
+    try {
+      const eventsCollection = collection(this.db, "events");
+      const eventsSnapshot = await getDocs(eventsCollection);
 
-// Add event (admin only)
-// - Take event data
-// - Save to Firebase events collection
-// - Return success/error
+      const events: Event[] = eventsSnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title,
+          date: data.date.toDate(),
+          location: data.location,
+          organizer: data.organizer,
+          attendeesCount: data.attendeesCount,
+          image: data.image || "/images/test.png",
+          status: data.status,
+          tags: data.tags,
+          registrationLink: data.registrationLink,
+          isActive: data.isActive,
+          createdAt: data.createdAt?.toDate(),
+          updatedAt: data.updatedAt?.toDate(),
+        };
+      });
 
-// Update event (admin only)
-// - Take event ID and new data
-// - Update document in Firebase
-// - Return success/error
+      return events.filter((event) => event.status === status);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      return [];
+    }
+  }
 
-// Delete event (admin only)
-// - Take event ID
-// - Remove from Firebase collection
-// - Return success/error
+  /**
+   * Sort events by date (newest or oldest)
+   */
+  sortEvents(events: Event[], order: "newest" | "oldest"): Event[] {
+    return [...events].sort((a, b) => {
+      if (order === "newest") {
+        return b.date.getTime() - a.date.getTime();
+      } else {
+        return a.date.getTime() - b.date.getTime();
+      }
+    });
+  }
+
+  /**
+   * Search events by event name
+   */
+  searchEvents(events: Event[], searchTerm: string): Event[] {
+    if (!searchTerm.trim()) {
+      return events;
+    }
+
+    const lowerSearchTerm = searchTerm.toLowerCase();
+    return events.filter((event) =>
+      event.title.toLowerCase().includes(lowerSearchTerm)
+    );
+  }
+}
