@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky",
+    "prepare": "husky && husky install",
     "test": "jest"
   },
   "dependencies": {
@@ -43,9 +43,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "**/*": [
-      "eslint .",
-      "prettier --write --ignore-unknown"
-    ]
+    "*.{js, ts, jsx, tsx}": ["eslint --cache --fix", "prettier --write --ignore-unknown"],
+    "*.{css,md}": "prettier --write"
   }
 }
