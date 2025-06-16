@@ -19,6 +19,7 @@ interface TextPart {
 interface FlexChipProps {
   content: TextPart[];
   logo?: ReactElement | string;
+  hasLogo?: boolean;
   logoPosition?: "left" | "right" | "top" | "bottom";
   paddingX?: number;
   paddingY?: number;
@@ -84,6 +85,7 @@ interface FlexChipProps {
 export default function FlexChip({
   content,
   logo,
+  hasLogo = true,
   logoPosition = "left",
   paddingX = 12,
   paddingY = 8,
@@ -101,7 +103,8 @@ export default function FlexChip({
     />
   );
 
-  const logoElement = logo || defaultLogo;
+  // Logo logic: show logo if hasLogo is true
+  const logoElement = hasLogo ? logo || defaultLogo : null;
   const renderContent = () => {
     return content.map((part, index) => (
       <Typography
@@ -118,6 +121,8 @@ export default function FlexChip({
           fontStyle: part.href ? "italic" : "normal",
           cursor: part.href ? "pointer" : "default",
           borderRadius: part.href ? "4px" : "0",
+          margin: part.href ? "2px" : "0",
+          padding: part.href ? "2px" : "0",
           whiteSpace: "nowrap",
           "&:hover": part.href
             ? {
@@ -130,6 +135,14 @@ export default function FlexChip({
         {part.text}
       </Typography>
     ));
+  };
+
+  const renderTextContent = () => {
+    return (
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        {renderContent()}
+      </Box>
+    );
   };
 
   const flexDirection = () => {
@@ -169,12 +182,13 @@ export default function FlexChip({
         letterSpacing: "0%",
       }}
     >
-      {typeof logoElement === "string" ? (
-        <Image src={logoElement} alt="logo" width={16} height={16} />
-      ) : (
-        logoElement
-      )}
-      {renderContent()}
+      {logoElement &&
+        (typeof logoElement === "string" ? (
+          <Image src={logoElement} alt="logo" width={16} height={16} />
+        ) : (
+          logoElement
+        ))}
+      {renderTextContent()}
     </Box>
   );
 }
