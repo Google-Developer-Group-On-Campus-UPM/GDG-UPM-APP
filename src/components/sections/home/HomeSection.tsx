@@ -3,6 +3,7 @@
 import { Poppins } from "next/font/google";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./HeroSection.module.css";
 
 const poppins = Poppins({
@@ -31,7 +32,7 @@ const cards = [
   },
 ];
 
-const HeroSection = () => {
+const HeroSection: React.FC = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [typing, setTyping] = useState(true);
@@ -63,29 +64,17 @@ const HeroSection = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-black">
-      <div
-        className={
-          "space-y-20 bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat"
-        }
-      >
-        <div className={"space-y-10"}>
-          <div className={"flex justify-center w-full"}>
-            <div
-              className={`${styles.gradientBorder} mt-32 sm:mt-40 md:mt-48 lg:mt-52`}
-            >
-              <div
-                className={
-                  "backdrop-blur-md rounded-full py-1.5 sm:py-2 md:py-2.5 px-4 sm:px-6 md:px-8 bg-gray-300/20 flex items-center justify-center"
-                }
-              >
-                <div
-                  className={
-                    "flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3"
-                  }
-                >
-                  <img
+      <div className="min-h-screen w-full space-y-20 bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat">
+        <div className="space-y-10">
+          <div className="flex justify-center w-full">
+            <div className={`${styles.gradientBorder} mt-32 sm:mt-40 md:mt-48 lg:mt-52`}>
+              <div className="backdrop-blur-md rounded-full py-1.5 sm:py-2 md:py-2.5 px-4 sm:px-6 md:px-8 bg-gray-300/20 flex items-center justify-center">
+                <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3">
+                  <Image
                     src="/images/hero/hat-icon.svg"
-                    alt=""
+                    alt="Hat Icon"
+                    width={24}
+                    height={24}
                     className="w-4 sm:w-5 md:w-6"
                   />
                   <span className="text-sm sm:text-base md:text-lg">
@@ -93,10 +82,8 @@ const HeroSection = () => {
                   </span>
                   <span className="text-sm sm:text-base md:text-lg">-</span>
                   <Link
-                    href={"/"}
-                    className={
-                      "text-white italic hover:underline text-sm sm:text-base md:text-lg"
-                    }
+                    href="/"
+                    className="text-white italic hover:underline text-sm sm:text-base md:text-lg"
                   >
                     Learn More
                   </Link>
@@ -105,7 +92,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className={"space-y-3 mx-5"}>
+          <div className="space-y-3 mx-5">
             <h1
               className={`${poppins.className} text-white text-[2.6rem] xm:text-[2.5rem] sm:text-[3rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-none text-center font-medium`}
             >
@@ -125,50 +112,36 @@ const HeroSection = () => {
              [-webkit-mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
              [mask-mode:alpha] [-webkit-mask-mode:alpha]"
               >
-                for <br className={"hidden"} />{" "}
-                <span className={"italic"}>
+                for <br className="hidden" />{" "}
+                <span className="italic">
                   {displayed}
                   <span className="border-r-2 border-white animate-pulse ml-1" />
                 </span>
               </span>
             </h1>
-
-            <p
-              className={
-                "text-sm sm:text-base lg:text-lg xl:text-lg text-gray-400 font-light text-center text-wrap"
-              }
-            >
+            <p className="text-sm sm:text-base lg:text-lg xl:text-lg text-gray-400 font-light text-center text-wrap">
               An open-space community where ideas thrive, skills grow, and
               everyone belongs — welcome to GDGoC UPM.
             </p>
           </div>
         </div>
-
         {/* Cards */}
-        <div
-          className={
-            "mx-12 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-64 grid grid-cols-1 lg:grid-cols-3 gap-4"
-          }
-        >
-          {cards.map((card, idx) => (
+        <div className="mx-12 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-64 grid grid-cols-1 lg:grid-cols-3 gap-4 pb-20">
+          {cards.map((card) => (
             <div
               key={card.title}
-              className={`p-[1px] rounded-lg relative bg-gradient-to-r from-[#67A4D5] to-[#ADEDFF] cursor-pointer`}
+              className="p-[1px] rounded-lg relative bg-gradient-to-r from-[#67A4D5] to-[#ADEDFF] cursor-pointer"
             >
               <div className="bg-gradient-to-r from-[#06233B] to-[#09365b] rounded-lg text-white space-y-1 h-full">
-                <div className={"flex items-center justify-end pt-2 pr-2"}>
-                  <img src="/images/hero/hover-action.svg" alt="" />
+                <div className="flex items-center justify-end pt-2 pr-2">
+                  <Image src="/images/hero/hover-action.svg" alt="Hover Action" width={20} height={20} />
                 </div>
-                <div className={"pb-6 pr-6 pl-6"}>
-                  <div className={"flex"}>
-                    <img src={card.icon} alt="" />
-                    <span className={"text-xl ml-2"}>{card.title}</span>
+                <div className="pb-6 pr-6 pl-6">
+                  <div className="flex">
+                    <Image src={card.icon} alt={card.title} width={26} height={26} />
+                    <span className="text-xl ml-2">{card.title}</span>
                   </div>
-                  <p
-                    className={
-                      "text-gray-400 font-light lg:text-base xl:text-lg"
-                    }
-                  >
+                  <p className="text-gray-400 font-light lg:text-base xl:text-lg">
                     {card.description}
                   </p>
                 </div>
@@ -176,55 +149,11 @@ const HeroSection = () => {
             </div>
           ))}
         </div>
-      </div>
-      <div
-        className={
-          "bg-[url('/images/hero/BG-Announcement.png')] bg-cover bg-bottom bg-no-repeat flex justify-center items-center"
-        }
-      >
-        <div className="w-full h-full flex justify-between items-center py-[264px] max-w-[70%] gap-[48px]">
-          <PhotoLayout />
-          <div className="w-full flex-col flex gap-[32px] font-[400]">
-            <div className="w-fit border border-white rounded-[18px]">
-              <p className="px-[10px] py-[4px] text-[12px]">announcements</p>
-            </div>
-            <div>
-              <p className="text-[48px]">
-                “At GDG, We Commit to{" "}
-                <span className="font-black">
-                  Advancing Theoretical Knowledge and Technical Skills”
-                </span>
-              </p>
-            </div>
-            <div>
-              <p className="text-[20px]">
-                To nurturing well-rounded developers by offering resources,
-                mentorship, and a collaborative environment that bridges...
-              </p>
-            </div>
-            <div>
-              <button className="text-white text-[20px] px-[48px] py-[12px] rounded-[30px] bg-[radial-gradient(circle,_#515EF3,_#2F21D9)] hover:opacity-90 cursor-pointer transition border border-transparent shadown-white shadow">
-                Read Full Article
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div> 
     </div>
   );
 };
 
-export function PhotoLayout() {
-  return (
-    <div className="w-full h-full">
-      <img
-        src="images/hero/Image-Announcement.png"
-        className="w-full h-full"
-        alt=""
-      />
-    </div>
-  );
-}
 
 export default HeroSection;
 

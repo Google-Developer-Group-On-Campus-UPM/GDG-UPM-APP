@@ -1,6 +1,7 @@
 "use client";
 
 import NavBar from "@/components/layout/Navbar";
+import AnnoucementSection from "@/components/sections/announcement/AnnouncementSection";
 import HeroSection from "@/components/sections/home/HomeSection";
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
     <>
       <NavBar/>
       <HeroSection/>
+      <AnnoucementSection/>
       {/*     
         <Navbar onHandleChange={onHandleChange} />
         <HomeSection />
