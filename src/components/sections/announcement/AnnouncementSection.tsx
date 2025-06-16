@@ -10,13 +10,13 @@ const AnnoucementSection: React.FC = () => {
         >
             <Image
                 src="/images/announcement/announcement-bg.svg"
-                className="absolute z-[-10] w-full h-full top-35"
+                className="absolute z-[-10] w-full h-full top-40"
                 width={4000}
                 height={100}
                 alt=""
                 style={{
-                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 5%, black 100%)',
-                    maskImage: 'linear-gradient(to bottom, transparent 5%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to bottom, transparent 2%, black 100%)',
+                    maskImage: 'linear-gradient(to bottom, transparent 2%, black 100%)',
                 }}
             />
             <div className="w-full h-full flex justify-between items-center max-w-[70%] gap-[48px]">

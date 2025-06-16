@@ -3,7 +3,7 @@
 import NavBar from "@/components/layout/Navbar";
 import AnnoucementSection from "@/components/sections/announcement/AnnouncementSection";
 import HeroSection from "@/components/sections/home/HomeSection";
-
+import EventsSection from "@/components/sections/events/EventsPage";
 export default function App() {
   // Your logic goes here
 
@@ -32,9 +32,12 @@ export default function App() {
      */
 
     <>
-      <NavBar/>
-      <HeroSection/>
-      <AnnoucementSection/>
+      
+        <NavBar />
+        <HeroSection />
+        <AnnoucementSection />
+        <EventsSection />
+      
       {/*     
         <Navbar onHandleChange={onHandleChange} />
         <HomeSection />
