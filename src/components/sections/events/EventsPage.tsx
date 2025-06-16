@@ -100,6 +100,7 @@ export default function EventsSection() {
   // };
 
   return (
+
     /**
      * Events Section Structure:
      * 1. Section header with title and description
@@ -127,6 +128,19 @@ export default function EventsSection() {
      * - EventModal -> INPUT: selectedEvent; OUTPUT: event details popup
      */
 
-    <></>
+    <>
+      <div className={"bg-black min-h-screen"}>
+        <div className="max-w-7xl mx-auto px-4 flex justify-center items-center">
+          <div className={"z-10 relative"}>
+            <h2 className="text-4xl font-bold text-white text-center mb-8">Events</h2>
+            <p className="text-lg text-gray-400 mb-12">
+              Join us for our upcoming events, workshops, and community gatherings.
+            </p>
+          </div>
+          {/* Event detail modal would go here if selectedEvent is not null */}
+        </div>
+      </div>
+
+    </>
   );
 }
