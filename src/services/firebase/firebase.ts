@@ -1,23 +1,27 @@
-/**
- * Firebase Service
- *
- * Initialize Firebase and export database/auth services
- */
 
-// Your Firebase setup logic goes here
+import { initializeApp } from "firebase/app";
+import { getAnalytics, isSupported } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+import firebaseConfig from "@/config/firebaseConfig";
 
-/**
- * Firebase Setup Logic:
- * 1. Import Firebase config
- * 2. Initialize Firebase app
- * 3. Setup Firestore database
- * 4. Setup Authentication
- * 5. Export services for use in other files
- */
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 
 // Initialize Firebase
-// - Import firebaseConfig
-// - Call initializeApp(firebaseConfig)
-// - Setup Firestore with getFirestore()
-// - Setup Auth with getAuth()
-// - Export db and auth for other services to use
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let analytics = null;
+
+isSupported().then((result) => {
+	if (result) {
+		analytics = getAnalytics(app);
+	}
+})
+
+export { db, analytics };
+export default firebaseConfig;
