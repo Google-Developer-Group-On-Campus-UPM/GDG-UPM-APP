@@ -1,7 +1,6 @@
-
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore";
+import { Firestore, getFirestore } from "firebase/firestore";
 import firebaseConfig from "@/config/firebaseConfig";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -10,18 +9,19 @@ import firebaseConfig from "@/config/firebaseConfig";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
-
 // Initialize Firebase
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-let analytics = null;
+let firestore: Firestore | null = null;
 
-isSupported().then((result) => {
-	if (result) {
-		analytics = getAnalytics(app);
-	}
-})
+export const initFirebase = (): { db: Firestore } => {
+  if (!firestore) {
+    const app = initializeApp(firebaseConfig);
+    firestore = getFirestore(app);
 
-export { db, analytics };
-export default firebaseConfig;
+    isSupported().then((result) => {
+      if (result) getAnalytics(app);
+    });
+  }
+
+  return { db: firestore };
+};
