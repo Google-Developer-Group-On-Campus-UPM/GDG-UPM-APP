@@ -2,12 +2,13 @@
 
 import { Box } from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
 
 interface FlexImageProps {
   src: string;
   alt?: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   zoom?: number;
   radius?: number;
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
@@ -20,9 +21,17 @@ interface FlexImageProps {
  *
  * A simple image component with fixed dimensions that scale naturally with browser zoom.
  * Features an inner border overlay and optional zoom control for users.
+ * If width/height not provided, uses the image's natural dimensions.
  *
  * @example
- * // Basic usage
+ * // Basic usage with auto-sizing (uses image's natural dimensions)
+ * <FlexImage
+ *   src="/images/hero/Image_1.png"
+ *   alt="Hero image"
+ * />
+ *
+ * @example
+ * // Custom dimensions
  * <FlexImage
  *   src="/images/hero/Image_1.png"
  *   alt="Hero image"
@@ -52,12 +61,30 @@ export default function FlexImage({
   objectPosition = "center",
   transformOrigin = "center",
 }: FlexImageProps) {
+  const [imageDimensions, setImageDimensions] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
+
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.target as HTMLImageElement;
+    if (!width || !height) {
+      setImageDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
+    }
+  };
+
+  const containerWidth = width || imageDimensions?.width || 400; // fallback to 400
+  const containerHeight = height || imageDimensions?.height || 300; // fallback to 300
+
   return (
     <Box
       sx={{
         position: "relative",
-        width: `${width}px`,
-        height: `${height}px`,
+        width: `${containerWidth}px`,
+        height: `${containerHeight}px`,
         borderRadius: `${radius}px`,
         overflow: "hidden",
         "&::before": {
@@ -80,6 +107,7 @@ export default function FlexImage({
         src={src}
         alt={alt}
         fill
+        onLoad={handleImageLoad}
         style={{
           objectFit: objectFit,
           objectPosition: objectPosition,
