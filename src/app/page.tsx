@@ -1,5 +1,8 @@
 "use client";
 
+import NavBar from "@/components/layout/Navbar";
+import HeroSection from "@/components/sections/home/HomeSection";
+
 export default function App() {
   // Your logic goes here
 
@@ -28,6 +31,8 @@ export default function App() {
      */
 
     <>
+      <NavBar/>
+      <HeroSection/>
       {/*     
         <Navbar onHandleChange={onHandleChange} />
         <HomeSection />
