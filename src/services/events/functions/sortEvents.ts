@@ -1,0 +1,18 @@
+import { Event } from "@/constants/types/events.type";
+
+/**
+ * Search events by event name
+ */
+export default function searchEvents(
+  events: Event[],
+  searchTerm: string
+): Event[] {
+  if (!searchTerm.trim()) {
+    return events;
+  }
+
+  const lowerSearchTerm = searchTerm.toLowerCase();
+  return events.filter((event) =>
+    event.title.toLowerCase().includes(lowerSearchTerm)
+  );
+}

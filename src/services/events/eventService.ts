@@ -53,31 +53,4 @@ export class EventService {
       return [];
     }
   }
-
-  /**
-   * Sort events by date (newest or oldest)
-   */
-  sortEvents(events: Event[], order: "newest" | "oldest"): Event[] {
-    return [...events].sort((a, b) => {
-      if (order === "newest") {
-        return b.date.getTime() - a.date.getTime();
-      } else {
-        return a.date.getTime() - b.date.getTime();
-      }
-    });
-  }
-
-  /**
-   * Search events by event name
-   */
-  searchEvents(events: Event[], searchTerm: string): Event[] {
-    if (!searchTerm.trim()) {
-      return events;
-    }
-
-    const lowerSearchTerm = searchTerm.toLowerCase();
-    return events.filter((event) =>
-      event.title.toLowerCase().includes(lowerSearchTerm)
-    );
-  }
 }
