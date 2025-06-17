@@ -5,9 +5,9 @@
  * covering various scenarios including normal cases, edge cases, and date sorting.
  */
 
-import sortEvents from "../sortEvents";
-import { mockEvents } from "@/constants/mock-events";
+import { mockEvents } from "@/constants/data/mock-events";
 import { Event } from "@/constants/types/events.type";
+import sortEvents from "@/services/events/functions/sortEvents";
 
 describe("sortEvents", () => {
   describe("Normal Sorting Functionality", () => {

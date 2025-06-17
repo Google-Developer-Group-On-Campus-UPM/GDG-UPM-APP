@@ -1,4 +1,4 @@
-import { Event } from "./types/events.type";
+import { Event } from "../types/events.type";
 
 /**
  * Mock Events Data for Testing

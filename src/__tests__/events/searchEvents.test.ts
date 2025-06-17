@@ -5,9 +5,9 @@
  * covering various scenarios including normal cases, edge cases, and error handling.
  */
 
-import { mockEvents } from "@/constants/mock-events";
+import { mockEvents } from "@/constants/data/mock-events";
 import { Event } from "@/constants/types/events.type";
-import searchEvents from "../searchEvents";
+import searchEvents from "@/services/events/functions/searchEvents";
 
 describe("searchEvents", () => {
   describe("Normal Search Functionality", () => {
