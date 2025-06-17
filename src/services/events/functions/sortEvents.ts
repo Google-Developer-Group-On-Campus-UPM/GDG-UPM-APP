@@ -36,9 +36,9 @@ export default function sortEvents(
 ): Event[] {
   return [...events].sort((a, b) => {
     if (order === "newest") {
-      return b.date.getTime() - a.date.getTime();
+      return b.dateStart.getTime() - a.dateStart.getTime();
     } else {
-      return a.date.getTime() - b.date.getTime();
+      return a.dateStart.getTime() - b.dateStart.getTime();
     }
   });
 }
