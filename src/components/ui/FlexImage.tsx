@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
 
 interface FlexImageProps {
   src: string;
@@ -19,84 +19,35 @@ interface FlexImageProps {
 /**
  * FlexImage Component
  *
- * A responsive, centered image component with customizable zoom, radius, and an elegant inner border.
- * Automatically resizes according to window dimensions while maintaining aspect ratio.
+ * A simple image component with fixed dimensions that scale naturally with browser zoom.
+ * Features an inner border overlay and optional zoom control for users.
+ * If width/height not provided, uses the image's natural dimensions.
  *
  * @example
- * // Basic usage with auto-sizing
+ * // Basic usage with auto-sizing (uses image's natural dimensions)
  * <FlexImage
  *   src="/images/hero/Image_1.png"
  *   alt="Hero image"
  * />
  *
  * @example
- * // Custom dimensions with zoom
+ * // Custom dimensions
  * <FlexImage
- *   src="/images/team/lead/dwight.jpg"
- *   alt="Team member"
- *   width={400}
- *   height={300}
- *   zoom={1.2}
- * />
- *
- * @example
- * // Highly rounded corners
- * <FlexImage
- *   src="/images/events/figma.png"
- *   alt="Event image"
- *   radius={100}
- *   zoom={0.8}
- * />
- *
- * @example
- * // Large display with custom radius
- * <FlexImage
- *   src="/images/GDG_Logo.svg"
- *   alt="GDG Logo"
+ *   src="/images/hero/Image_1.png"
+ *   alt="Hero image"
  *   width={600}
  *   height={400}
- *   radius={40}
  * />
  *
  * @example
- * // Zoomed in profile picture
- * <FlexImage
- *   src="/images/team/topboard/AminahAbujiya.jpg"
- *   alt="Profile picture"
- *   width={200}
- *   height={200}
- *   zoom={1.5}
- *   radius={50}
- * />
- *
- * @example
- * // Minimal fit - zooms to show maximum of one dimension
- * <FlexImage
- *   src="/images/hero/Image_1.png"
- *   alt="Hero image"
- *   objectFit="contain"
- *   width={400}
- *   height={300}
- * />
- *
- * @example
- * // Custom positioning - focus on top-left area
+ * // With user zoom and custom radius
  * <FlexImage
  *   src="/images/events/kitahack.png"
- *   alt="Event banner"
- *   objectPosition="top left"
- *   objectFit="cover"
+ *   alt="Event image"
+ *   width={400}
+ *   height={300}
  *   zoom={1.2}
- * />
- *
- * @example
- * // Transform origin for zoom center
- * <FlexImage
- *   src="/images/team/lead/Javan.jpg"
- *   alt="Team lead"
- *   zoom={1.3}
- *   transformOrigin="center top"
- *   objectFit="cover"
+ *   radius={50}
  * />
  */
 export default function FlexImage({
@@ -110,36 +61,32 @@ export default function FlexImage({
   objectPosition = "center",
   transformOrigin = "center",
 }: FlexImageProps) {
-  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [imageDimensions, setImageDimensions] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = event.target as HTMLImageElement;
+    if (!width || !height) {
+      setImageDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
       });
-    };
+    }
+  };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const containerWidth = width || Math.min(windowSize.width * 0.8, 800);
-  const containerHeight = height || Math.min(windowSize.height * 0.8, 600);
+  const containerWidth = width || imageDimensions?.width || 400; // fallback to 400
+  const containerHeight = height || imageDimensions?.height || 300; // fallback to 300
 
   return (
     <Box
       sx={{
         position: "relative",
-        width: containerWidth,
-        height: containerHeight,
-        margin: "auto",
+        width: `${containerWidth}px`,
+        height: `${containerHeight}px`,
         borderRadius: `${radius}px`,
         overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         "&::before": {
           content: '""',
           position: "absolute",
@@ -148,10 +95,11 @@ export default function FlexImage({
           right: 0,
           bottom: 0,
           borderRadius: `${radius}px`,
-          border: "2px solid rgba(255, 255, 255, 0.35)",
+          border: "2px solid rgba(255, 255, 255, 0.35)", // 35% white border
           pointerEvents: "none",
           zIndex: 2,
           mixBlendMode: "soft-light",
+          boxSizing: "border-box",
         },
       }}
     >
@@ -159,12 +107,12 @@ export default function FlexImage({
         src={src}
         alt={alt}
         fill
+        onLoad={handleImageLoad}
         style={{
           objectFit: objectFit,
           objectPosition: objectPosition,
           transform: `scale(${zoom})`,
           transformOrigin: transformOrigin,
-          borderRadius: `${radius}px`,
         }}
       />
     </Box>
