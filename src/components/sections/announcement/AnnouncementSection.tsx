@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import FlexChip from "@/components/ui/FlexChip";
 
 const AnnoucementSection: React.FC = () => {
     return (
@@ -19,15 +20,18 @@ const AnnoucementSection: React.FC = () => {
                     maskImage: 'linear-gradient(to bottom, transparent 2%, black 100%)',
                 }}
             />
-            <div className="w-full h-full flex justify-between items-center max-w-[70%] gap-[48px]">
+            <div className="w-full mx-12 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-54 grid grid-rows-2">
                 <Image
                     src="/images/hero/Image-Announcement.png"
-                    className="w-full h-full"
+                    className=""
                     width={400}
                     height={100}
                     alt="Announcement"
                 />
-                <div className="w-full flex-col flex gap-[32px] font-[400]">
+                
+
+                
+                {/* <div className="w-full flex-col flex gap-[32px] font-[400]">
                     <div className="w-fit border border-white rounded-[18px]">
                         <p className="px-[10px] py-[4px] text-[12px]">announcements</p>
                     </div>
@@ -50,7 +54,7 @@ const AnnoucementSection: React.FC = () => {
                             Read Full Article
                         </button>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
