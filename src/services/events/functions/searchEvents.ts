@@ -1,17 +1,18 @@
 import { Event } from "@/constants/types/events.type";
 
 /**
- * Sort events by date (newest or oldest)
+ * Search events by event name
  */
-export default function sortEvents(
+export default function searchEvents(
   events: Event[],
-  order: "newest" | "oldest"
+  searchTerm: string
 ): Event[] {
-  return [...events].sort((a, b) => {
-    if (order === "newest") {
-      return b.date.getTime() - a.date.getTime();
-    } else {
-      return a.date.getTime() - b.date.getTime();
-    }
-  });
+  if (!searchTerm.trim()) {
+    return events;
+  }
+
+  const lowerSearchTerm = searchTerm.toLowerCase();
+  return events.filter((event) =>
+    event.title.toLowerCase().includes(lowerSearchTerm)
+  );
 }
