@@ -5,6 +5,9 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./HeroSection.module.css";
+import MaskedBackground from "@/components/ui/MaskedBackground";
+import ScrollDownArrow from "@/components/ui/ScrollDownArrow";
+
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -64,92 +67,99 @@ const HeroSection: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-black">
-      <div className="min-h-screen w-full space-y-20 bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat">
-        <div className="space-y-10">
-          <div className="flex justify-center w-full">
-            <div className={`${styles.gradientBorder} mt-32 sm:mt-40 md:mt-48 lg:mt-52`}>
-              <div className="backdrop-blur-md rounded-full py-1.5 sm:py-2 md:py-2.5 px-4 sm:px-6 md:px-8 bg-gray-300/20 flex items-center justify-center">
-                <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3">
-                  <Image
-                    src="/images/hero/hat-icon.svg"
-                    alt="Hat Icon"
-                    width={24}
-                    height={24}
-                    className="w-4 sm:w-5 md:w-6"
-                  />
-                  <span className="text-sm sm:text-base md:text-lg">
-                    Student Developer Club
-                  </span>
-                  <span className="text-sm sm:text-base md:text-lg">-</span>
-                  <Link
-                    href="/"
-                    className="text-white italic hover:underline text-sm sm:text-base md:text-lg"
-                  >
-                    Learn More
-                  </Link>
+      <div className="min-h-screen w-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat relative space-y-10">
+        <MaskedBackground
+          template="template1"
+        />
+        <div className={"relative z-10 space-y-20 "}>
+
+          <div className="space-y-10">
+            <div className="flex justify-center w-full">
+              <div className={`${styles.gradientBorder} mt-32 sm:mt-40 md:mt-48 lg:mt-52`}>
+                <div className="backdrop-blur-md rounded-full py-1.5 sm:py-2 md:py-2.5 px-4 sm:px-6 md:px-8 bg-gray-300/20 flex items-center justify-center">
+                  <div className="flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3">
+                    <Image
+                      src="/images/hero/hat-icon.svg"
+                      alt="Hat Icon"
+                      width={24}
+                      height={24}
+                      className="w-4 sm:w-5 md:w-6"
+                    />
+                    <span className="text-sm sm:text-base md:text-lg">
+                      Student Developer Club
+                    </span>
+                    <span className="text-sm sm:text-base md:text-lg">-</span>
+                    <Link
+                      href="/"
+                      className="text-white italic hover:underline text-sm sm:text-base md:text-lg"
+                    >
+                      Learn More
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="space-y-3 mx-5">
-            <h1
-              className={`${poppins.className} text-white text-[2.6rem] xm:text-[2.5rem] sm:text-[3rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-none text-center font-medium`}
-            >
-              <span
-                className="inline-block relative
+            <div className="space-y-3 mx-5">
+              <h1
+                className={`${poppins.className} text-white text-[2.6rem] xm:text-[2.5rem] sm:text-[3rem] md:text-[3rem] lg:text-[4rem] xl:text-[5rem] leading-none text-center font-medium`}
+              >
+                <span
+                  className="inline-block relative
                    [mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
                    [-webkit-mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
                    [mask-mode:alpha] [-webkit-mask-mode:alpha] text-wrap"
-              >
-                Your #1 Tech Community
-              </span>
-              <br />
+                >
+                  Your #1 Tech Community
+                </span>
+                <br />
 
-              <span
-                className="inline-block relative leading-[1.2] pb-2
+                <span
+                  className="inline-block relative leading-[1.2] pb-2
              [mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
              [-webkit-mask-image:linear-gradient(to_right,rgba(0,0,0,0.3)_1%,rgba(0,0,0,1)_99%,rgba(0,0,0,1)_100%)]
              [mask-mode:alpha] [-webkit-mask-mode:alpha]"
-              >
-                for <br className="hidden" />{" "}
-                <span className="italic">
-                  {displayed}
-                  <span className="border-r-2 border-white animate-pulse ml-1" />
+                >
+                  for <br className="hidden" />{" "}
+                  <span className="italic">
+                    {displayed}
+                    <span className="border-r-2 border-white animate-pulse ml-1" />
+                  </span>
                 </span>
-              </span>
-            </h1>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-lg text-gray-400 font-light text-center text-wrap">
-              An open-space community where ideas thrive, skills grow, and
-              everyone belongs — welcome to GDGoC UPM.
-            </p>
+              </h1>
+              <p className="text-sm sm:text-base lg:text-lg xl:text-lg text-gray-400 font-light text-center text-wrap">
+                An open-space community where ideas thrive, skills grow, and
+                everyone belongs — welcome to GDGoC UPM.
+              </p>
+            </div>
           </div>
-        </div>
-        {/* Cards */}
-        <div className="mx-12 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-64 grid grid-cols-1 lg:grid-cols-3 gap-4 pb-20">
-          {cards.map((card) => (
-            <div
-              key={card.title}
-              className="p-[1px] rounded-lg relative bg-gradient-to-r from-[#67A4D5] to-[#ADEDFF] cursor-pointer"
-            >
-              <div className="bg-gradient-to-r from-[#06233B] to-[#09365b] rounded-lg text-white space-y-1 h-full">
-                <div className="flex items-center justify-end pt-2 pr-2">
-                  <Image src="/images/hero/hover-action.svg" alt="Hover Action" width={20} height={20} />
-                </div>
-                <div className="pb-6 pr-6 pl-6">
-                  <div className="flex">
-                    <Image src={card.icon} alt={card.title} width={26} height={26} />
-                    <span className="text-xl ml-2">{card.title}</span>
+          {/* Cards */}
+          <div className="mx-12 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-54 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {cards.map((card) => (
+              <div
+                key={card.title}
+                className="p-[1px] rounded-lg relative bg-gradient-to-r from-[#67A4D5] to-[#ADEDFF] cursor-pointer"
+              >
+                <div className="bg-gradient-to-r from-[#06233B] to-[#09365b] rounded-lg text-white space-y-1 h-full">
+                  <div className="flex items-center justify-end pt-2 pr-2">
+                    <Image src="/images/hero/hover-action.svg" alt="Hover Action" width={20} height={20} />
                   </div>
-                  <p className="text-gray-400 font-light lg:text-base xl:text-lg">
-                    {card.description}
-                  </p>
+                  <div className="pb-6 pr-6 pl-6">
+                    <div className="flex">
+                      <Image src={card.icon} alt={card.title} width={26} height={26} />
+                      <span className="text-xl ml-2">{card.title}</span>
+                    </div>
+                    <p className="text-gray-400 font-light lg:text-base xl:text-lg">
+                      {card.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div> 
+
+        <ScrollDownArrow/>
+      </div>
     </div>
   );
 };
