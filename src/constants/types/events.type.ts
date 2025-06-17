@@ -19,26 +19,34 @@ export interface Event {
   /** Event title/name */
   title: string;
 
-  /** Event date and time */
-  date: Date; // Use Date object for better date handling
+  /** Event mode */
+  mode: "online" | "physical" | "hybrid";
 
   /** Event location (physical or online) */
   location: string;
 
-  /** Event organizer information */
-  organizer: string;
+  /** Event start date and time */
+  dateStart: Date;
 
-  /** Number of attendees */
-  attendeesCount: number;
+  /** Event end date and time (optional) */
+  dateEnd?: Date;
+
+  /** Ticket information */
+  ticketType: string;
+
+  /** Maximum number of participants */
+  maxParticipants: number;
 
   /** Event banner/poster image filename (optional) */
   image: string; // Default: "/images/test.png"
 
   /** Event status */
   status: "upcoming" | "past";
-
   /** Tags for categorizing and filtering events */
-  tags?: string[];
+  tags?: {
+    tag: string;
+    presetColor?: "red" | "indigo"; // Optional color for the tag
+  }[];
 
   /** Registration or event page URL (optional) */
   registrationLink?: string; // Default: https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/
