@@ -26,6 +26,8 @@ interface FlexChipProps {
   marginX?: number;
   marginY?: number;
   backgroundColor?: string;
+  fontFamily?: string;
+  preset?: "red" | "indigo";
 }
 
 /**
@@ -61,6 +63,7 @@ interface FlexChipProps {
  *   logo={<CustomIcon />}
  *   logoPosition="top"
  * />
+ *
  * @example
  * // Multiple links in one chip
  * <FlexChip
@@ -92,31 +95,59 @@ export default function FlexChip({
   marginX = 1,
   marginY = 1,
   backgroundColor,
+  fontFamily,
+  preset,
 }: FlexChipProps) {
   const defaultLogo = (
     <Image
-      src="/globe.svg"
+      src="/icons/globe.svg"
       alt="globe"
       width={16}
       height={16}
       style={{ borderRadius: "50%" }}
     />
   );
-
   // Logo logic: show logo if hasLogo is true
   const logoElement = hasLogo ? logo || defaultLogo : null;
+
+  // Color preset logic
+  const getPresetColors = () => {
+    switch (preset) {
+      case "red":
+        return {
+          textColor: "#DC2626", // Red-600
+          borderColor: "#EF4444", // Red-500
+          backgroundColor: "#FEF2F2", // Red-50
+        };
+      case "indigo":
+        return {
+          textColor: "#4F46E5", // Indigo-600
+          borderColor: "#6366F1", // Indigo-500
+          backgroundColor: "#EEF2FF", // Indigo-50
+        };
+      default:
+        return {
+          textColor: "white",
+          borderColor: "white",
+          backgroundColor: backgroundColor || "transparent",
+        };
+    }
+  };
+
+  const colors = getPresetColors();
+  const chipFont = fontFamily || poppins.style.fontFamily;
   const renderContent = () => {
     return content.map((part, index) => (
       <Typography
         key={index}
         component="span"
         sx={{
-          fontFamily: poppins.style.fontFamily,
+          fontFamily: chipFont,
           fontWeight: 400,
           fontSize: "12px",
           lineHeight: "100%",
           letterSpacing: "0%",
-          color: "inherit",
+          color: colors.textColor,
           textDecoration: part.href ? "underline" : "none",
           fontStyle: part.href ? "italic" : "normal",
           cursor: part.href ? "pointer" : "default",
@@ -160,7 +191,6 @@ export default function FlexChip({
 
   const gap =
     logoPosition === "top" || logoPosition === "bottom" ? "4px" : "8px";
-
   return (
     <Box
       sx={{
@@ -171,11 +201,11 @@ export default function FlexChip({
         padding: `${paddingY}px ${paddingX}px`,
         margin: `${marginY}px ${marginX}px`,
         borderRadius: "20px",
-        border: "1px solid white",
-        color: "white",
-        backgroundColor: backgroundColor || "transparent",
-        boxShadow: "0 0 8px rgba(255, 255, 255, 0.3)",
-        fontFamily: poppins.style.fontFamily,
+        border: `1px solid ${colors.borderColor}`,
+        color: colors.textColor,
+        backgroundColor: colors.backgroundColor,
+        boxShadow: preset ? "none" : "0 0 8px rgba(255, 255, 255, 0.3)",
+        fontFamily: chipFont,
         fontWeight: 400,
         fontSize: "12px",
         lineHeight: "100%",
