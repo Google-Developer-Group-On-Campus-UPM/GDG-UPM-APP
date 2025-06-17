@@ -66,11 +66,12 @@ const HeroSection: React.FC = () => {
   }, [displayed, typing, wordIndex]);
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-black">
+    <div className="min-h-screen relative overflow-hidden">
       <div className="min-h-screen w-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat relative space-y-10">
         <MaskedBackground
           template="template1"
         />
+        
         <div className={"relative z-10 space-y-20 "}>
 
           <div className="space-y-10">
