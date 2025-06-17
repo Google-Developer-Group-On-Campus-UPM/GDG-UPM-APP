@@ -19,17 +19,23 @@ export interface Event {
   /** Event title/name */
   title: string;
 
-  /** Event date and time */
-  date: Date; // Use Date object for better date handling
+  /** Event mode */
+  mode: "online" | "physical" | "hybrid";
 
   /** Event location (physical or online) */
   location: string;
 
-  /** Event organizer information */
-  organizer: string;
+  /** Event start date and time */
+  dateStart: Date;
 
-  /** Number of attendees */
-  attendeesCount: number;
+  /** Event end date and time (optional) */
+  dateEnd?: Date;
+
+  /** Ticket information */
+  ticketType: string;
+
+  /** Maximum number of participants */
+  maxParticipants: number;
 
   /** Event banner/poster image filename (optional) */
   image: string; // Default: "/images/test.png"
