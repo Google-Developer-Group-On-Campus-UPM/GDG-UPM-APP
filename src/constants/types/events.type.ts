@@ -42,9 +42,11 @@ export interface Event {
 
   /** Event status */
   status: "upcoming" | "past";
-
   /** Tags for categorizing and filtering events */
-  tags?: string[];
+  tags?: {
+    tag: string;
+    presetColor?: "red" | "indigo"; // Optional color for the tag
+  }[];
 
   /** Registration or event page URL (optional) */
   registrationLink?: string; // Default: https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/
