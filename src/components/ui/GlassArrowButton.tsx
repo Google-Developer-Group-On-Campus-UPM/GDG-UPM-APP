@@ -1,149 +1,143 @@
 "use client";
 
-import { IconButton, SxProps, Theme } from "@mui/material";
-import {
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  KeyboardArrowUp,
-  KeyboardArrowDown,
-} from "@mui/icons-material";
-import { MouseEventHandler } from "react";
-
-type ArrowDirection = "left" | "right" | "up" | "down";
+import { Box, SxProps, Theme } from "@mui/material";
+import Image from "next/image";
 
 interface GlassArrowButtonProps {
-  direction?: ArrowDirection;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  disabled?: boolean;
-  size?: "small" | "medium" | "large";
+  onClick?: () => void;
+  size?: number;
   sx?: SxProps<Theme>;
+  disabled?: boolean;
+  direction?: "left" | "right" | "up" | "down";
+  icon?: React.ReactElement;
 }
 
 /**
  * GlassArrowButton Component
  *
- * A glassmorphism circular button with arrow icons based on the provided SVG design.
- * Features backdrop blur, inner shadow, and gradient border effects.
+ * Circular glass morphism button with fading border effect using two-layer approach.
+ * Features a border that fades from white to transparent towards bottom right,
+ * background blur effect, and semi-transparent white background.
+ * Contains a centered icon that can be rotated to point in different directions.
  *
  * @example
- * // Basic usage
- * <GlassArrowButton direction="left" onClick={handlePrevious} />
+ * <GlassArrowButton onClick={() => console.log('clicked')} />
  *
  * @example
- * // Custom size and styling
  * <GlassArrowButton
  *   direction="right"
- *   size="large"
- *   onClick={handleNext}
- *   sx={{ margin: 2 }}
+ *   size={60}
+ *   onClick={() => navigate('next')}
+ * />
+ *
+ * @example
+ * <GlassArrowButton
+ *   direction="up"
+ *   icon={<CustomIcon />}
  * />
  */
 export default function GlassArrowButton({
-  direction = "left",
   onClick,
-  disabled = false,
-  size = "medium",
+  size = 50,
   sx = {},
+  disabled = false,
+  direction = "left",
+  icon,
 }: GlassArrowButtonProps) {
-  const getIconComponent = () => {
+  const handleClick = () => {
+    if (!disabled && onClick) {
+      onClick();
+    }
+  };
+
+  // Get rotation angle based on direction (ArrowBackIosNewSharp points left by default)
+  const getRotation = () => {
     switch (direction) {
+      case "left":
+        return 0;
       case "right":
-        return <KeyboardArrowRight />;
+        return 180;
       case "up":
-        return <KeyboardArrowUp />;
+        return 90;
       case "down":
-        return <KeyboardArrowDown />;
-      default: // left
-        return <KeyboardArrowLeft />;
+        return -90;
+      default:
+        return 0;
     }
   };
-  const getSizeStyles = () => {
-    switch (size) {
-      case "small":
-        return {
-          width: 48,
-          height: 48,
-          borderRadius: "24px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "2.5rem", // ~56px for 48px button (doubled from 1.75rem)
-          },
-        };
-      case "large":
-        return {
-          width: 88,
-          height: 88,
-          borderRadius: "44px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "4.5rem", // ~88px for 88px button (doubled from 2.75rem)
-          },
-        };
-      default: // medium
-        return {
-          width: 64,
-          height: 64,
-          borderRadius: "32px",
-          "& .MuiSvgIcon-root": {
-            fontSize: "3.5rem", // ~72px for 64px button (doubled from 2.25rem)
-          },
-        };
-    }
-  };
-  return (
-    <IconButton
-      onClick={onClick}
-      disabled={disabled}
-      sx={{
-        position: "relative",
-        overflow: "visible", // allow the pseudo‐element to show
-        ...getSizeStyles(),
-        background: "rgba(255,255,255,0.2)",
-        backdropFilter: "blur(20px)",
-        border: "none", // we’ll draw our own border via ::after
-        color: "#000",
-        transition: "transform 0.3s ease",
-        "&:hover": {
-          backgroundColor: "rgba(255,255,255,1)",
-          transform: "translateY(-1px)",
-        },
-        "&:active": {
-          backgroundColor: "rgba(255,255,255,1)",
-          transform: "translateY(0)",
-        },
-        "&:disabled": {
-          opacity: 0.5,
-          cursor: "not-allowed",
-          transform: "none",
-        },
 
-        // THE MAGIC: a fading ring
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          inset: 0,
-          borderRadius: "inherit",
-          padding: "1px", // border thickness
+  // Base layer with fading border gradient
+  const baseLayerStyles: SxProps<Theme> = {
+    width: size,
+    height: size,
+    borderRadius: "50%", // Make it circular
+    // Gradient border that fades from white to transparent towards bottom left
+    background:
+      "linear-gradient(215deg, rgba(255, 255, 255, 0.8) 0%, transparent 70%)",
+    padding: "1px", // Thicker border for more visible effect
+    border: "none",
+    cursor: disabled ? "not-allowed" : "pointer",
+    opacity: disabled ? 0.5 : 1,
+    transition: "all 0.3s ease",
+    "&:hover": !disabled
+      ? {
+          transform: "translateY(-1px) scale(1.05)",
           background:
-            "linear-gradient(to bottom left, rgba(255,255,255,0.5), rgba(255,255,255,0))",
-          pointerEvents: "none",
+            "linear-gradient(215deg, rgba(255, 255, 255, 0.8) 0%, transparent 70%)",
+        }
+      : {},
+    "&:active": !disabled
+      ? {
+          transform: "translateY(0px) scale(0.95)",
+          transition: "all 0.1s ease",
+        }
+      : {},
+    ...sx,
+  };
 
-          // mask out the center so only the “border” shows
-          WebkitMask:
-            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-        },
+  // Inner layer with glass effect
+  const innerLayerStyles: SxProps<Theme> = {
+    width: "100%",
+    height: "100%",
+    borderRadius: "50%", // Make it circular
+    // Glass morphism effect - completely transparent center
+    backgroundColor: "transparent", // No background, only border visible
+    backdropFilter: "blur(3px)", // Minimal blur for subtle effect
+    WebkitBackdropFilter: "blur(2px)", // Safari support
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    // No border on inner layer since we want border-only effect
+    border: "none",
+    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Soft shadow
+  };
 
-        // Prevent text selection
-        userSelect: "none",
-        WebkitUserSelect: "none",
-        MozUserSelect: "none",
-        msUserSelect: "none",
+  // Icon styles with rotation and proper centering
+  const iconStyles: SxProps<Theme> = {
+    color: "black",
+    filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
+    transform: `rotate(${getRotation()}deg)`,
+    transition: "transform 0.3s ease",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
 
-        // Custom sx overrides
-        ...sx,
-      }}
-    >
-      {getIconComponent()}
-    </IconButton>
+  // Default icon if none provided
+  const displayIcon = icon || (
+    <Image
+      src="/icons/arrow_left.svg"
+      alt="arrow"
+      width={size * 0.25}
+      height={size * 0.25}
+    />
+  );
+
+  return (
+    <Box component="button" onClick={handleClick} sx={baseLayerStyles}>
+      <Box sx={innerLayerStyles}>
+        <Box sx={iconStyles}>{displayIcon}</Box>
+      </Box>
+    </Box>
   );
 }
