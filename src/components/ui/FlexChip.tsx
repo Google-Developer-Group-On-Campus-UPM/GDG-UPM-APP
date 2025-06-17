@@ -1,12 +1,12 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
-import { ReactElement } from "react";
-import Image from "next/image";
+import { Box, SxProps, Theme, Typography } from "@mui/material";
 import { Poppins } from "next/font/google";
+import Image from "next/image";
+import { ReactElement } from "react";
 
 const poppins = Poppins({
-  weight: ["400"],
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -18,23 +18,23 @@ interface TextPart {
 
 interface FlexChipProps {
   content: TextPart[];
-  logo?: ReactElement | string;
   hasLogo?: boolean;
+  logo?: ReactElement | string;
   logoPosition?: "left" | "right" | "top" | "bottom";
-  paddingX?: number;
-  paddingY?: number;
-  marginX?: number;
-  marginY?: number;
-  backgroundColor?: string;
-  fontFamily?: string;
   preset?: "red" | "indigo";
+  sx?: SxProps<Theme>;
+  fontSize?: string | number;
+  fontFamily?: string;
+  fontWeight?: string | number;
+  color?: string;
 }
 
 /**
  * FlexChip Component
  *
  * A flexible, customizable chip component with support for mixed text content,
- * clickable links, and adjustable logo positioning.
+ * clickable links, color presets, and adjustable logo positioning.
+ * Now supports sx prop for custom styling and Typography-style props.
  *
  * @example
  * // Basic usage with mixed text and links
@@ -47,20 +47,47 @@ interface FlexChipProps {
  * />
  *
  * @example
- * // Logo on the right with custom spacing
+ * // Red preset for error/warning states
  * <FlexChip
- *   content={[{ text: "Custom layout" }]}
- *   logoPosition="right"
- *   paddingX={20}
- *   paddingY={12}
- *   marginX={8}
+ *   content={[{ text: "Error" }]}
+ *   preset="red"
+ *   hasLogo={false}
  * />
  *
  * @example
- * // Logo on top with custom icon
+ * // Indigo preset for info states
  * <FlexChip
- *   content={[{ text: "Stacked layout" }]}
- *   logo={<CustomIcon />}
+ *   content={[{ text: "Information" }]}
+ *   preset="indigo"
+ *   hasLogo={false}
+ * />
+ *
+ * @example
+ * // Custom styling with sx prop
+ * <FlexChip
+ *   content={[{ text: "Custom Style" }]}
+ *   sx={{
+ *     padding: "12px 16px",
+ *     borderRadius: "8px",
+ *     backgroundColor: "purple"
+ *   }}
+ *   hasLogo={false}
+ * />
+ *
+ * @example
+ * // Typography-style props
+ * <FlexChip
+ *   content={[{ text: "Large Bold Text" }]}
+ *   fontSize="16px"
+ *   fontWeight={700}
+ *   fontFamily="Inter"
+ *   hasLogo={false}
+ * />
+ *
+ * @example
+ * // Logo positioning
+ * <FlexChip
+ *   content={[{ text: "Logo on top" }]}
  *   logoPosition="top"
  * />
  *
@@ -71,18 +98,9 @@ interface FlexChipProps {
  *     { text: "Check out" },
  *     { text: "GitHub", href: "https://github.com" },
  *     { text: "and" },
- *     { text: "Google", href: "https://google.com" },
- *     { text: "for resources" }
+ *     { text: "Google", href: "https://google.com" }
  *   ]}
- *   paddingX={16}
- *   paddingY={10}
- * />
- *
- * @example
- * // With subtle background color
- * <FlexChip
- *   content={[{ text: "Highlighted chip" }]}
- *   backgroundColor="rgba(255, 255, 255, 0.1)"
+ *   hasLogo={false}
  * />
  */
 export default function FlexChip({
@@ -90,13 +108,12 @@ export default function FlexChip({
   logo,
   hasLogo = true,
   logoPosition = "left",
-  paddingX = 12,
-  paddingY = 8,
-  marginX = 1,
-  marginY = 1,
-  backgroundColor,
-  fontFamily,
   preset,
+  sx = {},
+  fontSize = "12px",
+  fontFamily,
+  fontWeight = 400,
+  color,
 }: FlexChipProps) {
   const defaultLogo = (
     <Image
@@ -107,35 +124,35 @@ export default function FlexChip({
       style={{ borderRadius: "50%" }}
     />
   );
-  // Logo logic: show logo if hasLogo is true
-  const logoElement = hasLogo ? logo || defaultLogo : null;
 
-  // Color preset logic
+  // Logo logic: show logo if hasLogo is true
+  const logoElement = hasLogo ? logo || defaultLogo : null; // Color preset logic
   const getPresetColors = () => {
     switch (preset) {
       case "red":
         return {
-          textColor: "#DC2626", // Red-600
+          color: "#DC2626", // Red-600
           borderColor: "#EF4444", // Red-500
           backgroundColor: "#FEF2F2", // Red-50
         };
       case "indigo":
         return {
-          textColor: "#4F46E5", // Indigo-600
+          color: "#4F46E5", // Indigo-600
           borderColor: "#6366F1", // Indigo-500
           backgroundColor: "#EEF2FF", // Indigo-50
         };
       default:
         return {
-          textColor: "white",
+          color: color || "white",
           borderColor: "white",
-          backgroundColor: backgroundColor || "transparent",
+          backgroundColor: "transparent",
         };
     }
   };
 
-  const colors = getPresetColors();
+  const presetColors = getPresetColors();
   const chipFont = fontFamily || poppins.style.fontFamily;
+
   const renderContent = () => {
     return content.map((part, index) => (
       <Typography
@@ -143,11 +160,11 @@ export default function FlexChip({
         component="span"
         sx={{
           fontFamily: chipFont,
-          fontWeight: 400,
-          fontSize: "12px",
+          fontWeight: fontWeight,
+          fontSize: fontSize,
           lineHeight: "100%",
           letterSpacing: "0%",
-          color: colors.textColor,
+          color: "inherit",
           textDecoration: part.href ? "underline" : "none",
           fontStyle: part.href ? "italic" : "normal",
           cursor: part.href ? "pointer" : "default",
@@ -191,6 +208,7 @@ export default function FlexChip({
 
   const gap =
     logoPosition === "top" || logoPosition === "bottom" ? "4px" : "8px";
+
   return (
     <Box
       sx={{
@@ -198,18 +216,19 @@ export default function FlexChip({
         flexDirection: flexDirection(),
         alignItems: "center",
         gap: gap,
-        padding: `${paddingY}px ${paddingX}px`,
-        margin: `${marginY}px ${marginX}px`,
+        padding: "8px 12px",
+        margin: "1px",
         borderRadius: "20px",
-        border: `1px solid ${colors.borderColor}`,
-        color: colors.textColor,
-        backgroundColor: colors.backgroundColor,
+        border: `1px solid ${presetColors.borderColor}`,
+        color: presetColors.color,
+        backgroundColor: presetColors.backgroundColor,
         boxShadow: preset ? "none" : "0 0 8px rgba(255, 255, 255, 0.3)",
         fontFamily: chipFont,
-        fontWeight: 400,
-        fontSize: "12px",
+        fontWeight: fontWeight,
+        fontSize: fontSize,
         lineHeight: "100%",
         letterSpacing: "0%",
+        ...sx,
       }}
     >
       {logoElement &&
