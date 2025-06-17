@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import FlexChip from "@/components/ui/FlexChip";
 
-const AnnoucementSection: React.FC = () => {
+const AnnouncementSection: React.FC = () => {
     return (
         <div className="min-h-screen w-full bg-black flex justify-center items-center relative z-0">
             <Image
@@ -71,4 +71,4 @@ const AnnoucementSection: React.FC = () => {
 
     )
 }
-export default AnnoucementSection
+export default AnnouncementSection
