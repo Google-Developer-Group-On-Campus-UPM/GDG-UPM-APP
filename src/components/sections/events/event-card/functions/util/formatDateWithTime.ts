@@ -23,7 +23,7 @@ export default function formatDateWithTime(dateStart: Date, dateEnd?: Date) {
     return dateStr;
   }
 
-  return `${dateStr} ${startTimeStr}`;
+  return `${dateStr}, ${startTimeStr}`;
 }
 
 function formatDate(date: Date) {
