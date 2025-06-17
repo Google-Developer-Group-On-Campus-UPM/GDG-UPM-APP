@@ -18,7 +18,7 @@ export default function EventCardTicketButton({
 }: EventCardTicketButtonProps) {
   if (!showGetTicket) return null;
   return (
-    <Box>
+    <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
       <Typography
         sx={{
           fontFamily: poppins.style.fontFamily,
@@ -29,12 +29,16 @@ export default function EventCardTicketButton({
           color: "#FFFFFF",
           whiteSpace: "nowrap",
           margin: 0,
-          padding: "4px 8px",
+          padding: "4px 4px",
           display: "inline-block",
           cursor: "pointer",
           borderRadius: "6px",
           transition: "all 0.3s ease",
           border: "1px solid transparent",
+          userSelect: "none",
+          WebkitUserSelect: "none",
+          MozUserSelect: "none",
+          msUserSelect: "none",
           "&:hover": {
             color: "#E3F2FD",
             backgroundColor: "rgba(255, 255, 255, 0.15)",
