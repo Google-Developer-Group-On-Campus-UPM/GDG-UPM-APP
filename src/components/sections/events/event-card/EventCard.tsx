@@ -117,12 +117,7 @@ export default function EventCard({
           zIndex: 1,
         }}
       >
-        <EventCardImage
-          event={event}
-          width={width}
-          height={height}
-          borderRadius={borderRadius}
-        />
+        <EventCardImage event={event} borderRadius={borderRadius} />
 
         {/* Details Container - positioned 17px below image */}
         <Box
