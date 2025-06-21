@@ -20,8 +20,8 @@ export default function EventCardImage({
   return (
     <Box
       sx={{
-        width: 368,
-        height: 119,
+        width: width,
+        height: height,
         borderTopLeftRadius: `${borderRadius}px`,
         borderTopRightRadius: `${borderRadius}px`,
         overflow: "hidden",
