@@ -81,14 +81,14 @@ export default function GlassArrowButton({
     transition: "all 0.3s ease",
     "&:hover": !disabled
       ? {
-          transform: "translateY(-1px) scale(1.05)",
+          transform: "scale(1.05)",
           background:
-            "linear-gradient(215deg, rgba(255, 255, 255, 0.8) 0%, transparent 70%)",
+            "linear-gradient(215deg, rgba(255, 255, 255, 0.9) 0%, transparent 70%)",
         }
       : {},
     "&:active": !disabled
       ? {
-          transform: "translateY(0px) scale(0.95)",
+          transform: "scale(0.98)",
           transition: "all 0.1s ease",
         }
       : {},
