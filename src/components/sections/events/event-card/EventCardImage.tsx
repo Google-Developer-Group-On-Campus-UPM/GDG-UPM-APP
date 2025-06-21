@@ -6,15 +6,15 @@ import { Box } from "@mui/material";
 
 interface EventCardImageProps {
   event: Event;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   borderRadius: number;
 }
 
 export default function EventCardImage({
   event,
-  width,
-  height,
+  width = 368,
+  height = 119,
   borderRadius,
 }: EventCardImageProps) {
   return (
@@ -31,7 +31,7 @@ export default function EventCardImage({
         src={event.image || "/images/test.png"}
         alt={event.title}
         width={width}
-        height={Math.floor(height * 0.42)}
+        height={height}
         radius={0}
         objectFit="cover"
         objectPosition="center"
