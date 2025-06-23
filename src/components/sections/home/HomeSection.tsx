@@ -71,7 +71,7 @@ const HeroSection: React.FC = () => {
         <MaskedBackground
           template="template1"
         />
-        
+
         <div className={"relative z-10 space-y-20 "}>
 
           <div className="space-y-10">
@@ -159,7 +159,7 @@ const HeroSection: React.FC = () => {
           </div>
         </div>
 
-        <ScrollDownArrow/>
+        <ScrollDownArrow />
       </div>
     </div>
   );
