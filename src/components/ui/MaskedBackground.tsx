@@ -15,7 +15,7 @@ type MaskedBackgroundProps = {
 const templates: Record<string, string> = {
     template1: "linear-gradient(to bottom, transparent 90%, black 100%)",
     template2: "linear-gradient(to bottom, black 0%, transparent 50%, black 100%)",
-    template3: "linear-gradient(to bottom, black 10%, transparent 100%)",
+    template3: "linear-gradient(to bottom, black 5%, transparent 15%)",
 };
 
 export default function MaskedBackground({

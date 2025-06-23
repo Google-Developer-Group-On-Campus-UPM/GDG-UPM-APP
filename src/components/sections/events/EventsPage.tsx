@@ -1,5 +1,7 @@
 "use client";
 
+import CTAButton from "@/components/ui/CTAButton";
+
 export default function EventsSection() {
   // Your events section logic goes here
 
@@ -130,14 +132,21 @@ export default function EventsSection() {
 
     <>
       <div className={"bg-black min-h-screen"}>
-        <div className="max-w-7xl mx-auto px-4 flex justify-center items-center">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col justify-center items-center">
           <div className={"z-10 relative"}>
             <h2 className="text-4xl font-bold text-white text-center mb-8">Events</h2>
             <p className="text-lg text-gray-400 mb-12">
               Join us for our upcoming events, workshops, and community gatherings.
             </p>
           </div>
+          <div className={"mt-20"}>
+            <CTAButton
+              text={"Suggest Event"}
+              boxShadow={true}  
+            />
+          </div>
           {/* Event detail modal would go here if selectedEvent is not null */}
+
         </div>
       </div>
 

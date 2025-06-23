@@ -1,5 +1,7 @@
 import Image from "next/image";
-import FlexChip from "@/components/ui/FlexChip"; 
+import FlexChip from "@/components/ui/FlexChip";
+import CTAButton from "@/components/ui/CTAButton";
+
 const AnnouncementSection: React.FC = () => {
     return (
         <div className="min-h-screen w-full bg-black flex justify-center items-center relative z-0">
@@ -52,9 +54,7 @@ const AnnouncementSection: React.FC = () => {
                             To nurturing well-rounded developers by offering resources, mentorship, and a collaborative environment that bridges...
                         </p>
                         <div className="flex justify-center md:justify-start">
-                            <button className="text-white text-base md:text-lg px-8 py-3 rounded-full bg-[radial-gradient(circle,_#515EF3,_#2F21D9)] hover:opacity-90 transition border border-transparent shadow-white shadow">
-                                Read Full Article
-                            </button>
+                            <CTAButton/>
                         </div>
                     </div>
                 </div>
