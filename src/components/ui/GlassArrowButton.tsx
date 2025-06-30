@@ -66,57 +66,54 @@ export default function GlassArrowButton({
     }
   };
 
-  // Base layer with fading border gradient
+  // Base layer with white to transparent gradient
   const baseLayerStyles: SxProps<Theme> = {
     width: size,
     height: size,
     borderRadius: "50%", // Make it circular
-    // Gradient border that fades from white to transparent towards bottom left
+    backdropFilter: "blur(4px)", // Minimal blur for subtle effect
+    WebkitBackdropFilter: "blur(3px)", // Safari support
     background:
-      "linear-gradient(215deg, rgba(255, 255, 255, 0.8) 0%, transparent 70%)",
-    padding: "1px", // Thicker border for more visible effect
+      "linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 80%)",
     border: "none",
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? 0.5 : 1,
     transition: "all 0.3s ease",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transform: `rotate(${getRotation()}deg)`,
     "&:hover": !disabled
       ? {
-          transform: "scale(1.05)",
-          background:
-            "linear-gradient(215deg, rgba(255, 255, 255, 0.9) 0%, transparent 70%)",
+          transform: `rotate(${getRotation()}deg) scale(1.05)`,
         }
       : {},
     "&:active": !disabled
       ? {
-          transform: "scale(0.98)",
+          transform: `rotate(${getRotation()}deg) scale(0.98)`,
           transition: "all 0.1s ease",
         }
       : {},
     ...sx,
   };
 
-  // Inner layer with glass effect
+  // Inner layer for content centering
   const innerLayerStyles: SxProps<Theme> = {
-    width: "100%",
-    height: "100%",
+    width: "95%",
+    height: "95%",
     borderRadius: "50%", // Make it circular
-    // Glass morphism effect - completely transparent center
-    backgroundColor: "transparent", // No background, only border visible
-    backdropFilter: "blur(3px)", // Minimal blur for subtle effect
-    WebkitBackdropFilter: "blur(2px)", // Safari support
+    background: "rgba(255, 255, 255, 0.05)", // Semi-transparent white
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    // No border on inner layer since we want border-only effect
     border: "none",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Soft shadow
+    boxShadow: "none",
   };
 
-  // Icon styles with rotation and proper centering
+  // Icon styles with proper centering (no rotation here)
   const iconStyles: SxProps<Theme> = {
     color: "black",
     filter: "drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))",
-    transform: `rotate(${getRotation()}deg)`,
     transition: "transform 0.3s ease",
     display: "flex",
     alignItems: "center",
