@@ -207,7 +207,7 @@ export default function FlexChip({
   };
 
   const gap =
-    logoPosition === "top" || logoPosition === "bottom" ? "4px" : "8px";
+    logoPosition === "top" || logoPosition === "bottom" ? "4px" : "5px";
 
   return (
     <Box
@@ -216,9 +216,9 @@ export default function FlexChip({
         flexDirection: flexDirection(),
         alignItems: "center",
         gap: gap,
-        padding: "8px 12px",
+        padding: "4px 12px 4px 12px",
         margin: "1px",
-        borderRadius: "20px",
+        borderRadius: "18px",
         border: `1px solid ${presetColors.borderColor}`,
         color: presetColors.color,
         backgroundColor: presetColors.backgroundColor,
