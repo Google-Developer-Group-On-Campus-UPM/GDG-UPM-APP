@@ -1,7 +1,9 @@
 "use client";
 
 import EventsHeader from "./EventsHeader";
+import EventsBody from "./EventsBody";
 import { Box } from "@mui/material";
+import { Event } from "@/constants/types/events.type";
 
 export default function EventsSection() {
   /**
@@ -14,29 +16,21 @@ export default function EventsSection() {
    * 6. Show event details in modal or separate page
    */
 
-  return (
-    /**
-     * Events Section Structure:
-     * 1. Section header with title and description
-     * 2. Event status filter tabs (Upcoming, Past, Ongoing)
-     * 3. Category filter dropdown
-     * 4. Search bar for finding specific events
-     * 5. Events grid/list display
-     * 6. Event detail modal/popup
-     * 7. Loading and error states
-     *
-     * Components to render:
-     * - EventsHeader -> INPUT: none; OUTPUT: section title and description
-     * - StatusFilter -> INPUT: selectedStatus; OUTPUT: status tabs
-     * - CategoryFilter -> INPUT: categories, selectedCategory; OUTPUT: category dropdown
-     * - SearchBar -> INPUT: searchQuery; OUTPUT: search input
-     * - EventsGrid -> INPUT: filteredEvents; OUTPUT: events display
-     * - EventCard -> INPUT: event data; OUTPUT: event card with RSVP
-     * - EventModal -> INPUT: selectedEvent; OUTPUT: event details popup
-     */
+  // TODO: Implement actual event fetching
+  const events: Event[] = []; // Replace with actual event data
 
-    <Box>
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "48px",
+        py: "64px",
+      }}
+    >
       <EventsHeader />
+      <EventsBody events={events} />
     </Box>
   );
 }
