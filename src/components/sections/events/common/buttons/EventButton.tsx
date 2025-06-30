@@ -144,10 +144,11 @@ export default function EventButton({
     justifyContent: "center",
     flexDirection: logoPosition === "right" ? "row-reverse" : "row",
     gap: logo ? `${gap}px` : 0,
-    paddingTop: "12px",
+    paddingTop: "6px",
     paddingRight: "25px",
-    paddingBottom: "12px",
+    paddingBottom: "6px",
     paddingLeft: "25px",
+    overflow: "visible",
   };
 
   // Logo rendering function
@@ -177,7 +178,7 @@ export default function EventButton({
     fontFamily: poppins.style.fontFamily,
     fontWeight: 500,
     fontSize: "20px",
-    lineHeight: "100%",
+    lineHeight: "140%",
     letterSpacing: "-3%",
     background:
       "linear-gradient(265.86deg, #FFFFFF 29.57%, rgba(236, 236, 236, 0.46) 114.98%)",
@@ -186,7 +187,6 @@ export default function EventButton({
     WebkitTextFillColor: "transparent",
     textAlign: "center",
     whiteSpace: "nowrap",
-    overflow: "visible",
     flexShrink: 0,
   };
 

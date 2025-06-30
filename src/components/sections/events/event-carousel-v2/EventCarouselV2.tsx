@@ -104,77 +104,86 @@ export default function EventCarouselV2({
   return (
     <Box
       sx={{
-        position: "relative",
-        width: containerWidth,
-        height: containerHeight,
-        margin: "0 auto", // Center the carousel
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "20px",
         ...sx,
       }}
     >
-      {/* Left Glass Button - Floating on the side */}
-      {totalPages > 1 && currentPage > 0 && (
-        <GlassArrowButton
-          onClick={goToPreviousPage}
-          direction="left"
-          size={50}
-          sx={{
-            position: "absolute",
-            left: -25, // Position outside the container, floating above cards
-            top: "50%",
-            marginTop: "-25px", // Half of button size (50px) to center vertically
-            zIndex: 10,
-          }}
-        />
-      )}
-      {/* Right Glass Button - Floating on the side */}
-      {totalPages > 1 && currentPage < totalPages - 1 && (
-        <GlassArrowButton
-          onClick={goToNextPage}
-          direction="right"
-          size={50}
-          sx={{
-            position: "absolute",
-            right: -25, // Position outside the container, floating above cards
-            top: "50%",
-            marginTop: "-25px", // Half of button size (50px) to center vertically
-            zIndex: 10,
-          }}
-        />
-      )}
-      {/* Cards Container - No margins, cards fill the exact width */}
+      {/* Carousel Container */}
       <Box
         sx={{
-          display: "flex",
-          gap: `${gap}px`,
-          width: "100%",
-          height: "100%",
-          alignItems: "flex-start",
-          transition: "all 0.3s ease-in-out",
+          position: "relative",
+          width: containerWidth,
+          height: containerHeight,
         }}
       >
-        {/* Render only current page events */}
-        {currentPageEvents.map((event) => (
-          <Box
-            key={event.id}
+        {/* Left Glass Button - Floating on the side */}
+        {totalPages > 1 && currentPage > 0 && (
+          <GlassArrowButton
+            onClick={goToPreviousPage}
+            direction="left"
+            size={50}
             sx={{
-              width: eventCardWidth,
-              height: eventCardHeight,
-              flexShrink: 0,
+              position: "absolute",
+              left: -25, // Position outside the container, floating above cards
+              top: "50%",
+              marginTop: "-25px", // Half of button size (50px) to center vertically
+              zIndex: 10,
             }}
-          >
-            <EventCardV2
-              event={event}
-              showGetTicket={showGetTicket}
-              onGetTicketClick={() => onGetTicketClick?.(event)}
-              width={eventCardWidth}
-              height={eventCardHeight}
-            />
-          </Box>
-        ))}
-        {/* Fill remaining slots if current page has fewer events than eventsPerPage */}
-        {currentPageEvents.length < eventsPerPage &&
-          Array.from({ length: eventsPerPage - currentPageEvents.length }).map(
-            (_, index) => (
+          />
+        )}
+        {/* Right Glass Button - Floating on the side */}
+        {totalPages > 1 && currentPage < totalPages - 1 && (
+          <GlassArrowButton
+            onClick={goToNextPage}
+            direction="right"
+            size={50}
+            sx={{
+              position: "absolute",
+              right: -25, // Position outside the container, floating above cards
+              top: "50%",
+              marginTop: "-25px", // Half of button size (50px) to center vertically
+              zIndex: 10,
+            }}
+          />
+        )}
+        {/* Cards Container - No margins, cards fill the exact width */}
+        <Box
+          sx={{
+            display: "flex",
+            gap: `${gap}px`,
+            width: "100%",
+            height: "100%",
+            alignItems: "flex-start",
+            transition: "all 0.3s ease-in-out",
+          }}
+        >
+          {/* Render only current page events */}
+          {currentPageEvents.map((event) => (
+            <Box
+              key={event.id}
+              sx={{
+                width: eventCardWidth,
+                height: eventCardHeight,
+                flexShrink: 0,
+              }}
+            >
+              <EventCardV2
+                event={event}
+                showGetTicket={showGetTicket}
+                onGetTicketClick={() => onGetTicketClick?.(event)}
+                width={eventCardWidth}
+                height={eventCardHeight}
+              />
+            </Box>
+          ))}
+          {/* Fill remaining slots if current page has fewer events than eventsPerPage */}
+          {currentPageEvents.length < eventsPerPage &&
+            Array.from({
+              length: eventsPerPage - currentPageEvents.length,
+            }).map((_, index) => (
               <Box
                 key={`empty-${index}`}
                 sx={{
@@ -184,20 +193,18 @@ export default function EventCarouselV2({
                   visibility: "hidden", // Invisible placeholder to maintain layout
                 }}
               />
-            ),
-          )}
-      </Box>{" "}
-      {/* Page Indicator Dots (Optional) */}
+            ))}
+        </Box>
+      </Box>
+
+      {/* Page Indicator Dots - Below the carousel */}
       {totalPages > 1 && (
         <Box
           sx={{
-            position: "absolute",
-            bottom: 35, // Position closer to the cards (reduced from -30)
-            left: "50%",
-            transform: "translateX(-50%)",
             display: "flex",
             gap: 1,
-            zIndex: 10,
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {Array.from({ length: totalPages }).map((_, index) => (
@@ -205,8 +212,8 @@ export default function EventCarouselV2({
               key={index}
               onClick={() => setCurrentPage(index)}
               sx={{
-                width: 8,
-                height: 8,
+                width: index === currentPage ? 12 : 8,
+                height: index === currentPage ? 12 : 8,
                 borderRadius: "50%",
                 backgroundColor:
                   index === currentPage
@@ -214,10 +221,12 @@ export default function EventCarouselV2({
                     : "rgba(255, 255, 255, 0.4)",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "#ffffff",
-                  transform: "scale(1.4)",
-                },
+                ...(index !== currentPage && {
+                  "&:hover": {
+                    backgroundColor: "#ffffff",
+                    transform: "scale(1.4)",
+                  },
+                }),
               }}
             />
           ))}
