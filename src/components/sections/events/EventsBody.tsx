@@ -25,55 +25,49 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
   const [activeFilter, setActiveFilter] = useState<string>("upcoming");
   const [isSortActive, setIsSortActive] = useState(false);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Track search term
+  const [allSearchResults, setAllSearchResults] = useState<Event[]>(events); // Store all search results
 
-  // Initialize filtered events when component mounts or events change
-  useEffect(() => {
-    // Filter events based on the current active filter
-    const filtered = events.filter((event) => {
-      if (activeFilter === "past") {
+  // Apply both search and filter
+  const applyFilters = (searchResults: Event[], filterType: string) => {
+    return searchResults.filter((event) => {
+      if (filterType === "past") {
         return event.status === "past";
-      } else if (activeFilter === "upcoming") {
+      } else if (filterType === "upcoming") {
         return event.status === "upcoming";
       }
       return true; // Show all events for any other filter
     });
+  };
+
+  // Initialize filtered events when component mounts or events change
+  useEffect(() => {
+    // If there's a search term, use search results, otherwise use all events
+    const eventsToFilter = searchTerm ? allSearchResults : events;
+    const filtered = applyFilters(eventsToFilter, activeFilter);
 
     setFilteredEvents(filtered);
     setSortedEvents([]);
     setIsSortActive(false);
-  }, [events, activeFilter]);
+  }, [events, activeFilter, allSearchResults, searchTerm]);
 
   // Handle filter changes
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
-
-    // Filter events based on status
-    const filtered = events.filter((event) => {
-      if (filter === "past") {
-        return event.status === "past";
-      } else if (filter === "upcoming") {
-        return event.status === "upcoming";
-      }
-      return true; // Show all events for any other filter
-    });
-
-    setFilteredEvents(filtered);
-    // Reset sort when filter changes
-    setSortedEvents([]);
-    setIsSortActive(false);
+    // Don't reset search - let useEffect handle the filtering
   };
 
   // Handle search results
-  const handleSearchResults = (searchResults: Event[]) => {
-    // Further filter search results based on active filter
-    const filteredSearchResults = searchResults.filter((event) => {
-      if (activeFilter === "past") {
-        return event.status === "past";
-      } else if (activeFilter === "upcoming") {
-        return event.status === "upcoming";
-      }
-      return true; // Show all events for any other filter
-    });
+  const handleSearchResults = (
+    searchResults: Event[],
+    searchQuery?: string,
+  ) => {
+    // Store the search term and all search results
+    setSearchTerm(searchQuery || "");
+    setAllSearchResults(searchResults);
+
+    // Filter search results based on active filter
+    const filteredSearchResults = applyFilters(searchResults, activeFilter);
 
     setFilteredEvents(filteredSearchResults);
     // Reset sort when search changes
