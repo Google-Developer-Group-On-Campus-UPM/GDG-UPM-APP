@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Event } from "@/constants/types/events.type";
 import { Poppins } from "next/font/google";
 import EventButton from "./common/buttons/EventButton";
@@ -20,22 +20,65 @@ interface EventsBodyProps {
 }
 
 export default function EventsBody({ events = [] }: EventsBodyProps) {
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [sortedEvents, setSortedEvents] = useState<Event[]>(events);
   const [activeFilter, setActiveFilter] = useState<string>("upcoming");
   const [isSortActive, setIsSortActive] = useState(false);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
+  // Initialize filtered events when component mounts or events change
+  useEffect(() => {
+    // Filter events based on the current active filter
+    const filtered = events.filter((event) => {
+      if (activeFilter === "past") {
+        return event.status === "past";
+      } else if (activeFilter === "upcoming") {
+        return event.status === "upcoming";
+      }
+      return true; // Show all events for any other filter
+    });
+
+    setFilteredEvents(filtered);
+    setSortedEvents([]);
+    setIsSortActive(false);
+  }, [events, activeFilter]);
+
   // Handle filter changes
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
-    // TODO: Implement actual filtering logic based on event status
-    // For now, we'll just update state
+
+    // Filter events based on status
+    const filtered = events.filter((event) => {
+      if (filter === "past") {
+        return event.status === "past";
+      } else if (filter === "upcoming") {
+        return event.status === "upcoming";
+      }
+      return true; // Show all events for any other filter
+    });
+
+    setFilteredEvents(filtered);
+    // Reset sort when filter changes
+    setSortedEvents([]);
+    setIsSortActive(false);
   };
 
   // Handle search results
   const handleSearchResults = (searchResults: Event[]) => {
-    setFilteredEvents(searchResults);
+    // Further filter search results based on active filter
+    const filteredSearchResults = searchResults.filter((event) => {
+      if (activeFilter === "past") {
+        return event.status === "past";
+      } else if (activeFilter === "upcoming") {
+        return event.status === "upcoming";
+      }
+      return true; // Show all events for any other filter
+    });
+
+    setFilteredEvents(filteredSearchResults);
+    // Reset sort when search changes
+    setSortedEvents([]);
+    setIsSortActive(false);
   };
 
   // Handle sort
