@@ -107,7 +107,7 @@ export default function EventCarouselV2({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "20px",
+        height: containerHeight + 40, // Reserve space for page indicators
         ...sx,
       }}
     >
@@ -197,17 +197,19 @@ export default function EventCarouselV2({
         </Box>
       </Box>
 
-      {/* Page Indicator Dots - Below the carousel */}
-      {totalPages > 1 && (
-        <Box
-          sx={{
-            display: "flex",
-            gap: 1,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {Array.from({ length: totalPages }).map((_, index) => (
+      {/* Page Indicator Dots - Fixed position with reserved space */}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          height: "32px", // Fixed height for page indicators area
+          marginTop: "20px",
+        }}
+      >
+        {totalPages > 1 &&
+          Array.from({ length: totalPages }).map((_, index) => (
             <Box
               key={index}
               onClick={() => setCurrentPage(index)}
@@ -230,8 +232,7 @@ export default function EventCarouselV2({
               }}
             />
           ))}
-        </Box>
-      )}
+      </Box>
     </Box>
   );
 }
