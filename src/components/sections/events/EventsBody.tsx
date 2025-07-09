@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Event } from "@/constants/types/events.type";
 import { Poppins } from "next/font/google";
 import EventButton from "./common/buttons/EventButton";
@@ -20,22 +20,59 @@ interface EventsBodyProps {
 }
 
 export default function EventsBody({ events = [] }: EventsBodyProps) {
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [sortedEvents, setSortedEvents] = useState<Event[]>(events);
   const [activeFilter, setActiveFilter] = useState<string>("upcoming");
   const [isSortActive, setIsSortActive] = useState(false);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Track search term
+  const [allSearchResults, setAllSearchResults] = useState<Event[]>(events); // Store all search results
+
+  // Apply both search and filter
+  const applyFilters = (searchResults: Event[], filterType: string) => {
+    return searchResults.filter((event) => {
+      if (filterType === "past") {
+        return event.status === "past";
+      } else if (filterType === "upcoming") {
+        return event.status === "upcoming";
+      }
+      return true; // Show all events for any other filter
+    });
+  };
+
+  // Initialize filtered events when component mounts or events change
+  useEffect(() => {
+    // If there's a search term, use search results, otherwise use all events
+    const eventsToFilter = searchTerm ? allSearchResults : events;
+    const filtered = applyFilters(eventsToFilter, activeFilter);
+
+    setFilteredEvents(filtered);
+    setSortedEvents([]);
+    setIsSortActive(false);
+  }, [events, activeFilter, allSearchResults, searchTerm]);
 
   // Handle filter changes
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
-    // TODO: Implement actual filtering logic based on event status
-    // For now, we'll just update state
+    // Don't reset search - let useEffect handle the filtering
   };
 
   // Handle search results
-  const handleSearchResults = (searchResults: Event[]) => {
-    setFilteredEvents(searchResults);
+  const handleSearchResults = (
+    searchResults: Event[],
+    searchQuery?: string,
+  ) => {
+    // Store the search term and all search results
+    setSearchTerm(searchQuery || "");
+    setAllSearchResults(searchResults);
+
+    // Filter search results based on active filter
+    const filteredSearchResults = applyFilters(searchResults, activeFilter);
+
+    setFilteredEvents(filteredSearchResults);
+    // Reset sort when search changes
+    setSortedEvents([]);
+    setIsSortActive(false);
   };
 
   // Handle sort

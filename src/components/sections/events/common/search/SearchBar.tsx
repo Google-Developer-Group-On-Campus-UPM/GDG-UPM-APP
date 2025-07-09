@@ -15,7 +15,7 @@ const poppins = Poppins({
 
 interface SearchBarProps {
   events: Event[];
-  onSearchResults: (filteredEvents: Event[]) => void;
+  onSearchResults: (filteredEvents: Event[], searchTerm?: string) => void;
   placeholder?: string;
   width?: number;
   height?: number;
@@ -59,7 +59,7 @@ export default function SearchBar({
     (value: string) => {
       setSearchTerm(value);
       const filteredEvents = searchEvents(events, value);
-      onSearchResults(filteredEvents);
+      onSearchResults(filteredEvents, value);
     },
     [events, onSearchResults],
   );
