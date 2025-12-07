@@ -13,11 +13,7 @@
  * Used for displaying team members on the website and managing member data.
  */
 
-import { DocumentData } from "firebase/firestore";
-
-export interface DataWithId extends DocumentData {
-  id?: string;
-}
+import { DataWithId } from "./base.type";
 
 export interface Role extends DataWithId {
   title: string;
@@ -30,16 +26,16 @@ export interface Department extends DataWithId {
 }
 export interface TeamMember extends DataWithId {
   name: string | null;
-	role: string | null;
-	image: string | null;
-	interest: string | null;
-	social: {
-		linkedin: string;
-		[key: string]: string;
-	};
-	isActive: boolean;
-	currentRoleID?: string;
-	currentDepartmentID?: string;
+  role: string | null;
+  image: string | null;
+  interest: string | null;
+  social: {
+    linkedin: string;
+    [key: string]: string;
+  };
+  isActive: boolean;
+  currentRoleID?: string;
+  currentDepartmentID?: string;
 }
 
 /**
@@ -69,4 +65,3 @@ export type DepartmentList =
 export type TeamStructure = {
   [key in DepartmentList]: TeamMember[];
 };
-

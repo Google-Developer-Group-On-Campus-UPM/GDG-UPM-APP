@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { Firestore, getFirestore } from "firebase/firestore";
+import { FirebaseApp } from "firebase/app";
 import firebaseConfig from "@/config/firebaseConfig";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -13,9 +14,9 @@ import firebaseConfig from "@/config/firebaseConfig";
 
 let firestore: Firestore | null = null;
 
-export const initFirebase = (): { db: Firestore } => {
+const initFirebase = (): { db: Firestore } => {
   if (!firestore) {
-    const app = initializeApp(firebaseConfig);
+    const app: FirebaseApp = initializeApp(firebaseConfig);
     firestore = getFirestore(app);
 
     isSupported().then((result) => {
@@ -25,3 +26,5 @@ export const initFirebase = (): { db: Firestore } => {
 
   return { db: firestore };
 };
+
+export const db = initFirebase().db;
