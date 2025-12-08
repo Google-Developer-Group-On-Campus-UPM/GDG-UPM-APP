@@ -35,7 +35,7 @@ const footerLinks = {
     title: "PROGRAMS",
     links: [
       { label: "Study Jams", href: "/programs/jams" },
-      { label: "DevFest UPM", href: "/programs/devfest/upm" }, // may use query params e.g. /upm?year=2025
+      { label: "DevFest UPM", href: "/programs/devfest/upm" },
       { label: "Tech Talks", href: "/programs/tech-talks" },
       { label: "Hackathons", href: "/programs/hackathons" },
       { label: "Workshops", href: "/programs/workshops" },
