@@ -24,7 +24,6 @@ export default function FooterBackground() {
         alt="Footer Background"
         fill
         style={{ objectFit: "cover" }}
-        priority
       />
     </Box>
   );

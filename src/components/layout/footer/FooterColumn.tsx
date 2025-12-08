@@ -64,23 +64,9 @@ export default function FooterColumn({ title, links }: FooterColumnProps) {
               whiteSpace: "normal",
               display: "inline-block",
               width: "fit-content",
-              paddingBottom: "2px",
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                width: "0%",
-                height: "1px",
-                backgroundColor: "#ffffff",
-                transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              },
               "&:hover": {
                 opacity: 1,
-                transform: "translateX(4px)",
-                "&::after": {
-                  width: "100%",
-                },
+                transform: "translateX(1px)",
               },
             }}
           >

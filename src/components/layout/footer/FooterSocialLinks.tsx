@@ -4,26 +4,21 @@
  * Renders the social media icon buttons in the footer.
  */
 
-import { Facebook, Instagram, LinkedIn, Twitter } from "@mui/icons-material";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import {
+  Facebook,
+  Instagram,
+  LinkedIn,
+  Twitter,
+  YouTube,
+} from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 
 export default function FooterSocialLinks() {
   const socialLinks = [
     {
-      href: "https://facebook.com/gdgupm",
-      icon: <Facebook sx={{ fontSize: "24px" }} />,
-      label: "Facebook",
-    },
-    {
       href: "https://instagram.com/gdgupm",
       icon: <Instagram sx={{ fontSize: "24px" }} />,
       label: "Instagram",
-    },
-    {
-      href: "https://twitter.com/gdgupm",
-      icon: <Twitter sx={{ fontSize: "24px" }} />,
-      label: "Twitter",
     },
     {
       href: "https://linkedin.com/company/gdgupm",
@@ -31,9 +26,19 @@ export default function FooterSocialLinks() {
       label: "LinkedIn",
     },
     {
-      href: "https://github.com/Google-Developer-Group-On-Campus-UPM",
-      icon: <GitHubIcon sx={{ fontSize: "24px" }} />,
-      label: "GitHub",
+      href: "https://twitter.com/gdgupm",
+      icon: <Twitter sx={{ fontSize: "24px" }} />,
+      label: "Twitter",
+    },
+    {
+      href: "https://youtube.com/gdgupm",
+      icon: <YouTube sx={{ fontSize: "24px" }} />,
+      label: "YouTube",
+    },
+    {
+      href: "https://facebook.com/gdgupm",
+      icon: <Facebook sx={{ fontSize: "24px" }} />,
+      label: "Facebook",
     },
   ];
 
@@ -43,7 +48,8 @@ export default function FooterSocialLinks() {
       alignItems="center"
       sx={{
         flexShrink: 0,
-        gap: { xs: "12px", md: "16px" },
+        gap: { xs: "2px", md: "4px" },
+        opacity: 0.8,
       }}
     >
       {socialLinks.map((social, index) => (
