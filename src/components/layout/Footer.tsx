@@ -230,6 +230,7 @@ export default function Footer() {
             >
               DEVSPOTLIGHT NEWSLETTER
             </Typography>
+            {/* TODO: Update this to link to actual newsletter subscription page/endpoint instead of "/" */}
             <CTAButton text="Subscribe" href="/" />
           </Stack>
         </Stack>
