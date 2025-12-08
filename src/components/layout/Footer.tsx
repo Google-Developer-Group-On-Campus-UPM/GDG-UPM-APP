@@ -20,45 +20,46 @@ import {
 import Image from "next/image";
 import CTAButton from "../ui/CTAButton";
 
+// TODO: Create pages for all the footer links below - currently most routes don't exist yet
 const footerLinks = {
   community: {
     title: "COMMUNITY",
     links: [
-      { label: "About GDG on Campus UPM", href: "/community/info" },
-      { label: "Our Mission", href: "/community/mission" },
-      { label: "Events & Activities", href: "/community/events" },
-      { label: "Meet the Team", href: "/community/team" },
-      { label: "Join the Community", href: "/community/join" },
+      { label: "About GDG on Campus UPM", href: "/community/info" }, // TODO: Create /community/info page
+      { label: "Our Mission", href: "/community/mission" }, // TODO: Create /community/mission page
+      { label: "Events & Activities", href: "/community/events" }, // TODO: Create /community/events page
+      { label: "Meet the Team", href: "/community/team" }, // TODO: Create /community/team page
+      { label: "Join the Community", href: "/community/join" }, // TODO: Create /community/join page
     ],
   },
   programs: {
     title: "PROGRAMS",
     links: [
-      { label: "Study Jams", href: "/programs/jams" },
-      { label: "DevFest UPM", href: "/programs/devfest/upm" }, // may use query params e.g. /upm?year=2025
-      { label: "Tech Talks", href: "/programs/tech-talks" },
-      { label: "Hackathons", href: "/programs/hackathons" },
-      { label: "Workshops", href: "/programs/workshops" },
+      { label: "Study Jams", href: "/programs/jams" }, // TODO: Create /programs/jams page
+      { label: "DevFest UPM", href: "/programs/devfest/upm" }, // TODO: Create /programs/devfest/upm page (may use query params e.g. /upm?year=2025)
+      { label: "Tech Talks", href: "/programs/tech-talks" }, // TODO: Create /programs/tech-talks page
+      { label: "Hackathons", href: "/programs/hackathons" }, // TODO: Create /programs/hackathons page
+      { label: "Workshops", href: "/programs/workshops" }, // TODO: Create /programs/workshops page
     ],
   },
   resources: {
     title: "RESOURCES",
     links: [
-      { label: "Learning Materials", href: "/learning/materials" },
-      { label: "GDG CodeLabs", href: "/learning/gdg/codelabs" },
-      { label: "Speaker Decks", href: "/learning/speakers" },
-      { label: "Blog & Articles", href: "/blog" },
-      { label: "Project Showcase", href: "/projects" },
+      { label: "Learning Materials", href: "/learning/materials" }, // TODO: Create /learning/materials page
+      { label: "GDG CodeLabs", href: "/learning/gdg/codelabs" }, // TODO: Create /learning/gdg/codelabs page
+      { label: "Speaker Decks", href: "/learning/speakers" }, // TODO: Create /learning/speakers page
+      { label: "Blog & Articles", href: "/blog" }, // TODO: Create /blog page
+      { label: "Project Showcase", href: "/projects" }, // TODO: Create /projects page
     ],
   },
   support: {
     title: "SUPPORT",
     links: [
-      { label: "FAQs", href: "/faqs" },
-      { label: "Volunteer with Us", href: "/volunteer" },
-      { label: "Partnership & Sponsorships", href: "/partnerships" },
-      { label: "Contact Us", href: "/contact" },
-      { label: "Community Guidelines", href: "/guidelines" },
+      { label: "FAQs", href: "/faqs" }, // TODO: Create /faqs page
+      { label: "Volunteer with Us", href: "/volunteer" }, // TODO: Create /volunteer page
+      { label: "Partnership & Sponsorships", href: "/partnerships" }, // TODO: Create /partnerships page
+      { label: "Contact Us", href: "/contact" }, // TODO: Create /contact page
+      { label: "Community Guidelines", href: "/guidelines" }, // TODO: Create /guidelines page
     ],
   },
 };
