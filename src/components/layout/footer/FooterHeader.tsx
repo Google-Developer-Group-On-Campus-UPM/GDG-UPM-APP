@@ -13,16 +13,21 @@ export default function FooterHeader() {
       href="https://github.com/Google-Developer-Group-On-Campus-UPM"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Visit our GitHub organization"
       sx={{
         color: "#ffffff",
         display: "inline-flex",
-        transition: "opacity 0.2s",
+        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         "&:hover": {
-          opacity: 0.8,
+          transform: "scale(1.05)",
+          opacity: 0.9,
+        },
+        "&:active": {
+          transform: "scale(0.98)",
         },
       }}
     >
-      <GitHubIcon sx={{ fontSize: "63px" }} />
+      <GitHubIcon sx={{ fontSize: { xs: "48px", sm: "56px", md: "63px" } }} />
     </Link>
   );
 }

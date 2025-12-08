@@ -35,8 +35,8 @@ export default function Footer() {
         sx={{
           position: "relative",
           zIndex: 1,
-          px: { xs: "20px", sm: "40px", md: "60px", lg: "120px" },
-          py: { xs: "40px", md: "60px" },
+          px: { xs: "24px", sm: "48px", md: "72px", lg: "120px" },
+          py: { xs: "60px", sm: "80px", md: "100px" },
           maxWidth: "1920px",
           margin: "0 auto",
         }}
@@ -47,8 +47,8 @@ export default function Footer() {
           alignItems={{ xs: "flex-start", md: "center" }}
           justifyContent={{ xs: "center", md: "space-between" }}
           sx={{
-            mb: "80px",
-            gap: { xs: "30px", md: "20px" },
+            mb: { xs: "60px", md: "100px" },
+            gap: { xs: "40px", md: "32px" },
           }}
         >
           <FooterHeader />
@@ -62,9 +62,8 @@ export default function Footer() {
           alignItems={{ xs: "center", lg: "flex-start" }}
           sx={{
             width: "100%",
-            opacity: 1,
-            mb: "60px",
-            gap: { xs: "40px", md: "40px" },
+            mb: { xs: "60px", md: "80px" },
+            gap: { xs: "60px", md: "80px", lg: "100px" },
           }}
         >
           <FooterLinksSection />

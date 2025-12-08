@@ -43,7 +43,7 @@ export default function FooterSocialLinks() {
       alignItems="center"
       sx={{
         flexShrink: 0,
-        gap: "16px",
+        gap: { xs: "12px", md: "16px" },
       }}
     >
       {socialLinks.map((social, index) => (
@@ -55,13 +55,16 @@ export default function FooterSocialLinks() {
           rel="noopener noreferrer"
           aria-label={social.label}
           sx={{
-            width: "24px",
-            height: "24px",
+            width: { xs: "40px", md: "44px" },
+            height: { xs: "40px", md: "44px" },
             padding: 0,
             color: "#ffffff",
-            opacity: 0.8,
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             "&:hover": {
-              opacity: 1,
+              transform: "translateY(-3px) scale(1.05)",
+            },
+            "&:active": {
+              transform: "translateY(-1px) scale(1.02)",
             },
           }}
         >
