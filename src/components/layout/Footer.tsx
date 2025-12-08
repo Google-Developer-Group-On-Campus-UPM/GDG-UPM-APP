@@ -115,7 +115,7 @@ const FooterColumn = ({
             fontSize: "20px",
             lineHeight: "280%",
             color: "#ffffff",
-            opacity: 1,
+            opacity: 0.8,
             transition: "opacity 0.2s",
             wordWrap: "break-word",
             overflowWrap: "break-word",
@@ -337,7 +337,6 @@ export default function Footer() {
             sx={{
               flexShrink: 0,
               gap: "16px",
-              opacity: 0.8,
             }}
           >
             <IconButton
@@ -350,9 +349,9 @@ export default function Footer() {
                 height: "24px",
                 padding: 0,
                 color: "#ffffff",
-                opacity: 1,
+                opacity: 0.8,
                 "&:hover": {
-                  opacity: 0.7,
+                  opacity: 1,
                 },
               }}
             >
@@ -369,9 +368,9 @@ export default function Footer() {
                 height: "24px",
                 padding: 0,
                 color: "#ffffff",
-                opacity: 1,
+                opacity: 0.8,
                 "&:hover": {
-                  opacity: 0.7,
+                  opacity: 1,
                 },
               }}
             >
@@ -388,9 +387,9 @@ export default function Footer() {
                 height: "24px",
                 padding: 0,
                 color: "#ffffff",
-                opacity: 1,
+                opacity: 0.8,
                 "&:hover": {
-                  opacity: 0.7,
+                  opacity: 1,
                 },
               }}
             >
@@ -407,9 +406,9 @@ export default function Footer() {
                 height: "24px",
                 padding: 0,
                 color: "#ffffff",
-                opacity: 1,
+                opacity: 0.8,
                 "&:hover": {
-                  opacity: 0.7,
+                  opacity: 1,
                 },
               }}
             >
@@ -426,9 +425,9 @@ export default function Footer() {
                 height: "24px",
                 padding: 0,
                 color: "#ffffff",
-                opacity: 1,
+                opacity: 0.8,
                 "&:hover": {
-                  opacity: 0.7,
+                  opacity: 1,
                 },
               }}
             >
