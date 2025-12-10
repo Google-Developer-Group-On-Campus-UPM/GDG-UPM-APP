@@ -3,7 +3,7 @@
  *
  * This is the main layout that wraps all pages in the application.
  * It sets up:
- * 1. Global fonts (Geist Sans & Geist Mono)
+ * 1. Global fonts (Poppins & Geist Mono)
  * 2. Global CSS styles
  * 3. HTML document structure
  * 4. SEO metadata
@@ -12,14 +12,15 @@
  */
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 
 // Font configurations
-// Geist Sans - Primary font for headings and body text
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Poppins - Primary font for headings and body text
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 // Geist Mono - Monospace font for code and technical content
@@ -90,7 +91,7 @@ export default function RootLayout({
      * 5. Children components (pages)
      *
      * Font Variables Applied:
-     * - --font-geist-sans -> INPUT: Geist font config; OUTPUT: CSS variable
+     * - --font-poppins -> INPUT: Poppins font config; OUTPUT: CSS variable
      * - --font-geist-mono -> INPUT: Geist Mono config; OUTPUT: CSS variable
      *
      * Global Providers (TODO):
@@ -100,9 +101,7 @@ export default function RootLayout({
      */
 
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${poppins.variable} ${geistMono.variable} antialiased`}>
         {/* Global Error Boundary */}
         {/* 
         <ErrorBoundary onError={handleGlobalError}>
