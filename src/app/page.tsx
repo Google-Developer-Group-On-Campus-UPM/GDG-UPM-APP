@@ -1,33 +1,19 @@
 "use client";
 
+import Footer from "@/components/layout/Footer";
 import NavBar from "@/components/layout/Navbar";
-import HeroSection from "@/components/sections/home/HomeSection";
-import EventsSection from "@/components/sections/events/EventsSection";
 import AnnouncementSection from "@/components/sections/announcement/AnnouncementSection";
+import EventsSection from "@/components/sections/events/EventsSection";
+import HeroSection from "@/components/sections/home/HomeSection";
+
 export default function App() {
-  // Your logic goes here
-
-  /**
-   *  1. Initialize Firebase
-   *  2. Fetch data from Firebase
-   *  3. Store data in state variables
-   *  4. Render components with fetched data
-   */
-
-  // Fetch teams from Firebase
-  // const teams = await firebase.getTeams();
-
-  // Fetch events from Firebase
-  // const events = await firebase.getEvents();
-
   return (
     /**
      * Navbar Component
      * 1. Hero Section
      * 2. About Section
-     * 3. Teams Section (from Firebase) -> INPUT: none; OUTPUT: teams
-     * 4. Events Section (from Firebase) -> INPUT: none; OUTPUT: events
-     * 5. Partners Section
+     * 3. Events Section (from Firebase) -> INPUT: none; OUTPUT: events
+     * 3. Testimonials Section
      * Footer Component
      */
 
@@ -36,16 +22,7 @@ export default function App() {
       <HeroSection />
       <AnnouncementSection />
       <EventsSection />
-
-      {/*     
-        <Navbar onHandleChange={onHandleChange} />
-        <HomeSection />
-        <AboutSection />
-        <TeamsSection teams={teams} />
-        <EventsSection events={events} />
-        <PartnersSection />
-        <Footer /> 
-      */}
+      <Footer />
     </>
   );
 }
