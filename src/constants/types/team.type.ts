@@ -13,6 +13,7 @@
  * Used for displaying team members on the website and managing member data.
  */
 
+import { DocumentReference } from "firebase/firestore";
 import { DataWithId } from "./base.type";
 
 export interface Role extends DataWithId {
@@ -25,6 +26,8 @@ export interface Department extends DataWithId {
   description?: string;
 }
 export interface TeamMember extends DataWithId {
+  id?: string;
+  ref?: DocumentReference;
   name: string | null;
   role: string | null;
   image: string | null;

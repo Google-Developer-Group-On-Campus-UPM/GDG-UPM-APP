@@ -30,6 +30,7 @@ class BaseService {
 
       return querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        ref: doc.ref,
         ...doc.data(),
       })) as DataWithId[];
     } catch (error) {
