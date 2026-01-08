@@ -79,7 +79,7 @@ export default function AdminPage() {
       <main className="flex h-screen items-center justify-center">
         <button
           onClick={login}
-          className="bg-black text-white px-6 py-3 rounded"
+          className="bg-blue-700 text-white px-6 py-3 rounded hover:cursor-pointer"
         >
           Sign in with Google
         </button>

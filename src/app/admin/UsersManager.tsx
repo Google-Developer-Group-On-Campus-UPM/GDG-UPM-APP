@@ -1,9 +1,9 @@
 "use client";
 
-import { TeamMember } from "@/constants/types/team.type";
+import { TeamMember, Department } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
 import { useState } from "react";
-import { Edit, Delete } from "@mui/icons-material";
+import { Add, Edit, Delete } from "@mui/icons-material";
 
 type UsersManagerProps = {
   role: string;
@@ -14,6 +14,7 @@ const service = new TeamService();
 export default function UsersManager({ role }: UsersManagerProps) {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<TeamMember[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
 
   if (role !== "admin" && role !== "editor") {
     return <div>Unauthorised</div>;
@@ -22,7 +23,9 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const loadData = async () => {
     try {
       const users = await service.getUsers();
+      const departments = await service.getDepartments();
       setUsers(users);
+      setDepartments(departments);
     } catch (error) {
       console.warn(error);
     } finally {
@@ -32,14 +35,24 @@ export default function UsersManager({ role }: UsersManagerProps) {
 
   loadData();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
     <div>
+      <div className="flex justify-between items-center mb-4 w-full">
+        <h1 className="text-xl font-semibold">Users</h1>
+        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer">
+          <Add className="w-5 h-5"></Add>
+          Add New
+        </button>
+      </div>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
               Name
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              Department
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
               Role
@@ -58,7 +71,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
-                    {user.name.charAt(0)}
+                    {user.name ? user.name.charAt(0) : "_"}
                   </div>
                   <div className="ml-4">
                     <div className="text-sm font-medium text-gray-900">
@@ -66,6 +79,13 @@ export default function UsersManager({ role }: UsersManagerProps) {
                     </div>
                   </div>
                 </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {user.currentDepartmentID
+                  ? (departments.find(
+                      (dept) => dept.id === user.currentDepartmentID,
+                    )?.name ?? "")
+                  : "None"}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {user.role}

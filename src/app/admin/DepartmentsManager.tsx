@@ -3,7 +3,7 @@
 import { Department } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
 import { useState } from "react";
-import { Edit, Delete } from "@mui/icons-material";
+import { Add, Edit, Delete } from "@mui/icons-material";
 
 type DepartmentsManagerProps = {
   role: string;
@@ -32,9 +32,16 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
 
   loadData();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
     <div>
+      <div className="flex justify-between items-center mb-4 w-full">
+        <h1 className="text-xl font-semibold">Departments</h1>
+        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer">
+          <Add className="w-5 h-5"></Add>
+          Add New
+        </button>
+      </div>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
