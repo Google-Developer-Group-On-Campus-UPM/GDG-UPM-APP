@@ -106,21 +106,21 @@ class TeamService extends BaseService {
   async updateUser(
     data: Partial<TeamMember>,
     user: DocumentReference,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     return this.updateData(data, user);
   }
 
   async updateRole(
     data: Partial<Role>,
     role: DocumentReference,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     return this.updateData(data, role);
   }
 
   async updateDepartment(
     data: Partial<Department>,
     department: DocumentReference,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     return this.updateData(data, department);
   }
 

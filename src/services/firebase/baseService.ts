@@ -1,6 +1,5 @@
 import {
   doc,
-  collection,
   getDoc,
   getDocs,
   setDoc,
@@ -13,7 +12,6 @@ import {
   DocumentReference,
   query,
   QueryConstraint,
-  where,
 } from "firebase/firestore";
 
 import { DataWithId } from "@/constants/types/base.type";

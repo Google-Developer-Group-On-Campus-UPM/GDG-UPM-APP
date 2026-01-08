@@ -102,7 +102,7 @@ class EventService extends BaseService {
   async updateEvent(
     data: Partial<Event>,
     event: DocumentReference,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     return this.updateData(data, event);
   }
 
