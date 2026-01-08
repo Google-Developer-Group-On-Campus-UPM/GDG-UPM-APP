@@ -2,6 +2,7 @@ jest.mock("firebase/app");
 jest.mock("firebase/analytics");
 
 jest.mock("firebase/firestore", () => ({
+  getFirestore: jest.fn(() => ({})),
   collection: jest.fn(),
   query: jest.fn(),
   where: jest.fn(),
