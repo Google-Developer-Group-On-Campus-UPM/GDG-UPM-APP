@@ -1,100 +1,112 @@
 "use client";
 
-export default function AdminSection() {
-  // Your admin logic goes here
+import { useEffect, useState } from "react";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth } from "@/services/firebase/firebase";
+import { db } from "@/services/firebase/firebase";
+import AdminSidebar from "./AdminSidebar";
+import EventsManager from "./EventsManager";
+import UsersManager from "./UsersManager";
+import RolesManager from "./RolesManger";
+import DepartmentsManager from "./DepartmentsManager";
 
-  /**
-   * Admin Dashboard Logic:
-   * 1. Check user authentication and admin permissions
-   * 2. Fetch current teams and events data
-   * 3. Handle CRUD operations for teams and events
-   * 4. Manage file uploads for images
-   * 5. Display admin statistics and analytics
-   */
+type Role = "admin" | "editor";
 
-  // Authentication and authorization
-  // const { user, isAuthenticated, isAdmin } = useAuth();
-  // const router = useRouter();
+const provider = new GoogleAuthProvider();
 
-  // Data management state
-  // const [teams, setTeams] = useState<Team[]>([]);
-  // const [events, setEvents] = useState<Event[]>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [activeTab, setActiveTab] = useState('dashboard');
+export default function AdminPage() {
+  const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<Role | null>(null);
+  const [activeSection, setActiveSection] = useState("events");
+  const [loading, setLoading] = useState(true);
 
-  // Redirect if not authenticated or not admin
-  // useEffect(() => {
-  //   if (!isAuthenticated || !isAdmin) {
-  //     router.push('/login');
-  //   }
-  // }, [isAuthenticated, isAdmin]);
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      if (!u) {
+        setUser(null);
+        setRole(null);
+        setLoading(false);
+        return;
+      }
 
-  // Fetch data on component mount
-  // useEffect(() => {
-  //   fetchAdminData();
-  // }, []);
+      // Admin?
+      const adminSnap = await getDoc(doc(db, "admins", u.email!));
+      if (adminSnap.exists()) {
+        setUser(u);
+        setRole("admin");
+        setLoading(false);
+        return;
+      }
 
-  // const fetchAdminData = async () => {
-  //   setLoading(true);
-  //   const [teamsData, eventsData] = await Promise.all([
-  //     teamService.getAllTeams(),
-  //     eventService.getAllEvents()
-  //   ]);
-  //   setTeams(teamsData);
-  //   setEvents(eventsData);
-  //   setLoading(false);
-  // };
+      // Editor?
+      const editorSnap = await getDoc(doc(db, "editors", u.email!));
+      if (editorSnap.exists()) {
+        setUser(u);
+        setRole("editor");
+        setLoading(false);
+        return;
+      }
 
-  // Team management functions
-  // const handleAddTeam = async (teamData: Partial<Team>) => {
-  //   const newTeam = await teamService.createTeam(teamData);
-  //   setTeams([...teams, newTeam]);
-  // };
+      // Unauthorized
+      await signOut(auth);
+      alert("Access denied");
+    });
 
-  // const handleUpdateTeam = async (id: string, teamData: Partial<Team>) => {
-  //   const updatedTeam = await teamService.updateTeam(id, teamData);
-  //   setTeams(teams.map(team => team.id === id ? updatedTeam : team));
-  // };
+    return () => unsub();
+  }, []);
 
-  // const handleDeleteTeam = async (id: string) => {
-  //   await teamService.deleteTeam(id);
-  //   setTeams(teams.filter(team => team.id !== id));
-  // };
+  async function login() {
+    await signInWithPopup(auth, provider);
+  }
 
-  // Event management functions
-  // const handleAddEvent = async (eventData: Partial<Event>) => {
-  //   const newEvent = await eventService.createEvent(eventData);
-  //   setEvents([...events, newEvent]);
-  // };
+  async function logout() {
+    await signOut(auth);
+    setUser(null);
+    setRole(null);
+  }
 
-  // const handleUpdateEvent = async (id: string, eventData: Partial<Event>) => {
-  //   const updatedEvent = await eventService.updateEvent(id, eventData);
-  //   setEvents(events.map(event => event.id === id ? updatedEvent : event));
-  // };
+  if (loading) return <p>Loading...</p>;
 
-  // const handleDeleteEvent = async (id: string) => {
-  //   await eventService.deleteEvent(id);
-  //   setEvents(events.filter(event => event.id !== id));
-  // };
-
-  return (
-    /**
-     * Admin Dashboard Structure:
-     * 1. Authentication guard and loading state
-     * 2. Navigation tabs (Dashboard, Teams, Events, Settings)
-     * 3. Dashboard overview with statistics
-     * 4. Teams management section
-     * 5. Events management section
-     * 6. Settings and configuration
-     *
-     * Components to render:
-     * - AdminNavigation -> INPUT: activeTab; OUTPUT: tab switching
-     * - DashboardOverview -> INPUT: teams, events; OUTPUT: statistics display
-     * - TeamsManagement -> INPUT: teams; OUTPUT: CRUD operations
-     * - EventsManagement -> INPUT: events; OUTPUT: CRUD operations
-     * - AdminSettings -> INPUT: user; OUTPUT: configuration options
-     */
-
-    <></>
-  );
+  if (!user || !role) {
+    return (
+      <main className="flex h-screen items-center justify-center">
+        <button
+          onClick={login}
+          className="bg-black text-white px-6 py-3 rounded"
+        >
+          Sign in with Google
+        </button>
+      </main>
+    );
+  } else
+    return (
+      <main className="grid grid-cols-[auto_1fr] bg-[#f4f3f2] dark:bg-[#222222] text-black dark:text-white">
+        <AdminSidebar
+          logout={logout}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        ></AdminSidebar>
+        <div className="p-8">
+          {activeSection === "events" && (
+            <EventsManager role={role}></EventsManager>
+          )}
+          {activeSection === "members" && (
+            <UsersManager role={role}></UsersManager>
+          )}
+          {activeSection === "roles" && (
+            <RolesManager role={role}></RolesManager>
+          )}
+          {activeSection === "departments" && (
+            <DepartmentsManager role={role}></DepartmentsManager>
+          )}
+        </div>
+      </main>
+    );
 }
