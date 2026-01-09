@@ -2,8 +2,10 @@
 
 import { TeamMember, Department } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
+import { handleDelete } from "./eventHandlers";
+import { EditUserModal } from "./Modals";
 
 type UsersManagerProps = {
   role: string;
@@ -15,6 +17,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<TeamMember[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [selectedUser, setSelectedUser] = useState<TeamMember | null>(null);
 
   if (role !== "admin" && role !== "editor") {
     return <div>Unauthorised</div>;
@@ -33,7 +36,9 @@ export default function UsersManager({ role }: UsersManagerProps) {
     }
   };
 
-  loadData();
+  useEffect(() => {
+    loadData();
+  }, []);
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
@@ -102,10 +107,16 @@ export default function UsersManager({ role }: UsersManagerProps) {
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button className="text-blue-600 hover:text-blue-900 mr-3">
+                <button
+                  onClick={() => setSelectedUser(user)}
+                  className="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer"
+                >
                   <Edit className="w-4 h-4" />
                 </button>
-                <button className="text-red-600 hover:text-red-900">
+                <button
+                  onClick={() => handleDelete(user)}
+                  className="text-red-600 hover:text-red-900 hover:cursor-pointer"
+                >
                   <Delete className="w-4 h-4" />
                 </button>
               </td>
@@ -113,6 +124,15 @@ export default function UsersManager({ role }: UsersManagerProps) {
           ))}
         </tbody>
       </table>
+      <EditUserModal
+        open={!!selectedUser}
+        user={selectedUser}
+        onClose={() => setSelectedUser(null)}
+        onSave={(updatedUser) => {
+          console.log(updatedUser);
+          // call service.updateUser(updatedUser)
+        }}
+      />
     </div>
   );
 }

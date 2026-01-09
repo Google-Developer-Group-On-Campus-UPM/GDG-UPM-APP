@@ -2,8 +2,9 @@
 
 import { Role } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
+import { handleDelete, BasicModal } from "./eventHandlers";
 
 type RolesManagerProps = {
   role: string;
@@ -14,6 +15,7 @@ const service = new TeamService();
 export default function RolesManager({ role }: RolesManagerProps) {
   const [loading, setLoading] = useState(true);
   const [roles, setRoles] = useState<Role[]>([]);
+  const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
   if (role !== "admin" && role !== "editor") {
     return <div>Unauthorised</div>;
@@ -30,7 +32,9 @@ export default function RolesManager({ role }: RolesManagerProps) {
     }
   };
 
-  loadData();
+  useEffect(() => {
+    loadData();
+  }, []);
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
@@ -54,25 +58,31 @@ export default function RolesManager({ role }: RolesManagerProps) {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {roles.map((user) => (
-            <tr key={user.id}>
+          {roles.map((role) => (
+            <tr key={role.id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
-                    {user.name.charAt(0)}
+                    {role.name.charAt(0)}
                   </div>
                   <div className="ml-4">
                     <div className="text-sm font-medium text-gray-900">
-                      {user.name}
+                      {role.name}
                     </div>
                   </div>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button className="text-blue-600 hover:text-blue-900 mr-3">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium hover:cursor-pointer">
+                <button
+                  onClick={() => setSelectedRole(role)}
+                  className="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer"
+                >
                   <Edit className="w-4 h-4" />
                 </button>
-                <button className="text-red-600 hover:text-red-900">
+                <button
+                  onClick={() => handleDelete(role)}
+                  className="text-red-600 hover:text-red-900 hover:cursor-pointer"
+                >
                   <Delete className="w-4 h-4" />
                 </button>
               </td>
@@ -80,6 +90,11 @@ export default function RolesManager({ role }: RolesManagerProps) {
           ))}
         </tbody>
       </table>
+      <BasicModal
+        open={!!selectedRole}
+        onClose={() => setSelectedRole(null)}
+        type={"roles"}
+      />
     </div>
   );
 }
