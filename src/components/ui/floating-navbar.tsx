@@ -90,15 +90,15 @@ export const FloatingNav = ({
             ease: [0.19, 1, 0.22, 1],
           }}
           className={cn(
-            "fixed inset-x-0 mx-auto z-[5000] flex items-center justify-center font-sans",
+            "fixed inset-x-0 mx-auto z-5000 flex items-center justify-center font-sans",
             "top-0 md:top-8 w-full md:w-fit md:min-w-[700px]",
             className
           )}
         >
           <div
             className={cn(
-              "flex w-full items-center justify-between md:justify-center md:gap-6 px-5 py-3 md:py-2 transition-colors duration-300 backdrop-blur-xl",
-              "rounded-none md:rounded-full border-b md:border border-white/[0.08] shadow-none md:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]",
+              "flex w-full items-center justify-between md:justify-center md:gap-6 px-5 py-3 md:py-2 transition-colors duration-300 backdrop-blur-md",
+              "rounded-none md:rounded-full shadow-none md:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]",
               "bg-black/60 md:bg-black/40"
             )}
           >
@@ -109,7 +109,7 @@ export const FloatingNav = ({
                 className="relative flex items-center gap-2 px-1 py-1"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {logoItem.icon && <span className="flex-shrink-0">{logoItem.icon}</span>}
+                {logoItem.icon && <span className="shrink-0">{logoItem.icon}</span>}
               </a>
             )}
 
@@ -129,12 +129,9 @@ export const FloatingNav = ({
               ))}
             </div>
 
-            {/* Desktop Divider */}
-            <div className="hidden md:block h-4 w-[1px] bg-white/[0.12]" />
-
             {/* Desktop CTA Button */}
             <button
-              className="hidden md:flex h-[34px] w-[140px] items-center justify-center rounded-full bg-white text-[13px] font-semibold text-black transition-all duration-200 hover:bg-white/90 active:scale-[0.98]"
+              className="hidden md:flex h-[34px] w-[140px] items-center justify-center rounded-full bg-white text-[13px] font-semibold text-black transition-all duration-200 hover:bg-white/90 hover:cursor-pointer active:scale-[1.1]"
             >
               Join Us
             </button>
@@ -159,10 +156,10 @@ export const FloatingNav = ({
             animate={{ opacity: 1, backdropFilter: "blur(32px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[5001] flex flex-col bg-black/95 md:hidden"
+            className="fixed inset-0 z-5001 flex flex-col bg-black/95 md:hidden"
           >
             {/* Top Bar for Overlay (Matches original mobile bar layout) */}
-            <div className="flex w-full items-center justify-between px-5 py-3 border-b border-white/[0.08] bg-transparent">
+            <div className="flex w-full items-center justify-between px-5 py-3 border-b border-white/30 bg-transparent">
               {/* Logo in overlay */}
               {logoItem && (
                 <a
@@ -170,7 +167,7 @@ export const FloatingNav = ({
                   className="relative flex items-center gap-2 px-1 py-1"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {logoItem.icon && <span className="flex-shrink-0">{logoItem.icon}</span>}
+                  {logoItem.icon && <span className="shrink-0">{logoItem.icon}</span>}
                 </a>
               )}
               {/* Close Button */}

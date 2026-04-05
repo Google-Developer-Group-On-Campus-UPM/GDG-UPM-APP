@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FloatingNav } from "../ui/floating-navbar";
 
 const GDG_LOGO = <Image
-	src="/images/gdg-logo.svg"
+	src="/images/navbar/gdg-logo.svg"
 	alt="GDG Logo"
 	width={64}
 	height={40}
