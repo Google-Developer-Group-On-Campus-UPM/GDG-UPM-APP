@@ -22,7 +22,7 @@ const NavBar: React.FC = () => {
           <div className="flex items-center justify-between md:justify-center h-full gap-4 sm:gap-8 md:gap-14">
             {/* Logo */}
             <Image
-              src="/images/gdg-logo.svg"
+              src="/images/navbar/gdg-logo.svg"
               alt="GDG Logo"
               width={40}
               height={40}
@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
             </button>
 
             {/* Apply Membership Button */}
-            <div className="hidden md:block border-2 bg-gradient-to-r from-[#C0C0C0] to-[#ffff] border-white backdrop-blur-md rounded-full px-4 md:px-6 py-1 cursor-pointer hover:bg-gray-100 transition-colors">
+            <div className="hidden md:block border-2 bg-linear-to-r from-[#C0C0C0] to-[#ffff] border-white backdrop-blur-md rounded-full px-4 md:px-6 py-1 cursor-pointer hover:bg-gray-100 transition-colors">
               <span className="text-gray-800 font-normal text-sm md:text-base">Apply Committee</span>
             </div>
           </div>
@@ -96,7 +96,7 @@ const NavBar: React.FC = () => {
 
           {/* Mobile Apply Membership Button */}
           <div className="mt-auto mb-8">
-            <div className="bg-gradient-to-r from-[#C0C0C0] to-[#ffff] border-2 border-white rounded-full px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors text-center">
+            <div className="bg-linear-to-r from-[#C0C0C0] to-[#ffff] border-2 border-white rounded-full px-4 py-2 cursor-pointer hover:bg-gray-100 transition-colors text-center">
               <span className="text-gray-800 font-medium">Apply Committee</span>
             </div>
           </div>
