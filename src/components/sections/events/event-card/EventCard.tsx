@@ -1,7 +1,7 @@
 "use client";
 
 import { Event } from "@/constants/types/events.type";
-import { Box } from "@mui/material";
+import { Card, Box } from "@mui/material";
 import { Poppins } from "next/font/google";
 import EventCardContent from "./EventCardContent";
 import EventCardImage from "./EventCardImage";
@@ -22,44 +22,12 @@ interface EventCardProps {
 }
 
 /**
- * EventCard Component
+ * EventCard Component - Built with MUI Card components
  *
- * A sophisticated card component for displaying event information with glassmorphism design.
- * Features event image, status, title, location details, tags, and optional ticket action.
- * Follows Material Design principles with custom gradient styling and backdrop blur effects.
- *
- * @example
- * // Basic usage
- * <EventCard event={eventData} />
- *
- * @example
- * // With ticket button and custom dimensions
- * <EventCard
- *   event={eventData}
- *   showGetTicket={true}
- *   onGetTicketClick={() => window.open(event.registrationLink)}
- *   width={400}
- *   height={350}
- * />
- *
- * @example
- * // Custom styling with different radius
- * <EventCard
- *   event={eventData}
- *   borderRadius={20}
- *   showGetTicket={true}
- * />
- *
- * @example
- * // Event with tags and participants
- * <EventCard
- *   event={{
- *     ...eventData,
- *     tags: ["Web Development", "Workshop"],
- *     attendeesCount: 50,
- *     organizer: "GDG UPM"
- *   }}
- * />
+ * A responsive card component for displaying event information using Material-UI's
+ * built-in Card components. Features automatic scaling and proper responsive behavior.
+ * Maintains the same visual appearance as the original EventCard but built with
+ * MUI's CardMedia and CardContent for proper layout structure.
  */
 export default function EventCard({
   event,
@@ -74,10 +42,13 @@ export default function EventCard({
     console.warn("EventCard: No event data provided");
     return null;
   }
+
+  // Calculate proportional image height (approximately 36% of total height)
+  const imageHeight = 119;
+
   return (
-    <Box
+    <Card
       sx={{
-        position: "relative",
         width: width,
         height: height,
         borderRadius: `${borderRadius}px`,
@@ -86,61 +57,42 @@ export default function EventCard({
           linear-gradient(90deg, rgba(4, 42, 81, 0.096) 19.71%, rgba(2, 28, 64, 0.4) 55.29%)
         `,
         backdropFilter: "blur(11.5px)",
-
-        // Light border overlay
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          borderRadius: `${borderRadius}px`,
-          border: "2px solid rgba(255, 255, 255, 0.1)",
-          pointerEvents: "none",
-          zIndex: 2,
-          mixBlendMode: "soft-light",
-        },
+        border: "2px solid rgba(255, 255, 255, 0.1)",
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: poppins.style.fontFamily,
+        overflow: "hidden",
+        position: "relative",
+        // Scale all content proportionally
+        fontSize: `${width / 368}rem`,
+        // Ensure proper MUI Card structure without clickable areas
+        cursor: "default",
       }}
     >
+      {/* Image using CardMedia for proper MUI structure */}
+      <EventCardImage event={event} height={imageHeight} />
+
+      {/* Content Container - centered like original, positioned below image */}
       <Box
         sx={{
-          width: "100%",
-          height: "100%",
-          borderRadius: `${borderRadius}px`,
+          position: "absolute",
+          top: `${imageHeight + 17}px`, // Image height + 17px spacing like original
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: 298, // Same as original
+          height: 168, // Fixed height as requested
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          overflow: "hidden",
-          fontFamily: poppins.style.fontFamily,
-          position: "relative",
-          zIndex: 1,
+          gap: "12px", // Same as original
+          zIndex: 3,
         }}
       >
-        <EventCardImage event={event} borderRadius={borderRadius} />
-
-        {/* Details Container - positioned 17px below image */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: "136px", // 119px (image height) + 17px spacing
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 298,
-            height: 168,
-            display: "flex",
-            flexDirection: "column",
-            gap: "12px",
-            zIndex: 3,
-          }}
-        >
-          <EventCardContent
-            event={event}
-            showGetTicket={showGetTicket}
-            onGetTicketClick={onGetTicketClick}
-          />
-        </Box>
+        <EventCardContent
+          event={event}
+          showGetTicket={showGetTicket}
+          onGetTicketClick={onGetTicketClick}
+        />
       </Box>
-    </Box>
+    </Card>
   );
 }

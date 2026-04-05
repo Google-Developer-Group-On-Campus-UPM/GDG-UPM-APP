@@ -16,6 +16,7 @@ export default function EventCardStatus({ status }: EventCardStatusProps) {
         lineHeight: "140%",
         letterSpacing: "0%",
         textTransform: "capitalize",
+        textAlign: "left", // Ensure left alignment
       }}
     >
       {status} Event

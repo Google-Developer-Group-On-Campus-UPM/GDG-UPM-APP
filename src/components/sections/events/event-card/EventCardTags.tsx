@@ -10,7 +10,7 @@ export default function EventCardTags({ tags }: EventCardTagsProps) {
   if (!tags || tags.length === 0) return null;
 
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+    <Box sx={{ display: "flex", flexWrap: "wrap", padding: "2px 0 4px 0" }}>
       {tags.map((tagItem, index) =>
         tagItem ? (
           <FlexChip

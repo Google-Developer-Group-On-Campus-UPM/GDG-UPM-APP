@@ -7,7 +7,7 @@ import { Poppins } from "next/font/google";
 import EventButton from "./common/buttons/EventButton";
 import SearchBar from "./common/search/SearchBar";
 import SortRecentButton from "./common/buttons/SortRecentButton";
-import EventCarouselV2 from "./event-carousel-v2/EventCarouselV2";
+import EventCarousel from "./event-carousel/EventCarousel";
 
 const poppins = Poppins({
   weight: ["400", "500", "600"],
@@ -162,7 +162,7 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
         }}
       >
         {displayEvents.length > 0 ? (
-          <EventCarouselV2
+          <EventCarousel
             events={displayEvents}
             eventsPerPage={3}
             showGetTicket={true}
