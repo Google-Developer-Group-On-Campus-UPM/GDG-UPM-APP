@@ -4,7 +4,7 @@ import FlexChip from "@/components/ui/FlexChip";
 
 const AnnouncementSection: React.FC = () => {
 	return (
-		<div className="min-h-screen w-full bg-black flex justify-center items-center relative z-0">
+		<div id="about" className="min-h-screen w-full bg-black flex justify-center items-center relative z-0">
 			<Image
 				src="/images/announcement/announcement-bg.svg"
 				className="absolute -z-10 w-full h-full top-30"
@@ -12,9 +12,8 @@ const AnnouncementSection: React.FC = () => {
 				height={100}
 				alt="Announcement Background"
 				style={{
-					WebkitMaskImage:
-						"linear-gradient(to bottom, transparent 2%, black 100%)",
-					maskImage: "linear-gradient(to bottom, transparent 2%, black 100%)",
+					WebkitMaskImage: 'linear-gradient(to bottom, transparent 2%, black 100%)',
+					maskImage: 'linear-gradient(to bottom, transparent 2%, black 100%)',
 				}}
 			/>
 			<div className="mx-4 md:mx-16 lg:mx-32 xl:mx-64 grid grid-cols-1 md:grid-cols-2 grid-rows-[0.2fr_1fr] gap-x-10 gap-y-5 items-center max-w-7xl w-full">
@@ -39,8 +38,7 @@ const AnnouncementSection: React.FC = () => {
 							</span>
 						</p>
 						<p className="font-small text-white text-center md:text-left text-[clamp(14px,1.2vw,20px)]">
-							To nurturing well-rounded developers by offering resources,
-							mentorship, and a collaborative environment that bridges...
+							To nurturing well-rounded developers by offering resources, mentorship, and a collaborative environment that bridges...
 						</p>
 						<div className="flex justify-center md:justify-start">
 							{/* TODO: Add appropriate href */}
@@ -50,6 +48,6 @@ const AnnouncementSection: React.FC = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 export default AnnouncementSection;

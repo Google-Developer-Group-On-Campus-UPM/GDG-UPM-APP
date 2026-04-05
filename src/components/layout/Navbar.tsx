@@ -20,23 +20,23 @@ const navItems = [
 	},
 	{
 		name: "Home",
-		link: "/",
+		link: "/#",
 	},
 	{
 		name: "About",
-		link: "#about",
+		link: "/#about",
 	},
 	{
 		name: "Team",
-		link: "#teams",
+		link: "/#teams", // TODO?
 	},
 	{
 		name: "Events",
-		link: "#events",
+		link: "/#events",
 	},
 	{
 		name: "Partners",
-		link: "#partners",
+		link: "/#partners", // TODO?
 	},
 ];
 
