@@ -1,15 +1,9 @@
 "use client";
 
 import { Box, SxProps, Theme, Typography } from "@mui/material";
-import { Poppins } from "next/font/google";
+import { Globe } from "lucide-react";
 import Image from "next/image";
 import { ReactElement } from "react";
-
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
 
 interface TextPart {
   text: string;
@@ -30,78 +24,8 @@ interface FlexChipProps {
 }
 
 /**
- * FlexChip Component
- *
- * A flexible, customizable chip component with support for mixed text content,
- * clickable links, color presets, and adjustable logo positioning.
- * Now supports sx prop for custom styling and Typography-style props.
- *
- * @example
- * // Basic usage with mixed text and links
- * <FlexChip
- *   content={[
- *     { text: "Visit" },
- *     { text: "our website", href: "https://gdg.dev" },
- *     { text: "for more info" }
- *   ]}
- * />
- *
- * @example
- * // Red preset for error/warning states
- * <FlexChip
- *   content={[{ text: "Error" }]}
- *   preset="red"
- *   hasLogo={false}
- * />
- *
- * @example
- * // Indigo preset for info states
- * <FlexChip
- *   content={[{ text: "Information" }]}
- *   preset="indigo"
- *   hasLogo={false}
- * />
- *
- * @example
- * // Custom styling with sx prop
- * <FlexChip
- *   content={[{ text: "Custom Style" }]}
- *   sx={{
- *     padding: "12px 16px",
- *     borderRadius: "8px",
- *     backgroundColor: "purple"
- *   }}
- *   hasLogo={false}
- * />
- *
- * @example
- * // Typography-style props
- * <FlexChip
- *   content={[{ text: "Large Bold Text" }]}
- *   fontSize="16px"
- *   fontWeight={700}
- *   fontFamily="Inter"
- *   hasLogo={false}
- * />
- *
- * @example
- * // Logo positioning
- * <FlexChip
- *   content={[{ text: "Logo on top" }]}
- *   logoPosition="top"
- * />
- *
- * @example
- * // Multiple links in one chip
- * <FlexChip
- *   content={[
- *     { text: "Check out" },
- *     { text: "GitHub", href: "https://github.com" },
- *     { text: "and" },
- *     { text: "Google", href: "https://google.com" }
- *   ]}
- *   hasLogo={false}
- * />
+ * A flexible, customizable chip component for UI tags and indicators.
+ * Supports mixed text/links, color presets, and lucide-react icons.
  */
 export default function FlexChip({
   content,
@@ -111,22 +35,16 @@ export default function FlexChip({
   preset,
   sx = {},
   fontSize = "12px",
-  fontFamily,
+  fontFamily = "inherit",
   fontWeight = 400,
   color,
 }: FlexChipProps) {
-  const defaultLogo = (
-    <Image
-      src="/icons/globe.svg"
-      alt="globe"
-      width={16}
-      height={16}
-      style={{ borderRadius: "50%" }}
-    />
-  );
+  const defaultLogo = <Globe size={16} />;
 
   // Logo logic: show logo if hasLogo is true
-  const logoElement = hasLogo ? logo || defaultLogo : null; // Color preset logic
+  const logoElement = hasLogo ? logo || defaultLogo : null;
+
+  // Color preset logic
   const getPresetColors = () => {
     switch (preset) {
       case "red":
@@ -151,7 +69,6 @@ export default function FlexChip({
   };
 
   const presetColors = getPresetColors();
-  const chipFont = fontFamily || poppins.style.fontFamily;
 
   const renderContent = () => {
     return content.map((part, index) => (
@@ -159,7 +76,7 @@ export default function FlexChip({
         key={index}
         component="span"
         sx={{
-          fontFamily: chipFont,
+          fontFamily: fontFamily,
           fontWeight: fontWeight,
           fontSize: fontSize,
           lineHeight: "100%",
@@ -174,8 +91,8 @@ export default function FlexChip({
           whiteSpace: "nowrap",
           "&:hover": part.href
             ? {
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-              }
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+            }
             : {},
         }}
         onClick={part.href ? () => window.open(part.href, "_blank") : undefined}
@@ -223,7 +140,7 @@ export default function FlexChip({
         color: presetColors.color,
         backgroundColor: presetColors.backgroundColor,
         boxShadow: preset ? "none" : "0 0 8px rgba(255, 255, 255, 0.3)",
-        fontFamily: chipFont,
+        fontFamily: fontFamily,
         fontWeight: fontWeight,
         fontSize: fontSize,
         lineHeight: "100%",
