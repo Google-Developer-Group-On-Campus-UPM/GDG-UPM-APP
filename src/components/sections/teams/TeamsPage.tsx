@@ -72,7 +72,7 @@ export default function TeamsSection() {
 
   return (
     /**
-     * Teams Section Structure:
+     * TODO: Teams Section Structure:
      * 1. Section header with title and description
      * 2. Department filter tabs
      * 3. Search bar for finding specific members

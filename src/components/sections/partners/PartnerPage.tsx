@@ -68,7 +68,7 @@ export default function PartnersSection() {
 
   return (
     /**
-     * Partners Section Structure:
+     * TODO: Partners Section Structure:
      * 1. Section header with title and description
      * 2. Partnership benefits overview
      * 3. Partner category filters
