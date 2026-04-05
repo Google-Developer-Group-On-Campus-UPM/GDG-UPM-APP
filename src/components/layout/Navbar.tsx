@@ -41,5 +41,10 @@ const navItems = [
 ];
 
 export default function Navbar() {
-	return <FloatingNav navItems={navItems} />
+	return (
+		<FloatingNav
+			navItems={navItems}
+			ctaLink="/" // TODO: Add appropriate href
+		/>
+	);
 }
