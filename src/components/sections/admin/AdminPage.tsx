@@ -12,7 +12,7 @@ export default function AdminSection() {
    */
 
   return (
-    // Placeholder for Admin Section
+    // TODO
     <></>
   );
 }

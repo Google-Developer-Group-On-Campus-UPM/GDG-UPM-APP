@@ -83,6 +83,7 @@ export default function HeroSection() {
                   <span className="text-[14px] font-normal leading-[150%] text-[#F2F4F8] font-sans tracking-wide">
                     Student Developer Club -
                     <Link
+                      // TODO: Add appropriate href
                       href="/"
                       className="italic hover:underline ml-1"
                     >
