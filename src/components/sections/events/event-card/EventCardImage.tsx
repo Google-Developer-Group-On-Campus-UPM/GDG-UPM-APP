@@ -1,41 +1,28 @@
-"use client";
-
-import FlexImage from "@/components/ui/FlexImage";
+import { CardMedia } from "@mui/material";
 import { Event } from "@/constants/types/events.type";
-import { Box } from "@mui/material";
 
 interface EventCardImageProps {
   event: Event;
-  width?: number;
   height?: number;
-  borderRadius: number;
 }
 
 export default function EventCardImage({
   event,
-  width = 368,
   height = 119,
-  borderRadius,
 }: EventCardImageProps) {
   return (
-    <Box
+    <CardMedia
+      component="img"
+      height={height}
+      image={event.image || "/images/test.png"}
+      alt={event.title}
       sx={{
-        width: width,
-        height: height,
-        borderTopLeftRadius: `${borderRadius}px`,
-        borderTopRightRadius: `${borderRadius}px`,
-        overflow: "hidden",
+        objectFit: "cover",
+        objectPosition: "center",
+        flexShrink: 0, // Prevent the image from shrinking
+        minHeight: height, // Ensure minimum height
+        maxHeight: height, // Prevent expansion
       }}
-    >
-      <FlexImage
-        src={event.image || "/images/test.png"}
-        alt={event.title}
-        width={width}
-        height={height}
-        radius={0}
-        objectFit="cover"
-        objectPosition="center"
-      />
-    </Box>
+    />
   );
 }

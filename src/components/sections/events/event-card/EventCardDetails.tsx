@@ -20,74 +20,71 @@ export default function EventCardDetails({ event }: EventCardDetailsProps) {
     }
   };
 
+  const detailItemStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: 1, // 8px spacing using MUI spacing units
+    marginBottom: 0.5, // 4px spacing between rows
+  };
+
+  const iconStyle = {
+    flexShrink: 0,
+    width: 12,
+    height: 12,
+  };
+
+  const textStyle = {
+    ...getGradientTextStyle(0.47),
+    fontWeight: 400,
+    fontSize: "0.75rem", // 12px in rem units
+    lineHeight: 1.4,
+    letterSpacing: 0,
+    textAlign: "left" as const,
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       {/* Location Row */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+      <Box sx={detailItemStyle}>
         <Image
-          src="icons/location.svg"
+          src="/icons/location.svg"
           alt="location"
           width={12}
           height={12}
-          style={{ flexShrink: 0 }}
+          style={iconStyle}
         />
-        <Typography
-          sx={{
-            ...getGradientTextStyle(0.47),
-            fontWeight: 400,
-            fontSize: "12px",
-            lineHeight: "140%",
-            letterSpacing: "0%",
-            textAlign: "left",
-          }}
-        >
+        <Typography sx={textStyle}>
           {getEventType()}, {event.location}
         </Typography>
       </Box>
 
       {/* Date Row */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+      <Box sx={detailItemStyle}>
         <Image
-          src="icons/clock.svg"
+          src="/icons/clock.svg"
           alt="clock"
           width={12}
           height={12}
-          style={{ flexShrink: 0 }}
+          style={iconStyle}
         />
-        <Typography
-          sx={{
-            ...getGradientTextStyle(0.47),
-            fontWeight: 400,
-            fontSize: "12px",
-            lineHeight: "140%",
-            letterSpacing: "0%",
-            textAlign: "left",
-          }}
-        >
-          {formatDateWithTime(event.dateStart, event.dateEnd)}
+        <Typography sx={textStyle}>
+          {event.dateStart &&
+            event.dateEnd &&
+            formatDateWithTime(event.dateStart, event.dateEnd)}
         </Typography>
       </Box>
 
       {/* Organizer/Participants Row */}
       {(event.ticketType || event.maxParticipants) && (
-        <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
+        <Box sx={detailItemStyle}>
           <Image
-            src="icons/people.svg"
+            src="/icons/people.svg"
             alt="people"
             width={12}
             height={12}
-            style={{ flexShrink: 0 }}
+            style={iconStyle}
           />
-          <Typography
-            sx={{
-              ...getGradientTextStyle(0.47),
-              fontWeight: 400,
-              fontSize: "12px",
-              lineHeight: "140%",
-              letterSpacing: "0%",
-              textAlign: "left",
-            }}
-          >
+          <Typography sx={textStyle}>
             {event.ticketType}
             {event.ticketType && event.maxParticipants && ", "}
             {event.maxParticipants > 0 &&
