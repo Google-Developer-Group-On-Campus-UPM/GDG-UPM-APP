@@ -26,8 +26,6 @@ export interface Event {
   /** Event mode */
   mode: "online" | "physical" | "hybrid";
 
-  description: string;
-
   /** Event location (physical or online) */
   location: string;
 
