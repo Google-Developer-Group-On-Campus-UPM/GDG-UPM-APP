@@ -15,6 +15,10 @@ jest.mock("firebase/firestore", () => ({
   deleteDoc: jest.fn(),
 }));
 
+jest.mock("firebase/auth", () => ({
+  getAuth: jest.fn(() => ({})),
+}));
+
 import TeamService from "@/services/team/teamService";
 import {
   getDocs,

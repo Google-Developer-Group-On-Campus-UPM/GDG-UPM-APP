@@ -6,6 +6,8 @@
  * for the expected data structure.
  */
 
+import { DocumentReference } from "firebase/firestore";
+
 /**
  * Core Event Interface
  *
@@ -14,13 +16,17 @@
  */
 export interface Event {
   /** Unique identifier for the event */
-  id: string;
+  id?: string;
+
+  ref?: DocumentReference;
 
   /** Event title/name */
   title: string;
 
   /** Event mode */
   mode: "online" | "physical" | "hybrid";
+
+  description: string;
 
   /** Event location (physical or online) */
   location: string;

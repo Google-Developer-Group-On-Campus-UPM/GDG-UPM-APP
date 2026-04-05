@@ -1,6 +1,5 @@
 import {
   doc,
-  collection,
   getDoc,
   getDocs,
   setDoc,
@@ -13,7 +12,6 @@ import {
   DocumentReference,
   query,
   QueryConstraint,
-  where,
 } from "firebase/firestore";
 
 import { DataWithId } from "@/constants/types/base.type";
@@ -32,6 +30,7 @@ class BaseService {
 
       return querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        ref: doc.ref,
         ...doc.data(),
       })) as DataWithId[];
     } catch (error) {
