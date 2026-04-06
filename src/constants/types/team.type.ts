@@ -17,28 +17,28 @@ import { DocumentReference } from "firebase/firestore";
 import { DataWithId } from "./base.type";
 
 export interface Role extends DataWithId {
-  title: string;
+	title: string;
 }
 
 export interface Department extends DataWithId {
-  id: DepartmentList;
-  name: string;
-  description?: string;
+	id: DepartmentList;
+	name: string;
+	description?: string;
 }
 export interface TeamMember extends DataWithId {
-  id?: string;
-  ref?: DocumentReference;
-  name: string | null;
-  role: string | null;
-  image: string | null;
-  interest: string | null;
-  social: {
-    linkedin: string;
-    [key: string]: string;
-  };
-  isActive: boolean;
-  currentRoleID?: string;
-  currentDepartmentID?: string;
+	id?: string;
+	ref?: DocumentReference;
+	name: string | null;
+	role: string | null;
+	image: string | null;
+	interest: string | null;
+	social: {
+		linkedin: string;
+		[key: string]: string;
+	};
+	isActive: boolean;
+	currentRoleID?: string;
+	currentDepartmentID?: string;
 }
 
 /**
@@ -48,17 +48,17 @@ export interface TeamMember extends DataWithId {
  * TODO: Must match the constants defined in constants.ts
  */
 export type DepartmentList =
-  | "lead"
-  | "topboard"
-  | "aiml"
-  | "cloud"
-  | "mobileapp"
-  | "webapp"
-  | "uiux"
-  | "cybersecurity"
-  | "creatives"
-  | "communitysocials"
-  | "externalrelations";
+	| "lead"
+	| "topboard"
+	| "aiml"
+	| "cloud"
+	| "mobileapp"
+	| "webapp"
+	| "uiux"
+	| "cybersecurity"
+	| "creatives"
+	| "communitysocials"
+	| "externalrelations";
 
 /**
  * Team Structure
@@ -66,5 +66,5 @@ export type DepartmentList =
  * Represents the entire team organization with members grouped by department.
  */
 export type TeamStructure = {
-  [key in DepartmentList]: TeamMember[];
+	[key in DepartmentList]: TeamMember[];
 };
