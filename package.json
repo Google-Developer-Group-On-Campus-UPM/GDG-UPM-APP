@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "npm run lint && next build",
     "start": "next start",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
     "test": "jest"
   },
   "dependencies": {
