@@ -4,7 +4,9 @@ import { Department } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
 import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
-import { handleDelete, BasicModal } from "./eventHandlers";
+import toast from "react-hot-toast";
+import { handleDelete } from "./eventHandlers";
+import { EditDepartmentModal } from "./Modals";
 
 type DepartmentsManagerProps = {
   role: string;
@@ -50,6 +52,27 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
   const handleDeleteAndRefresh = async (department: Department) => {
     await handleDelete(department);
     refreshData();
+  };
+
+  const handleSaveDepartment = async (updated: {
+    name: string;
+    description: string;
+  }) => {
+    try {
+      if (isAdding) {
+        await service.createDepartment(updated);
+        toast.success("Department created successfully.");
+      } else if (selectedDepartment?.ref) {
+        await service.updateDepartment(updated, selectedDepartment.ref);
+        toast.success("Department updated successfully.");
+      }
+
+      setSelectedDepartment(null);
+      setIsAdding(false);
+      refreshData();
+    } catch (error: any) {
+      toast.error("Failed to save department: " + error.message);
+    }
   };
 
 
@@ -126,16 +149,14 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
           ))}
         </tbody>
       </table>
-      <BasicModal
+      <EditDepartmentModal
         open={!!selectedDepartment || isAdding}
         onClose={() => {
           setSelectedDepartment(null);
           setIsAdding(false);
         }}
-        type={"departments"}
         department={selectedDepartment}
-        isAdding={isAdding}
-        onSave={refreshData}
+        onSave={handleSaveDepartment}
       />
     </div>
   );

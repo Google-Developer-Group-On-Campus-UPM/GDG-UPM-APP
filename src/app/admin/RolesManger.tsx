@@ -4,7 +4,9 @@ import { Role } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
 import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
-import { handleDelete, BasicModal } from "./eventHandlers";
+import toast from "react-hot-toast";
+import { handleDelete } from "./eventHandlers";
+import { EditRoleModal } from "./Modals";
 
 type RolesManagerProps = {
   role: string;
@@ -45,6 +47,24 @@ export default function RolesManager({ role }: RolesManagerProps) {
   const handleDeleteAndRefresh = async (roleItem: Role) => {
     await handleDelete(roleItem);
     refreshData();
+  };
+
+  const handleSaveRole = async (updated: { title: string }) => {
+    try {
+      if (isAdding) {
+        await service.createRole({ title: updated.title });
+        toast.success("Role created successfully.");
+      } else if (selectedRole?.ref) {
+        await service.updateRole({ title: updated.title }, selectedRole.ref);
+        toast.success("Role updated successfully.");
+      }
+
+      setSelectedRole(null);
+      setIsAdding(false);
+      refreshData();
+    } catch (error: any) {
+      toast.error("Failed to save role: " + error.message);
+    }
   };
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
@@ -107,16 +127,14 @@ export default function RolesManager({ role }: RolesManagerProps) {
           ))}
         </tbody>
       </table>
-      <BasicModal
+      <EditRoleModal
         open={!!selectedRole || isAdding}
         onClose={() => {
           setSelectedRole(null);
           setIsAdding(false);
         }}
-        type={"roles"}
         roleItem={selectedRole}
-        isAdding={isAdding}
-        onSave={refreshData}
+        onSave={handleSaveRole}
       />
     </div>
   );

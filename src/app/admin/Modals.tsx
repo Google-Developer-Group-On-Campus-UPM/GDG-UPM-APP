@@ -8,10 +8,12 @@ import {
   Switch,
   FormControlLabel,
   Grid,
+  MenuItem,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { TeamMember } from "@/constants/types/team.type";
+import { Event } from "@/constants/types/events.type";
+import { Department, Role, TeamMember } from "@/constants/types/team.type";
 
 const darkTheme = createTheme({
   palette: {
@@ -24,6 +26,45 @@ type EditUserModalProps = {
   user: TeamMember | null;
   onClose: () => void;
   onSave?: (updated: TeamMember) => void;
+};
+
+type EditDepartmentModalProps = {
+  open: boolean;
+  department: Department | null;
+  onClose: () => void;
+  onSave?: (updated: { name: string; description: string }) => void;
+};
+
+type EditRoleModalProps = {
+  open: boolean;
+  roleItem: Role | null;
+  onClose: () => void;
+  onSave?: (updated: { title: string }) => void;
+};
+
+type EditEventModalProps = {
+  open: boolean;
+  eventItem: Event | null;
+  onClose: () => void;
+  onSave?: (
+    updated: {
+      title: string;
+      description: string;
+      status: "upcoming" | "past";
+    },
+  ) => void;
+};
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 520,
+  bgcolor: "background.paper",
+  borderRadius: 2,
+  boxShadow: 24,
+  p: 4,
 };
 
 export function EditUserModal({
@@ -73,19 +114,7 @@ export function EditUserModal({
   return (
     <Modal open={open} onClose={onClose}>
       <ThemeProvider theme={darkTheme}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 520,
-            bgcolor: "background.paper",
-            borderRadius: 2,
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
+        <Box sx={modalStyle}>
           {/* Header */}
           <Typography variant="h6" mb={3}>
             {user?.ref ? "Edit User" : "Add User"}
@@ -173,6 +202,212 @@ export function EditUserModal({
             </Grid>
 
             {/* Actions */}
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+              <Button onClick={onClose} variant="outlined">
+                Cancel
+              </Button>
+              <Button onClick={handleSave} variant="contained">
+                Save Changes
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </ThemeProvider>
+    </Modal>
+  );
+}
+
+export function EditDepartmentModal({
+  open,
+  department,
+  onClose,
+  onSave,
+}: EditDepartmentModalProps) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setName(department?.name ?? "");
+    setDescription(department?.description ?? "");
+    setErrors({});
+  }, [department, open]);
+
+  const handleSave = () => {
+    if (!name.trim()) {
+      setErrors({ name: "Department name is required" });
+      return;
+    }
+
+    onSave?.({ name: name.trim(), description: description.trim() });
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <ThemeProvider theme={darkTheme}>
+        <Box sx={modalStyle}>
+          <Typography variant="h6" mb={3}>
+            {department?.ref ? "Edit Department" : "Add Department"}
+          </Typography>
+
+          <Stack spacing={3}>
+            <TextField
+              label="Department Name"
+              fullWidth
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              error={Boolean(errors.name)}
+              helperText={errors.name}
+            />
+
+            <TextField
+              label="Description"
+              fullWidth
+              multiline
+              minRows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+              <Button onClick={onClose} variant="outlined">
+                Cancel
+              </Button>
+              <Button onClick={handleSave} variant="contained">
+                Save Changes
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </ThemeProvider>
+    </Modal>
+  );
+}
+
+export function EditRoleModal({
+  open,
+  roleItem,
+  onClose,
+  onSave,
+}: EditRoleModalProps) {
+  const [title, setTitle] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setTitle(roleItem?.title ?? "");
+    setErrors({});
+  }, [roleItem, open]);
+
+  const handleSave = () => {
+    if (!title.trim()) {
+      setErrors({ title: "Role title is required" });
+      return;
+    }
+
+    onSave?.({ title: title.trim() });
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <ThemeProvider theme={darkTheme}>
+        <Box sx={modalStyle}>
+          <Typography variant="h6" mb={3}>
+            {roleItem?.ref ? "Edit Role" : "Add Role"}
+          </Typography>
+
+          <Stack spacing={3}>
+            <TextField
+              label="Role Title"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              error={Boolean(errors.title)}
+              helperText={errors.title}
+            />
+
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+              <Button onClick={onClose} variant="outlined">
+                Cancel
+              </Button>
+              <Button onClick={handleSave} variant="contained">
+                Save Changes
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </ThemeProvider>
+    </Modal>
+  );
+}
+
+export function EditEventModal({
+  open,
+  eventItem,
+  onClose,
+  onSave,
+}: EditEventModalProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState<"upcoming" | "past">("upcoming");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    setTitle(eventItem?.title ?? "");
+    setDescription(eventItem?.description ?? "");
+    setStatus(eventItem?.status ?? "upcoming");
+    setErrors({});
+  }, [eventItem, open]);
+
+  const handleSave = () => {
+    if (!title.trim()) {
+      setErrors({ title: "Event title is required" });
+      return;
+    }
+
+    onSave?.({ title: title.trim(), description: description.trim(), status });
+    onClose();
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <ThemeProvider theme={darkTheme}>
+        <Box sx={modalStyle}>
+          <Typography variant="h6" mb={3}>
+            {eventItem?.ref ? "Edit Event" : "Add Event"}
+          </Typography>
+
+          <Stack spacing={3}>
+            <TextField
+              label="Event Title"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              error={Boolean(errors.title)}
+              helperText={errors.title}
+            />
+
+            <TextField
+              label="Description"
+              fullWidth
+              multiline
+              minRows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <TextField
+              select
+              label="Status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value as "upcoming" | "past")}
+              fullWidth
+            >
+              <MenuItem value="upcoming">upcoming</MenuItem>
+              <MenuItem value="past">past</MenuItem>
+            </TextField>
+
             <Stack direction="row" spacing={2} justifyContent="flex-end">
               <Button onClick={onClose} variant="outlined">
                 Cancel

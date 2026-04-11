@@ -4,7 +4,9 @@ import { Event } from "@/constants/types/events.type";
 import EventService from "@/services/events/eventService";
 import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
-import { handleDelete, BasicModal } from "./eventHandlers";
+import toast from "react-hot-toast";
+import { handleDelete } from "./eventHandlers";
+import { EditEventModal } from "./Modals";
 
 type EventsManagerProps = {
   role: string;
@@ -45,6 +47,46 @@ export default function EventsManager({ role }: EventsManagerProps) {
   const handleDeleteAndRefresh = async (event: Event) => {
     await handleDelete(event);
     refreshData();
+  };
+
+  const handleSaveEvent = async (updated: {
+    title: string;
+    description: string;
+    status: "upcoming" | "past";
+  }) => {
+    try {
+      if (isAdding) {
+        await service.createEvent({
+          title: updated.title,
+          description: updated.description,
+          status: updated.status,
+          mode: "physical",
+          location: "TBA",
+          dateStart: new Date(),
+          ticketType: "Free",
+          maxParticipants: 100,
+          image: "/images/test.png",
+          isActive: true,
+        });
+        toast.success("Event created successfully.");
+      } else if (selectedEvent?.ref) {
+        await service.updateEvent(
+          {
+            title: updated.title,
+            description: updated.description,
+            status: updated.status,
+          },
+          selectedEvent.ref,
+        );
+        toast.success("Event updated successfully.");
+      }
+
+      setSelectedEvent(null);
+      setIsAdding(false);
+      refreshData();
+    } catch (error: any) {
+      toast.error("Failed to save event: " + error.message);
+    }
   };
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
@@ -121,16 +163,14 @@ export default function EventsManager({ role }: EventsManagerProps) {
           ))}
         </tbody>
       </table>
-      <BasicModal
+      <EditEventModal
         open={!!selectedEvent || isAdding}
         onClose={() => {
           setSelectedEvent(null);
           setIsAdding(false);
         }}
-        type={"events"}
         eventItem={selectedEvent}
-        isAdding={isAdding}
-        onSave={refreshData}
+        onSave={handleSaveEvent}
       />
     </div>
   );
