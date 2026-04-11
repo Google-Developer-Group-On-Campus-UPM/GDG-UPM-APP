@@ -2,7 +2,7 @@
 
 import { TeamMember, Department } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import { handleDelete } from "./eventHandlers";
 import { EditUserModal } from "./Modals";
@@ -19,11 +19,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [selectedUser, setSelectedUser] = useState<TeamMember | null>(null);
 
-  if (role !== "admin" && role !== "editor") {
-    return <div>Unauthorised</div>;
-  }
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const users = await service.getUsers();
       const departments = await service.getDepartments();
@@ -34,11 +30,16 @@ export default function UsersManager({ role }: UsersManagerProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
+
+  if (role !== "admin" && role !== "editor") {
+    return <div>Unauthorised</div>;
+  }
+
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
