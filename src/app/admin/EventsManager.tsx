@@ -17,24 +17,24 @@ export default function EventsManager({ role }: EventsManagerProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const events = await service.getEvents();
+        setEvents(events);
+      } catch (error) {
+        console.warn(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
+  }, []);
+
   if (role !== "admin" && role !== "editor") {
     return <div>Unauthorised</div>;
   }
-
-  const loadData = async () => {
-    try {
-      const events = await service.getEvents();
-      setEvents(events);
-    } catch (error) {
-      console.warn(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (

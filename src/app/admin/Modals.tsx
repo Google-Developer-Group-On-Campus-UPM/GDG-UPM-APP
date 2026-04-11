@@ -34,6 +34,22 @@ export function EditUserModal({
 }: EditUserModalProps) {
   const [form, setForm] = useState<TeamMember | null>(null);
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+const validateForm = () => {
+  if (!form) {
+    setErrors({ form: "Form data is required" });
+    return false;
+  }
+
+  const newErrors: Record<string, string> = {};
+  if (!form.title?.trim()) newErrors.title = "Title is required";
+  if (!form.dateStart) newErrors.dateStart = "Start date is required";
+  // Add more validations...
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
   useEffect(() => {
     if (user) {
       setForm({ ...user });

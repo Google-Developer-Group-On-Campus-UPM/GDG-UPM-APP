@@ -2,7 +2,7 @@
 
 import { Role } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import { handleDelete, BasicModal } from "./eventHandlers";
 
@@ -17,11 +17,7 @@ export default function RolesManager({ role }: RolesManagerProps) {
   const [roles, setRoles] = useState<Role[]>([]);
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
-  if (role !== "admin" && role !== "editor") {
-    return <div>Unauthorised</div>;
-  }
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const roles = await service.getRoles();
       setRoles(roles);
@@ -30,11 +26,16 @@ export default function RolesManager({ role }: RolesManagerProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
+
+  if (role !== "admin" && role !== "editor") {
+    return <div>Unauthorised</div>;
+  }
+
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
