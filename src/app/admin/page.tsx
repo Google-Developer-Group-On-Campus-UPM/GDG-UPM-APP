@@ -9,7 +9,6 @@ import {
   User,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { doc, getDoc } from "firebase/firestore";
 import { auth } from "@/services/firebase/firebase";
 import { db } from "@/services/firebase/firebase";
 import { Toaster, toast } from "react-hot-toast";
@@ -20,8 +19,7 @@ import UsersManager from "./UsersManager";
 import RolesManager from "./RolesManger";
 import DepartmentsManager from "./DepartmentsManager";
 import EditorsManager from "./EditorsManager";
-
-type Role = "admin" | "editor";
+import { resolveAdminRole, type AdminRole } from "./auth";
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
@@ -53,7 +51,7 @@ function getAuthErrorMessage(error: unknown): string {
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<Role | null>(null);
+  const [role, setRole] = useState<AdminRole | null>(null);
   const [activeSection, setActiveSection] = useState("events");
   const [loading, setLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -83,10 +81,7 @@ export default function AdminPage() {
           return;
         }
 
-        const userEmail = u.email?.trim();
-        const normalizedEmail = userEmail?.toLowerCase();
-
-        if (!normalizedEmail) {
+        if (!u.email?.trim()) {
           await signOut(auth);
           toast.error("Your Google account email is missing.");
           setUser(null);
@@ -95,41 +90,18 @@ export default function AdminPage() {
           return;
         }
 
-        const roleDocExists = async (collectionName: "admins" | "editors") => {
-          const primarySnap = await getDoc(doc(db, collectionName, normalizedEmail));
-          if (primarySnap.exists()) return true;
+        const resolvedRole = await resolveAdminRole(db, u.email);
 
-          if (userEmail && userEmail !== normalizedEmail) {
-            const fallbackSnap = await getDoc(doc(db, collectionName, userEmail));
-            return fallbackSnap.exists();
-          }
-
-          return false;
-        };
-
-        // Admin?
-        let isAdminUser = false;
-        try {
-          isAdminUser = await roleDocExists("admins");
-        } catch (error) {
-          const firestoreError = error as FirebaseError;
-          if (firestoreError?.code !== "permission-denied") {
-            throw error;
-          }
-        }
-
-        if (isAdminUser) {
+        if (resolvedRole === "admin") {
           setUser(u);
-          setRole("admin");
+          setRole(resolvedRole);
           setLoading(false);
           return;
         }
 
-        // Editor?
-        const isEditorUser = await roleDocExists("editors");
-        if (isEditorUser) {
+        if (resolvedRole === "editor") {
           setUser(u);
-          setRole("editor");
+          setRole(resolvedRole);
           setLoading(false);
           return;
         }
