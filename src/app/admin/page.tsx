@@ -19,6 +19,7 @@ import EventsManager from "./EventsManager";
 import UsersManager from "./UsersManager";
 import RolesManager from "./RolesManger";
 import DepartmentsManager from "./DepartmentsManager";
+import EditorsManager from "./EditorsManager";
 
 type Role = "admin" | "editor";
 
@@ -82,9 +83,42 @@ export default function AdminPage() {
           return;
         }
 
+        const userEmail = u.email?.trim();
+        const normalizedEmail = userEmail?.toLowerCase();
+
+        if (!normalizedEmail) {
+          await signOut(auth);
+          toast.error("Your Google account email is missing.");
+          setUser(null);
+          setRole(null);
+          setLoading(false);
+          return;
+        }
+
+        const roleDocExists = async (collectionName: "admins" | "editors") => {
+          const primarySnap = await getDoc(doc(db, collectionName, normalizedEmail));
+          if (primarySnap.exists()) return true;
+
+          if (userEmail && userEmail !== normalizedEmail) {
+            const fallbackSnap = await getDoc(doc(db, collectionName, userEmail));
+            return fallbackSnap.exists();
+          }
+
+          return false;
+        };
+
         // Admin?
-        const adminSnap = await getDoc(doc(db, "admins", u.email!));
-        if (adminSnap.exists()) {
+        let isAdminUser = false;
+        try {
+          isAdminUser = await roleDocExists("admins");
+        } catch (error) {
+          const firestoreError = error as FirebaseError;
+          if (firestoreError?.code !== "permission-denied") {
+            throw error;
+          }
+        }
+
+        if (isAdminUser) {
           setUser(u);
           setRole("admin");
           setLoading(false);
@@ -92,8 +126,8 @@ export default function AdminPage() {
         }
 
         // Editor?
-        const editorSnap = await getDoc(doc(db, "editors", u.email!));
-        if (editorSnap.exists()) {
+        const isEditorUser = await roleDocExists("editors");
+        if (isEditorUser) {
           setUser(u);
           setRole("editor");
           setLoading(false);
@@ -180,6 +214,7 @@ export default function AdminPage() {
         <Toaster position="top-right" />
         <AdminSidebar
           logoutAction={logout}
+          role={role}
           activeSection={activeSection}
           setActiveSectionAction={setActiveSection}
         ></AdminSidebar>
@@ -214,6 +249,9 @@ export default function AdminPage() {
           )}
           {activeSection === "departments" && (
             <DepartmentsManager role={role}></DepartmentsManager>
+          )}
+          {activeSection === "editors" && (
+            <EditorsManager role={role}></EditorsManager>
           )}
         </section>
       </main>

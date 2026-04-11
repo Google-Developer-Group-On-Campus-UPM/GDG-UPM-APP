@@ -1,16 +1,18 @@
 "use client";
 
-import { Person, Group, Logout, Flag, Event } from "@mui/icons-material";
+import { Person, Group, Logout, Flag, Event, Edit } from "@mui/icons-material";
 import { Dispatch, SetStateAction } from "react";
 
 type AdminSidebarProps = {
   logoutAction: () => void;
+  role: string;
   activeSection: string;
   setActiveSectionAction: Dispatch<SetStateAction<string>>;
 };
 
 export default function AdminSidebar({
   logoutAction,
+  role,
   activeSection,
   setActiveSectionAction,
 }: AdminSidebarProps) {
@@ -19,6 +21,7 @@ export default function AdminSidebar({
     { key: "members", label: "Members", icon: Person },
     { key: "roles", label: "Roles", icon: Flag },
     { key: "departments", label: "Departments", icon: Group },
+    ...(role === "admin" ? [{ key: "editors", label: "Editors", icon: Edit }] : []),
   ] as const;
 
   return (
