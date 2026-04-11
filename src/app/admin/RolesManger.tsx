@@ -45,8 +45,8 @@ export default function RolesManager({ role }: RolesManagerProps) {
   };
 
   const handleDeleteAndRefresh = async (roleItem: Role) => {
-    await handleDelete(roleItem);
-    refreshData();
+    const deleted = await handleDelete(roleItem);
+    if (deleted) refreshData();
   };
 
   const handleSaveRole = async (updated: { id: string; title: string }) => {

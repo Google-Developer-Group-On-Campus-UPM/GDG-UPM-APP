@@ -77,8 +77,8 @@ export default function EventsManager({ role }: EventsManagerProps) {
   };
 
   const handleDeleteAndRefresh = async (event: Event) => {
-    await handleDelete(event);
-    refreshData();
+    const deleted = await handleDelete(event);
+    if (deleted) refreshData();
   };
 
   const handleSaveEvent = async (updated: {

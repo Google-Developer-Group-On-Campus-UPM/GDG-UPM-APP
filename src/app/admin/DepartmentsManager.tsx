@@ -50,8 +50,8 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
   };
 
   const handleDeleteAndRefresh = async (department: Department) => {
-    await handleDelete(department);
-    refreshData();
+    const deleted = await handleDelete(department);
+    if (deleted) refreshData();
   };
 
   const handleSaveDepartment = async (updated: {

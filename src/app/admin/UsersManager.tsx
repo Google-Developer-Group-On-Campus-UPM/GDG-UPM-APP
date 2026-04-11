@@ -51,8 +51,8 @@ export default function UsersManager({ role }: UsersManagerProps) {
   };
 
   const handleDeleteAndRefresh = async (user: TeamMember) => {
-    await handleDelete(user);
-    refreshData();
+    const deleted = await handleDelete(user);
+    if (deleted) refreshData();
   };
 
   const handleSaveUser = async (updatedUser: TeamMember) => {
