@@ -47,6 +47,11 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
     loadData();
   };
 
+  const handleDeleteAndRefresh = async (department: Department) => {
+    await handleDelete(department);
+    refreshData();
+  };
+
 
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
@@ -110,7 +115,7 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => handleDelete(department)}
+                  onClick={() => handleDeleteAndRefresh(department)}
                   className="text-red-600 hover:text-red-900 hover:cursor-pointer"
                   aria-label={`Delete ${department.name}`}
                 >

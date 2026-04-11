@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import { handleDelete } from "./eventHandlers";
 import { EditUserModal } from "./Modals";
+import toast from "react-hot-toast";
 
 type UsersManagerProps = {
   role: string;
@@ -18,6 +19,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const [users, setUsers] = useState<TeamMember[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [selectedUser, setSelectedUser] = useState<TeamMember | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -37,16 +39,63 @@ export default function UsersManager({ role }: UsersManagerProps) {
   }, [loadData]);
 
   if (role !== "admin" && role !== "editor") {
-    return <div>Unauthorised</div>;
+    return <div className="text-red-500 text-xl font-semibold">Unauthorized</div>;
   }
 
+  const refreshData = () => {
+    setLoading(true);
+    loadData();
+  };
+
+  const handleDeleteAndRefresh = async (user: TeamMember) => {
+    await handleDelete(user);
+    refreshData();
+  };
+
+  const handleSaveUser = async (updatedUser: TeamMember) => {
+    try {
+      const { id, ref, ...userData } = updatedUser;
+
+      if (isAdding) {
+        await service.createUser(userData);
+        toast.success("User created successfully.");
+      } else if (ref) {
+        await service.updateUser(userData, ref);
+        toast.success("User updated successfully.");
+      }
+
+      setSelectedUser(null);
+      setIsAdding(false);
+      refreshData();
+    } catch (error: any) {
+      toast.error("Failed to save user: " + error.message);
+    }
+  };
+
+  const emptyUser: TeamMember = {
+    name: "",
+    role: "member",
+    image: "/images/no-pfp.png",
+    interest: "",
+    social: {
+      linkedin: "",
+    },
+    isActive: true,
+  };
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
     <div>
       <div className="flex justify-between items-center mb-4 w-full">
         <h1 className="text-xl font-semibold">Users</h1>
-        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer">
+        <button
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer"
+          onClick={() => {
+            setSelectedUser(emptyUser);
+            setIsAdding(true);
+          }}
+          aria-label="Add new user"
+        >
           <Add className="w-5 h-5"></Add>
           Add New
         </button>
@@ -109,14 +158,19 @@ export default function UsersManager({ role }: UsersManagerProps) {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button
-                  onClick={() => setSelectedUser(user)}
+                  onClick={() => {
+                    setSelectedUser(user);
+                    setIsAdding(false);
+                  }}
                   className="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer"
+                  aria-label={`Edit ${user.name ?? "user"}`}
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => handleDelete(user)}
+                  onClick={() => handleDeleteAndRefresh(user)}
                   className="text-red-600 hover:text-red-900 hover:cursor-pointer"
+                  aria-label={`Delete ${user.name ?? "user"}`}
                 >
                   <Delete className="w-4 h-4" />
                 </button>
@@ -128,11 +182,11 @@ export default function UsersManager({ role }: UsersManagerProps) {
       <EditUserModal
         open={!!selectedUser}
         user={selectedUser}
-        onClose={() => setSelectedUser(null)}
-        onSave={(updatedUser) => {
-          console.log(updatedUser);
-          // call service.updateUser(updatedUser)
+        onClose={() => {
+          setSelectedUser(null);
+          setIsAdding(false);
         }}
+        onSave={handleSaveUser}
       />
     </div>
   );

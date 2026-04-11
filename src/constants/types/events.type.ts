@@ -23,6 +23,9 @@ export interface Event {
 	/** Event title/name */
 	title: string;
 
+	/** Optional event summary text */
+	description?: string;
+
 	/** Event mode */
 	mode: "online" | "physical" | "hybrid";
 

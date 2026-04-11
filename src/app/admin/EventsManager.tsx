@@ -2,7 +2,7 @@
 
 import { Event } from "@/constants/types/events.type";
 import EventService from "@/services/events/eventService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import { handleDelete, BasicModal } from "./eventHandlers";
 
@@ -16,32 +16,47 @@ export default function EventsManager({ role }: EventsManagerProps) {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const events = await service.getEvents();
-        setEvents(events);
-      } catch (error) {
-        console.warn(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    loadData();
+  const loadData = useCallback(async () => {
+    try {
+      const events = await service.getEvents();
+      setEvents(events);
+    } catch (error) {
+      console.warn(error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
   if (role !== "admin" && role !== "editor") {
-    return <div>Unauthorised</div>;
+    return <div className="text-red-500 text-xl font-semibold">Unauthorized</div>;
   }
+
+  const refreshData = () => {
+    setLoading(true);
+    loadData();
+  };
+
+  const handleDeleteAndRefresh = async (event: Event) => {
+    await handleDelete(event);
+    refreshData();
+  };
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
     <div>
       <div className="flex justify-between items-center mb-4 w-full">
         <h1 className="text-xl font-semibold">Events</h1>
-        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer">
+        <button
+          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer"
+          onClick={() => setIsAdding(true)}
+          aria-label="Add new event"
+        >
           <Add className="w-5 h-5"></Add>
           Add New
         </button>
@@ -90,12 +105,14 @@ export default function EventsManager({ role }: EventsManagerProps) {
                 <button
                   onClick={() => setSelectedEvent(event)}
                   className="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer"
+                  aria-label={`Edit ${event.title}`}
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => handleDelete(event)}
+                  onClick={() => handleDeleteAndRefresh(event)}
                   className="text-red-600 hover:text-red-900 hover:cursor-pointer"
+                  aria-label={`Delete ${event.title}`}
                 >
                   <Delete className="w-4 h-4" />
                 </button>
@@ -105,9 +122,15 @@ export default function EventsManager({ role }: EventsManagerProps) {
         </tbody>
       </table>
       <BasicModal
-        open={!!selectedEvent}
-        onClose={() => setSelectedEvent(null)}
+        open={!!selectedEvent || isAdding}
+        onClose={() => {
+          setSelectedEvent(null);
+          setIsAdding(false);
+        }}
         type={"events"}
+        eventItem={selectedEvent}
+        isAdding={isAdding}
+        onSave={refreshData}
       />
     </div>
   );

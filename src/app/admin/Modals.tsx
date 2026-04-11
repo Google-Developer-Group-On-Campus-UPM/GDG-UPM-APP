@@ -36,23 +36,23 @@ export function EditUserModal({
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-const validateForm = () => {
-  if (!form) {
-    setErrors({ form: "Form data is required" });
-    return false;
-  }
+  const validateForm = () => {
+    if (!form) {
+      setErrors({ form: "Form data is required" });
+      return false;
+    }
 
-  const newErrors: Record<string, string> = {};
-  if (!form.title?.trim()) newErrors.title = "Title is required";
-  if (!form.dateStart) newErrors.dateStart = "Start date is required";
-  // Add more validations...
-  setErrors(newErrors);
-  return Object.keys(newErrors).length === 0;
-};
+    const newErrors: Record<string, string> = {};
+    if (!form.name?.trim()) newErrors.name = "Name is required";
+    if (!form.role?.trim()) newErrors.role = "Role is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   useEffect(() => {
     if (user) {
       setForm({ ...user });
+      setErrors({});
     }
   }, [user]);
 
@@ -65,7 +65,7 @@ const validateForm = () => {
     };
 
   const handleSave = () => {
-    if (!form) return;
+    if (!form || !validateForm()) return;
     onSave?.(form);
     onClose();
   };
@@ -88,7 +88,7 @@ const validateForm = () => {
         >
           {/* Header */}
           <Typography variant="h6" mb={3}>
-            Edit User
+            {user?.ref ? "Edit User" : "Add User"}
           </Typography>
 
           {/* Form */}
@@ -100,6 +100,8 @@ const validateForm = () => {
                   fullWidth
                   value={form.name ?? ""}
                   onChange={handleChange("name")}
+                  error={Boolean(errors.name)}
+                  helperText={errors.name}
                 />
               </Grid>
 
@@ -109,6 +111,8 @@ const validateForm = () => {
                   fullWidth
                   value={form.role ?? ""}
                   onChange={handleChange("role")}
+                  error={Boolean(errors.role)}
+                  helperText={errors.role}
                 />
               </Grid>
 
