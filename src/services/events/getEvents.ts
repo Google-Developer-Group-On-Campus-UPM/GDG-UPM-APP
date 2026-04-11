@@ -25,7 +25,7 @@ interface FirestoreEventData {
 				name?: string;
 				presetColor?: "red" | "indigo";
 				color?: "red" | "indigo";
-	}
+		  }
 	)[];
 	registrationLink?: string;
 	isActive?: boolean;

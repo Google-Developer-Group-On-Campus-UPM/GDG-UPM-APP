@@ -10,7 +10,7 @@ export interface Event {
 	dateEnd?: Date;
 	ticketType: string;
 	maxParticipants: number;
-	image: string; 
+	image: string;
 	status: "upcoming" | "past";
 	tags?: {
 		tag: string;
