@@ -14,6 +14,38 @@ type EventsManagerProps = {
 
 const service = new EventService();
 
+function formatEventDate(value: unknown) {
+  if (value instanceof Date) {
+    return value;
+  }
+
+  if (
+    value &&
+    typeof value === "object" &&
+    "toDate" in value &&
+    typeof (value as { toDate: () => Date }).toDate === "function"
+  ) {
+    return (value as { toDate: () => Date }).toDate();
+  }
+
+  if (
+    value &&
+    typeof value === "object" &&
+    "seconds" in value &&
+    typeof (value as { seconds?: number }).seconds === "number"
+  ) {
+    const timestamp = value as { seconds: number; nanoseconds?: number };
+    return new Date(timestamp.seconds * 1000 + (timestamp.nanoseconds ?? 0) / 1_000_000);
+  }
+
+  if (typeof value === "string" || typeof value === "number") {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  return null;
+}
+
 export default function EventsManager({ role }: EventsManagerProps) {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState<Event[]>([]);
@@ -52,32 +84,23 @@ export default function EventsManager({ role }: EventsManagerProps) {
   const handleSaveEvent = async (updated: {
     title: string;
     description: string;
+    mode: Event["mode"];
+    location: string;
+    dateStart: Date;
+    dateEnd?: Date;
+    ticketType: string;
+    maxParticipants: number;
+    image: string;
     status: "upcoming" | "past";
+    registrationLink?: string;
+    isActive: boolean;
   }) => {
     try {
       if (isAdding) {
-        await service.createEvent({
-          title: updated.title,
-          description: updated.description,
-          status: updated.status,
-          mode: "physical",
-          location: "TBA",
-          dateStart: new Date(),
-          ticketType: "Free",
-          maxParticipants: 100,
-          image: "/images/test.png",
-          isActive: true,
-        });
+        await service.createEvent(updated as Event);
         toast.success("Event created successfully.");
       } else if (selectedEvent?.ref) {
-        await service.updateEvent(
-          {
-            title: updated.title,
-            description: updated.description,
-            status: updated.status,
-          },
-          selectedEvent.ref,
-        );
+        await service.updateEvent(updated, selectedEvent.ref);
         toast.success("Event updated successfully.");
       }
 
@@ -91,11 +114,14 @@ export default function EventsManager({ role }: EventsManagerProps) {
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
-    <div>
-      <div className="flex justify-between items-center mb-4 w-full">
-        <h1 className="text-xl font-semibold">Events</h1>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="mb-5 flex w-full items-center justify-between">
+        <div>
+          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Events</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Track and manage all event records.</p>
+        </div>
         <button
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer"
+          className="flex items-center gap-2 rounded-xl bg-[#026cba] px-4 py-2 text-white transition-colors hover:cursor-pointer hover:bg-[#015b9b] dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400"
           onClick={() => setIsAdding(true)}
           aria-label="Add new event"
         >
@@ -103,41 +129,52 @@ export default function EventsManager({ role }: EventsManagerProps) {
           Add New
         </button>
       </div>
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+      <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+      <div className="max-h-[68vh] overflow-auto">
+      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+        <thead className="bg-slate-50 dark:bg-slate-900">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Title
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Date
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Status
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Actions
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-900">
           {events.map((event) => (
-            <tr key={event.id}>
+            <tr key={event.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm font-medium text-gray-900">
+                <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
                   {event.title}
                 </div>
-                <div className="text-sm text-gray-500">{event.description}</div>
+                <div className="text-sm text-slate-500 dark:text-slate-400">{event.description}</div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {event.dateStart.toString()}
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
+                {(() => {
+                  const date = formatEventDate(event.dateStart);
+
+                  return date
+                    ? date.toLocaleString(undefined, {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                      })
+                    : "Invalid date";
+                })()}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span
                   className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                     event.status === "upcoming"
-                      ? "bg-blue-100 text-blue-800"
-                      : "bg-gray-100 text-gray-800"
+                      ? "bg-[#026cba]/10 text-[#026cba] dark:bg-[#026cba]/20 dark:text-sky-200"
+                      : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
                   }`}
                 >
                   {event.status}
@@ -146,14 +183,14 @@ export default function EventsManager({ role }: EventsManagerProps) {
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button
                   onClick={() => setSelectedEvent(event)}
-                  className="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer"
+                  className="mr-3 text-slate-600 hover:cursor-pointer hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
                   aria-label={`Edit ${event.title}`}
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDeleteAndRefresh(event)}
-                  className="text-red-600 hover:text-red-900 hover:cursor-pointer"
+                  className="text-rose-600 hover:cursor-pointer hover:text-rose-800 dark:text-rose-400 dark:hover:text-rose-300"
                   aria-label={`Delete ${event.title}`}
                 >
                   <Delete className="w-4 h-4" />
@@ -163,6 +200,8 @@ export default function EventsManager({ role }: EventsManagerProps) {
           ))}
         </tbody>
       </table>
+      </div>
+      </div>
       <EditEventModal
         open={!!selectedEvent || isAdding}
         onClose={() => {

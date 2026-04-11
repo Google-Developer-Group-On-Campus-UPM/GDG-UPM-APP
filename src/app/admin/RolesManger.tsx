@@ -69,11 +69,14 @@ export default function RolesManager({ role }: RolesManagerProps) {
 
   if (loading) return <h1 className="text-xl font-semibold">Loading...</h1>;
   return (
-    <div>
-      <div className="flex justify-between items-center mb-4 w-full">
-        <h1 className="text-xl font-semibold">Roles</h1>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <div className="mb-5 flex w-full items-center justify-between">
+        <div>
+          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Roles</h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Manage role definitions for members.</p>
+        </div>
         <button
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 hover:cursor-pointer"
+          className="flex items-center gap-2 rounded-xl bg-[#026cba] px-4 py-2 text-white transition-colors hover:cursor-pointer hover:bg-[#015b9b] dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400"
           onClick={() => setIsAdding(true)}
           aria-label="Add new role"
         >
@@ -81,27 +84,28 @@ export default function RolesManager({ role }: RolesManagerProps) {
           Add New
         </button>
       </div>
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+      <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+      <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+        <thead className="bg-slate-50 dark:bg-slate-900">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Title
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Actions
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-900">
           {roles.map((role) => (
-            <tr key={role.id}>
+            <tr key={role.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
-                  <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#026cba]/10 font-medium text-[#026cba] dark:bg-[#026cba]/20 dark:text-sky-200">
                     {role.title.charAt(0)}
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
                       {role.title}
                     </div>
                   </div>
@@ -110,14 +114,14 @@ export default function RolesManager({ role }: RolesManagerProps) {
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium hover:cursor-pointer">
                 <button
                   onClick={() => setSelectedRole(role)}
-                  className="text-blue-600 hover:text-blue-900 mr-3 hover:cursor-pointer"
+                  className="mr-3 text-[#026cba] hover:cursor-pointer hover:text-[#015b9b] dark:text-sky-300 dark:hover:text-sky-200"
                   aria-label={`Edit ${role.title}`}
                 >
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDeleteAndRefresh(role)}
-                  className="text-red-600 hover:text-red-900 hover:cursor-pointer"
+                  className="text-rose-600 hover:cursor-pointer hover:text-rose-800 dark:text-rose-400 dark:hover:text-rose-300"
                   aria-label={`Delete ${role.title}`}
                 >
                   <Delete className="w-4 h-4" />
@@ -127,6 +131,7 @@ export default function RolesManager({ role }: RolesManagerProps) {
           ))}
         </tbody>
       </table>
+      </div>
       <EditRoleModal
         open={!!selectedRole || isAdding}
         onClose={() => {

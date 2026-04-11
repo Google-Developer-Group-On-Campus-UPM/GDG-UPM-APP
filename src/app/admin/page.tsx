@@ -13,6 +13,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth } from "@/services/firebase/firebase";
 import { db } from "@/services/firebase/firebase";
 import { Toaster, toast } from "react-hot-toast";
+import { DarkMode, LightMode } from "@mui/icons-material";
 import AdminSidebar from "./AdminSidebar";
 import EventsManager from "./EventsManager";
 import UsersManager from "./UsersManager";
@@ -54,6 +55,22 @@ export default function AdminPage() {
   const [role, setRole] = useState<Role | null>(null);
   const [activeSection, setActiveSection] = useState("events");
   const [loading, setLoading] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("admin-theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const nextIsDarkMode = storedTheme
+      ? storedTheme === "dark"
+      : prefersDark;
+
+    setIsDarkMode(nextIsDarkMode);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDarkMode);
+    localStorage.setItem("admin-theme", isDarkMode ? "dark" : "light");
+  }, [isDarkMode]);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
@@ -125,30 +142,67 @@ export default function AdminPage() {
     setRole(null);
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <main className="grid h-screen place-items-center bg-slate-100 dark:bg-slate-950">
+        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          Loading admin panel...
+        </p>
+      </main>
+    );
 
   if (!user || !role) {
     return (
-      <main className="flex h-screen items-center justify-center">
+      <main className="relative flex h-screen items-center justify-center overflow-hidden bg-slate-100 px-6 dark:bg-slate-950">
+        <div className="pointer-events-none absolute -left-24 -top-20 h-72 w-72 rounded-full bg-[#026cba]/15 blur-3xl dark:bg-[#026cba]/20" />
+        <div className="pointer-events-none absolute -right-10 -bottom-24 h-72 w-72 rounded-full bg-sky-300/40 blur-3xl dark:bg-[#026cba]/20" />
         <Toaster position="top-right" />
-        <button
-          onClick={login}
-          className="bg-blue-700 text-white px-6 py-3 rounded hover:cursor-pointer"
-        >
-          Sign in with Google
-        </button>
+        <div className="z-10 w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-xl dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#026cba] dark:text-sky-300">GDG UPM</p>
+          <h1 className="mt-2 text-2xl font-semibold text-slate-900 dark:text-slate-100">
+            Admin CMS
+          </h1>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            Sign in with your authorized account to manage events, members, and teams.
+          </p>
+          <button
+            onClick={login}
+            className="mt-6 w-full rounded-xl bg-[#026cba] px-6 py-3 font-medium text-white transition-colors hover:cursor-pointer hover:bg-[#015b9b] dark:bg-sky-500 dark:text-white dark:hover:bg-sky-400"
+          >
+            Sign in with Google
+          </button>
+        </div>
       </main>
     );
   } else
     return (
-      <main className="grid grid-cols-[auto_1fr] bg-[#f4f3f2] dark:bg-[#222222] text-black dark:text-white">
+      <main className="grid min-h-screen grid-cols-[auto_1fr] bg-linear-to-br from-slate-100 via-slate-50 to-sky-50 text-black dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-white">
         <Toaster position="top-right" />
         <AdminSidebar
           logoutAction={logout}
           activeSection={activeSection}
           setActiveSectionAction={setActiveSection}
         ></AdminSidebar>
-        <div className="p-8">
+        <section className="p-6 md:p-8">
+          <div className="mb-6 flex items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/70">
+            <div>
+              <h2 className="text-lg font-semibold capitalize text-[#026cba] dark:text-sky-300">
+                {activeSection}
+              </h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Manage content and configuration for the selected module.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setIsDarkMode((value) => !value)}
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200 dark:hover:bg-slate-800"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {isDarkMode ? <LightMode className="h-4 w-4" /> : <DarkMode className="h-4 w-4" />}
+              {isDarkMode ? "Light" : "Dark"}
+            </button>
+          </div>
           {activeSection === "events" && (
             <EventsManager role={role}></EventsManager>
           )}
@@ -161,7 +215,7 @@ export default function AdminPage() {
           {activeSection === "departments" && (
             <DepartmentsManager role={role}></DepartmentsManager>
           )}
-        </div>
+        </section>
       </main>
     );
 }

@@ -11,15 +11,14 @@ import {
   MenuItem,
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Event } from "@/constants/types/events.type";
-import { Department, Role, TeamMember } from "@/constants/types/team.type";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
+import {
+  Department,
+  DepartmentList,
+  Role,
+  TeamMember,
+} from "@/constants/types/team.type";
 
 type EditUserModalProps = {
   open: boolean;
@@ -32,7 +31,9 @@ type EditDepartmentModalProps = {
   open: boolean;
   department: Department | null;
   onClose: () => void;
-  onSave?: (updated: { name: string; description: string }) => void;
+  onSave?: (
+    updated: { id: DepartmentList; name: string; description: string },
+  ) => void;
 };
 
 type EditRoleModalProps = {
@@ -50,10 +51,33 @@ type EditEventModalProps = {
     updated: {
       title: string;
       description: string;
+      mode: Event["mode"];
+      location: string;
+      dateStart: Date;
+      dateEnd?: Date;
+      ticketType: string;
+      maxParticipants: number;
+      image: string;
       status: "upcoming" | "past";
+      registrationLink?: string;
+      isActive: boolean;
     },
   ) => void;
 };
+
+const departmentOptions: DepartmentList[] = [
+  "lead",
+  "topboard",
+  "aiml",
+  "cloud",
+  "mobileapp",
+  "webapp",
+  "uiux",
+  "cybersecurity",
+  "creatives",
+  "communitysocials",
+  "externalrelations",
+];
 
 const modalStyle = {
   position: "absolute",
@@ -67,6 +91,39 @@ const modalStyle = {
   p: 4,
 };
 
+function useModalTheme() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const syncTheme = () => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
+    };
+
+    syncTheme();
+
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: isDarkMode ? "dark" : "light",
+          primary: {
+            main: "#026cba",
+          },
+        },
+      }),
+    [isDarkMode],
+  );
+}
+
 export function EditUserModal({
   open,
   user,
@@ -74,6 +131,7 @@ export function EditUserModal({
   onSave,
 }: EditUserModalProps) {
   const [form, setForm] = useState<TeamMember | null>(null);
+  const theme = useModalTheme();
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -113,7 +171,7 @@ export function EditUserModal({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <Box sx={modalStyle}>
           {/* Header */}
           <Typography variant="h6" mb={3}>
@@ -142,6 +200,24 @@ export function EditUserModal({
                   onChange={handleChange("role")}
                   error={Boolean(errors.role)}
                   helperText={errors.role}
+                />
+              </Grid>
+
+              <Grid size={12}>
+                <TextField
+                  label="Current Role ID"
+                  fullWidth
+                  value={form.currentRoleID ?? ""}
+                  onChange={handleChange("currentRoleID")}
+                />
+              </Grid>
+
+              <Grid size={12}>
+                <TextField
+                  label="Current Department ID"
+                  fullWidth
+                  value={form.currentDepartmentID ?? ""}
+                  onChange={handleChange("currentDepartmentID")}
                 />
               </Grid>
 
@@ -203,10 +279,18 @@ export function EditUserModal({
 
             {/* Actions */}
             <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button onClick={onClose} variant="outlined">
+              <Button
+                onClick={onClose}
+                variant="outlined"
+                sx={{ borderColor: "#026cba", color: "#026cba" }}
+              >
                 Cancel
               </Button>
-              <Button onClick={handleSave} variant="contained">
+              <Button
+                onClick={handleSave}
+                variant="contained"
+                sx={{ bgcolor: "#026cba", "&:hover": { bgcolor: "#015b9b" } }}
+              >
                 Save Changes
               </Button>
             </Stack>
@@ -223,35 +307,69 @@ export function EditDepartmentModal({
   onClose,
   onSave,
 }: EditDepartmentModalProps) {
+  const theme = useModalTheme();
+  const [departmentId, setDepartmentId] = useState<DepartmentList>("lead");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    setDepartmentId(department?.id ?? "lead");
     setName(department?.name ?? "");
     setDescription(department?.description ?? "");
     setErrors({});
   }, [department, open]);
 
   const handleSave = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!departmentId) {
+      newErrors.id = "Department id is required";
+    }
+
     if (!name.trim()) {
-      setErrors({ name: "Department name is required" });
+      newErrors.name = "Department name is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    onSave?.({ name: name.trim(), description: description.trim() });
+    onSave?.({
+      id: departmentId,
+      name: name.trim(),
+      description: description.trim(),
+    });
     onClose();
   };
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <Box sx={modalStyle}>
           <Typography variant="h6" mb={3}>
             {department?.ref ? "Edit Department" : "Add Department"}
           </Typography>
 
           <Stack spacing={3}>
+            <TextField
+              select
+              label="Department ID"
+              fullWidth
+              value={departmentId}
+              onChange={(e) => setDepartmentId(e.target.value as DepartmentList)}
+              error={Boolean(errors.id)}
+              helperText={errors.id}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            >
+              {departmentOptions.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField>
+
             <TextField
               label="Department Name"
               fullWidth
@@ -271,10 +389,18 @@ export function EditDepartmentModal({
             />
 
             <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button onClick={onClose} variant="outlined">
+              <Button
+                onClick={onClose}
+                variant="outlined"
+                sx={{ borderColor: "#026cba", color: "#026cba" }}
+              >
                 Cancel
               </Button>
-              <Button onClick={handleSave} variant="contained">
+              <Button
+                onClick={handleSave}
+                variant="contained"
+                sx={{ bgcolor: "#026cba", "&:hover": { bgcolor: "#015b9b" } }}
+              >
                 Save Changes
               </Button>
             </Stack>
@@ -291,6 +417,7 @@ export function EditRoleModal({
   onClose,
   onSave,
 }: EditRoleModalProps) {
+  const theme = useModalTheme();
   const [title, setTitle] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -311,7 +438,7 @@ export function EditRoleModal({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <Box sx={modalStyle}>
           <Typography variant="h6" mb={3}>
             {roleItem?.ref ? "Edit Role" : "Add Role"}
@@ -325,13 +452,22 @@ export function EditRoleModal({
               onChange={(e) => setTitle(e.target.value)}
               error={Boolean(errors.title)}
               helperText={errors.title}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
             />
 
             <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button onClick={onClose} variant="outlined">
+              <Button
+                onClick={onClose}
+                variant="outlined"
+                sx={{ borderColor: "#026cba", color: "#026cba" }}
+              >
                 Cancel
               </Button>
-              <Button onClick={handleSave} variant="contained">
+              <Button
+                onClick={handleSave}
+                variant="contained"
+                sx={{ bgcolor: "#026cba", "&:hover": { bgcolor: "#015b9b" } }}
+              >
                 Save Changes
               </Button>
             </Stack>
@@ -348,37 +484,96 @@ export function EditEventModal({
   onClose,
   onSave,
 }: EditEventModalProps) {
+  const theme = useModalTheme();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [mode, setMode] = useState<Event["mode"]>("physical");
+  const [location, setLocation] = useState("");
+  const [dateStart, setDateStart] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
+  const [ticketType, setTicketType] = useState("");
+  const [maxParticipants, setMaxParticipants] = useState(100);
+  const [image, setImage] = useState("");
   const [status, setStatus] = useState<"upcoming" | "past">("upcoming");
+  const [registrationLink, setRegistrationLink] = useState("");
+  const [isActive, setIsActive] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const toLocalDateTimeInput = (value?: Date) => {
+    if (!value) return "";
+    const date = value instanceof Date ? value : new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+  };
 
   useEffect(() => {
     setTitle(eventItem?.title ?? "");
     setDescription(eventItem?.description ?? "");
+    setMode(eventItem?.mode ?? "physical");
+    setLocation(eventItem?.location ?? "");
+    setDateStart(toLocalDateTimeInput(eventItem?.dateStart));
+    setDateEnd(toLocalDateTimeInput(eventItem?.dateEnd));
+    setTicketType(eventItem?.ticketType ?? "");
+    setMaxParticipants(eventItem?.maxParticipants ?? 100);
+    setImage(eventItem?.image ?? "/images/test.png");
     setStatus(eventItem?.status ?? "upcoming");
+    setRegistrationLink(eventItem?.registrationLink ?? "");
+    setIsActive(eventItem?.isActive ?? true);
     setErrors({});
   }, [eventItem, open]);
 
   const handleSave = () => {
-    if (!title.trim()) {
-      setErrors({ title: "Event title is required" });
+    const newErrors: Record<string, string> = {};
+
+    if (!title.trim()) newErrors.title = "Event title is required";
+    if (!location.trim()) newErrors.location = "Location is required";
+    if (!dateStart) newErrors.dateStart = "Start date and time are required";
+    if (!ticketType.trim()) newErrors.ticketType = "Ticket type is required";
+    if (!image.trim()) newErrors.image = "Image path is required";
+    if (!Number.isFinite(maxParticipants) || maxParticipants < 1) {
+      newErrors.maxParticipants = "Max participants must be at least 1";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    onSave?.({ title: title.trim(), description: description.trim(), status });
+    onSave?.({
+      title: title.trim(),
+      description: description.trim(),
+      mode,
+      location: location.trim(),
+      dateStart: new Date(dateStart),
+      dateEnd: dateEnd ? new Date(dateEnd) : undefined,
+      ticketType: ticketType.trim(),
+      maxParticipants,
+      image: image.trim(),
+      status,
+      registrationLink: registrationLink.trim() || undefined,
+      isActive,
+    });
     onClose();
   };
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ThemeProvider theme={darkTheme}>
-        <Box sx={modalStyle}>
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            ...modalStyle,
+            width: { xs: "92vw", sm: 520 },
+            maxHeight: "80vh",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Typography variant="h6" mb={3}>
             {eventItem?.ref ? "Edit Event" : "Add Event"}
           </Typography>
 
-          <Stack spacing={3}>
+          <Stack spacing={3} sx={{ overflowY: "auto", pr: 1, flex: 1 }}>
             <TextField
               label="Event Title"
               fullWidth
@@ -386,6 +581,83 @@ export function EditEventModal({
               onChange={(e) => setTitle(e.target.value)}
               error={Boolean(errors.title)}
               helperText={errors.title}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <TextField
+              select
+              label="Mode"
+              value={mode}
+              onChange={(e) => setMode(e.target.value as Event["mode"])}
+              fullWidth
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            >
+              <MenuItem value="online">online</MenuItem>
+              <MenuItem value="physical">physical</MenuItem>
+              <MenuItem value="hybrid">hybrid</MenuItem>
+            </TextField>
+
+            <TextField
+              label="Location"
+              fullWidth
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              error={Boolean(errors.location)}
+              helperText={errors.location}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <TextField
+              label="Start Date & Time"
+              type="datetime-local"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={dateStart}
+              onChange={(e) => setDateStart(e.target.value)}
+              error={Boolean(errors.dateStart)}
+              helperText={errors.dateStart}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <TextField
+              label="End Date & Time"
+              type="datetime-local"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={dateEnd}
+              onChange={(e) => setDateEnd(e.target.value)}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <TextField
+              label="Ticket Type"
+              fullWidth
+              value={ticketType}
+              onChange={(e) => setTicketType(e.target.value)}
+              error={Boolean(errors.ticketType)}
+              helperText={errors.ticketType}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <TextField
+              label="Max Participants"
+              type="number"
+              fullWidth
+              value={maxParticipants}
+              onChange={(e) => setMaxParticipants(Number(e.target.value))}
+              error={Boolean(errors.maxParticipants)}
+              helperText={errors.maxParticipants}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <TextField
+              label="Image URL/Path"
+              fullWidth
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              error={Boolean(errors.image)}
+              helperText={errors.image}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
             />
 
             <TextField
@@ -395,6 +667,7 @@ export function EditEventModal({
               minRows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
             />
 
             <TextField
@@ -403,19 +676,51 @@ export function EditEventModal({
               value={status}
               onChange={(e) => setStatus(e.target.value as "upcoming" | "past")}
               fullWidth
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
             >
               <MenuItem value="upcoming">upcoming</MenuItem>
               <MenuItem value="past">past</MenuItem>
             </TextField>
 
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button onClick={onClose} variant="outlined">
-                Cancel
-              </Button>
-              <Button onClick={handleSave} variant="contained">
-                Save Changes
-              </Button>
-            </Stack>
+            <TextField
+              label="Registration Link"
+              fullWidth
+              value={registrationLink}
+              onChange={(e) => setRegistrationLink(e.target.value)}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.checked)}
+                />
+              }
+              label="Active"
+            />
+          </Stack>
+
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="flex-end"
+            sx={{ pt: 2, mt: 2, borderTop: "1px solid", borderColor: "divider" }}
+          >
+            <Button
+              onClick={onClose}
+              variant="outlined"
+              sx={{ borderColor: "#026cba", color: "#026cba" }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSave}
+              variant="contained"
+              sx={{ bgcolor: "#026cba", "&:hover": { bgcolor: "#015b9b" } }}
+            >
+              Save Changes
+            </Button>
           </Stack>
         </Box>
       </ThemeProvider>
