@@ -8,9 +8,6 @@ import {
 } from "firebase/firestore";
 import { Event } from "@/constants/types/events.type";
 
-/**
- * Firestore document data structure
- */
 interface FirestoreEventData {
 	title?: string;
 	mode?: "online" | "physical" | "hybrid";
@@ -28,7 +25,7 @@ interface FirestoreEventData {
 				name?: string;
 				presetColor?: "red" | "indigo";
 				color?: "red" | "indigo";
-		  }
+	}
 	)[];
 	registrationLink?: string;
 	isActive?: boolean;
@@ -36,11 +33,6 @@ interface FirestoreEventData {
 	updatedAt?: Timestamp;
 }
 
-/**
- * Fetches all events from Firebase
- * @param firebaseApp - The Firebase app instance
- * @returns Promise<Event[]> - Array of all events
- */
 export default async function getEvents(
 	firebaseApp: FirebaseApp,
 ): Promise<Event[]> {

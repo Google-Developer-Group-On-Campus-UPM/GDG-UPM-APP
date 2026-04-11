@@ -1,6 +1,6 @@
 "use client";
 
-import { TeamMember, Department } from "@/constants/types/team.type";
+import { TeamMember, Department, Role } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
 import { useState, useEffect, useCallback } from "react";
 import { Add, Edit, Delete } from "@mui/icons-material";
@@ -18,6 +18,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<TeamMember[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [roles, setRoles] = useState<Role[]>([]);
   const [selectedUser, setSelectedUser] = useState<TeamMember | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -25,8 +26,10 @@ export default function UsersManager({ role }: UsersManagerProps) {
     try {
       const users = await service.getUsers();
       const departments = await service.getDepartments();
+      const roles = await service.getRoles();
       setUsers(users);
       setDepartments(departments);
+      setRoles(roles);
     } catch (error) {
       console.warn(error);
     } finally {
@@ -189,6 +192,8 @@ export default function UsersManager({ role }: UsersManagerProps) {
       <EditUserModal
         open={!!selectedUser}
         user={selectedUser}
+        roles={roles}
+        departments={departments}
         onClose={() => {
           setSelectedUser(null);
           setIsAdding(false);

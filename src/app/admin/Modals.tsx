@@ -15,7 +15,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Event } from "@/constants/types/events.type";
 import {
   Department,
-  DepartmentList,
   Role,
   TeamMember,
 } from "@/constants/types/team.type";
@@ -23,6 +22,8 @@ import {
 type EditUserModalProps = {
   open: boolean;
   user: TeamMember | null;
+  roles: Role[];
+  departments: Department[];
   onClose: () => void;
   onSave?: (updated: TeamMember) => void;
 };
@@ -32,7 +33,7 @@ type EditDepartmentModalProps = {
   department: Department | null;
   onClose: () => void;
   onSave?: (
-    updated: { id: DepartmentList; name: string; description: string },
+    updated: { id: string; name: string; description: string },
   ) => void;
 };
 
@@ -40,7 +41,7 @@ type EditRoleModalProps = {
   open: boolean;
   roleItem: Role | null;
   onClose: () => void;
-  onSave?: (updated: { title: string }) => void;
+  onSave?: (updated: { id: string; title: string }) => void;
 };
 
 type EditEventModalProps = {
@@ -64,20 +65,6 @@ type EditEventModalProps = {
     },
   ) => void;
 };
-
-const departmentOptions: DepartmentList[] = [
-  "lead",
-  "topboard",
-  "aiml",
-  "cloud",
-  "mobileapp",
-  "webapp",
-  "uiux",
-  "cybersecurity",
-  "creatives",
-  "communitysocials",
-  "externalrelations",
-];
 
 const modalStyle = {
   position: "absolute",
@@ -127,6 +114,8 @@ function useModalTheme() {
 export function EditUserModal({
   open,
   user,
+  roles,
+  departments,
   onClose,
   onSave,
 }: EditUserModalProps) {
@@ -144,6 +133,8 @@ export function EditUserModal({
     const newErrors: Record<string, string> = {};
     if (!form.name?.trim()) newErrors.name = "Name is required";
     if (!form.role?.trim()) newErrors.role = "Role is required";
+    if (!form.currentRoleID?.trim()) newErrors.currentRoleID = "Current role is required";
+    if (!form.currentDepartmentID?.trim()) newErrors.currentDepartmentID = "Current department is required";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -205,20 +196,38 @@ export function EditUserModal({
 
               <Grid size={12}>
                 <TextField
-                  label="Current Role ID"
+                  select
+                  label="Current Role"
                   fullWidth
                   value={form.currentRoleID ?? ""}
                   onChange={handleChange("currentRoleID")}
-                />
+                  error={Boolean(errors.currentRoleID)}
+                  helperText={errors.currentRoleID}
+                >
+                  {roles.map((roleItem) => (
+                    <MenuItem key={roleItem.id} value={roleItem.id ?? ""}>
+                      {roleItem.title}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid size={12}>
                 <TextField
-                  label="Current Department ID"
+                  select
+                  label="Current Department"
                   fullWidth
                   value={form.currentDepartmentID ?? ""}
                   onChange={handleChange("currentDepartmentID")}
-                />
+                  error={Boolean(errors.currentDepartmentID)}
+                  helperText={errors.currentDepartmentID}
+                >
+                  {departments.map((departmentItem) => (
+                    <MenuItem key={departmentItem.id} value={departmentItem.id ?? ""}>
+                      {departmentItem.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid size={12}>
@@ -308,13 +317,13 @@ export function EditDepartmentModal({
   onSave,
 }: EditDepartmentModalProps) {
   const theme = useModalTheme();
-  const [departmentId, setDepartmentId] = useState<DepartmentList>("lead");
+  const [departmentId, setDepartmentId] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    setDepartmentId(department?.id ?? "lead");
+    setDepartmentId(department?.id ?? "");
     setName(department?.name ?? "");
     setDescription(department?.description ?? "");
     setErrors({});
@@ -354,21 +363,14 @@ export function EditDepartmentModal({
 
           <Stack spacing={3}>
             <TextField
-              select
               label="Department ID"
               fullWidth
               value={departmentId}
-              onChange={(e) => setDepartmentId(e.target.value as DepartmentList)}
+              onChange={(e) => setDepartmentId(e.target.value)}
               error={Boolean(errors.id)}
               helperText={errors.id}
               sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
-            >
-              {departmentOptions.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
+            />
 
             <TextField
               label="Department Name"
@@ -418,21 +420,33 @@ export function EditRoleModal({
   onSave,
 }: EditRoleModalProps) {
   const theme = useModalTheme();
+  const [id, setId] = useState("");
   const [title, setTitle] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    setId(roleItem?.id ?? "");
     setTitle(roleItem?.title ?? "");
     setErrors({});
   }, [roleItem, open]);
 
   const handleSave = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!id.trim()) {
+      newErrors.id = "Role id is required";
+    }
+
     if (!title.trim()) {
-      setErrors({ title: "Role title is required" });
+      newErrors.title = "Role title is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    onSave?.({ title: title.trim() });
+    onSave?.({ id: id.trim(), title: title.trim() });
     onClose();
   };
 
@@ -445,6 +459,16 @@ export function EditRoleModal({
           </Typography>
 
           <Stack spacing={3}>
+            <TextField
+              label="Role ID"
+              fullWidth
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              error={Boolean(errors.id)}
+              helperText={errors.id}
+              sx={{ "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#026cba" } }}
+            />
+
             <TextField
               label="Role Title"
               fullWidth

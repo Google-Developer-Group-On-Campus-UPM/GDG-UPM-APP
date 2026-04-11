@@ -49,13 +49,13 @@ export default function RolesManager({ role }: RolesManagerProps) {
     refreshData();
   };
 
-  const handleSaveRole = async (updated: { title: string }) => {
+  const handleSaveRole = async (updated: { id: string; title: string }) => {
     try {
       if (isAdding) {
-        await service.createRole({ title: updated.title });
+        await service.createRole({ id: updated.id, title: updated.title });
         toast.success("Role created successfully.");
       } else if (selectedRole?.ref) {
-        await service.updateRole({ title: updated.title }, selectedRole.ref);
+        await service.updateRole({ id: updated.id, title: updated.title }, selectedRole.ref);
         toast.success("Role updated successfully.");
       }
 

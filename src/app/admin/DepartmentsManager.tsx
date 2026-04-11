@@ -55,7 +55,7 @@ export default function DepartmentsManager({ role }: DepartmentsManagerProps) {
   };
 
   const handleSaveDepartment = async (updated: {
-    id: Department["id"];
+    id: string;
     name: string;
     description: string;
   }) => {
