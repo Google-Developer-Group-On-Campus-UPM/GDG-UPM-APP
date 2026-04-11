@@ -109,19 +109,19 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 	);
 
 	return (
-		<div
+        <div
 			className={`inline-block rounded-[30px] p-[2.8px] ${outerBg}`}
 			style={{
 				...borderStyle,
 				...shadowStyle,
 			}}
 		>
-			{href ? (
-				<Link href={href} legacyBehavior>
-					<a tabIndex={0} style={{ display: "inline-block" }}>
-						{buttonContent}
-					</a>
-				</Link>
+            {href ? (
+				<Link href={href} tabIndex={0} style={{ display: "inline-block" }}>
+
+                    {buttonContent}
+
+                </Link>
 			) : (
 				<button
 					type="button"
@@ -132,8 +132,8 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 					{buttonContent}
 				</button>
 			)}
-		</div>
-	);
+        </div>
+    );
 };
 
 export default CTAButton;
