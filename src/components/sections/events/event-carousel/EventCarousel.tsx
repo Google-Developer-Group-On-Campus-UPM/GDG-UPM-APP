@@ -116,6 +116,7 @@ export default function EventCarousel({
 				sx={{
 					position: "relative",
 					width: containerWidth,
+					maxWidth: "100%",
 					height: containerHeight,
 				}}
 			>
@@ -158,6 +159,7 @@ export default function EventCarousel({
 						height: "100%",
 						alignItems: "flex-start",
 						transition: "all 0.3s ease-in-out",
+						overflowX: "hidden", // Prevent cards from overflowing the container horizontally
 					}}
 				>
 					{/* Render only current page events */}

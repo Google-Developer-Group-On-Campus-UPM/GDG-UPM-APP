@@ -137,6 +137,8 @@ export default function EventsSection() {
 				alignItems: "center",
 				gap: "48px",
 				py: "64px",
+				width: "100%",
+				overflowX: "hidden",
 			}}
 		>
 			<EventsHeader />
