@@ -60,11 +60,20 @@ export default function HeroSection() {
 	}, [displayed, typing, wordIndex]);
 
 	return (
-		<div className="h-screen min-h-[700px] max-h-[1080px] relative overflow-hidden font-sans">
-			<div className="h-screen min-h-[700px] max-h-[1080px] w-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat relative space-y-10">
+		<div className="h-screen min-h-[700px] max-h-[1080px] relative overflow-hidden font-sans flex justify-center">
+			{/* Background Container (max width 2560px to prevent infinite zoom scaling) */}
+			<div className="absolute inset-0 w-full h-full max-w-[2560px] mx-auto -z-10">
+				{/* Background Image */}
+				<div className="absolute inset-0 w-full h-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat" />
+				
+				{/* Side Fades to blend with the black background starting outside the 1080p center */}
+				<div className="absolute inset-0 w-full h-full" style={{ background: 'linear-gradient(to right, black 0%, black calc(50% - 1200px), transparent calc(50% - 960px), transparent calc(50% + 960px), black calc(50% + 1200px), black 100%)' }} />
+			</div>
+
+			<div className="h-screen min-h-[700px] max-h-[1080px] w-full relative space-y-10 z-10 flex flex-col">
 				<MaskedBackground template="template1" />
 
-				<div className="relative z-10 space-y-20">
+				<div className="relative z-10 space-y-20 max-w-7xl mx-auto w-full">
 					<div className="space-y-10">
 						<div className="flex justify-center w-full">
 							<div className="mt-32 sm:mt-40 md:mt-48 lg:mt-52 flex justify-center w-full">

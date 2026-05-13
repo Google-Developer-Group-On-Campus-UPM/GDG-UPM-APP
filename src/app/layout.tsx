@@ -28,8 +28,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className={cn("font-sans", geist.variable)}>
-			<body className={`${poppins.variable} ${geistMono.variable} antialiased`}>
-				{children}
+			<body className={`${poppins.variable} ${geistMono.variable} antialiased bg-black overflow-x-hidden`}>
+				<div className="w-full relative flex flex-col min-h-screen">
+					{children}
+				</div>
 			</body>
 		</html>
 	);
