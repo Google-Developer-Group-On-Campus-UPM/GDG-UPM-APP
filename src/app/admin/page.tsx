@@ -1,5 +1,8 @@
 "use client";
 
+import Navbar from "@/components/layout/Navbar";
+import AnnouncementSection from "@/components/sections/announcement/AnnouncementSection";
+
 export default function AdminSection() {
 	// Your admin logic goes here
 
@@ -94,7 +97,9 @@ export default function AdminSection() {
 		 * - EventsManagement -> INPUT: events; OUTPUT: CRUD operations
 		 * - AdminSettings -> INPUT: user; OUTPUT: configuration options
 		 */
-
-		<></>
+		<div>
+			<Navbar />
+			<AnnouncementSection />
+		</div>
 	);
 }

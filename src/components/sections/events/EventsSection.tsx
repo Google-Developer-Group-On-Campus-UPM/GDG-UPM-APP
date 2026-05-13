@@ -130,6 +130,7 @@ export default function EventsSection() {
 
 	return (
 		<Box
+			id="events"
 			sx={{
 				display: "flex",
 				flexDirection: "column",
