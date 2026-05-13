@@ -60,8 +60,8 @@ export default function HeroSection() {
 	}, [displayed, typing, wordIndex]);
 
 	return (
-		<div className="min-h-screen relative overflow-hidden font-sans">
-			<div className="min-h-screen w-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat relative space-y-10">
+		<div className="h-screen min-h-[700px] max-h-[1080px] relative overflow-hidden font-sans">
+			<div className="h-screen min-h-[700px] max-h-[1080px] w-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat relative space-y-10">
 				<MaskedBackground template="template1" />
 
 				<div className="relative z-10 space-y-20">
@@ -128,7 +128,7 @@ export default function HeroSection() {
 					</div>
 
 					{/* Cards */}
-					<div className="mx-6 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-54 grid grid-cols-1 lg:grid-cols-3 gap-4">
+					<div className="mx-6 sm:mx-14 md:mx-20 lg:mx-24 xl:max-w-[1000px] xl:mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4">
 						{cards.map((card) => (
 							<div
 								key={card.title}
