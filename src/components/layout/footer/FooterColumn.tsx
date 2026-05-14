@@ -17,7 +17,7 @@ export default function FooterColumn({ title, links }: FooterColumnProps) {
 			sx={{
 				flex: "1 1 auto",
 				minWidth: "180px",
-				gap: "28px",
+				gap: "12px",
 			}}
 		>
 			{/* Column Header */}
