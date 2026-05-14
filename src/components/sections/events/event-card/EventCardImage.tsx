@@ -1,5 +1,5 @@
-import { CardMedia } from "@mui/material";
 import { Event } from "@/constants/types/events.type";
+import Image from "next/image";
 
 interface EventCardImageProps {
 	event: Event;
@@ -11,18 +11,17 @@ export default function EventCardImage({
 	height = 119,
 }: EventCardImageProps) {
 	return (
-		<CardMedia
-			component="img"
-			height={height}
-			image={event.image || "/images/test.png"}
-			alt={event.title}
-			sx={{
-				objectFit: "cover",
-				objectPosition: "center",
-				flexShrink: 0, // Prevent the image from shrinking
-				minHeight: height, // Ensure minimum height
-				maxHeight: height, // Prevent expansion
-			}}
-		/>
+		<div
+			className="relative w-full shrink-0 overflow-hidden"
+			style={{ height: `${height}px` }}
+		>
+			<img
+				src={event.image || "/images/test.png"}
+				alt={event.title}
+				className="w-full h-full object-cover object-center"
+			/>
+			{/* Soft gradient overlay for better text readability and apple-style depth */}
+			<div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+		</div>
 	);
 }

@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { Event } from "@/constants/types/events.type";
 import EventCardDetails from "./EventCardDetails";
 import EventCardStatus from "./EventCardStatus";
@@ -12,41 +11,28 @@ interface EventCardContentProps {
 	onGetTicketClick?: () => void;
 }
 
-export default function EventCardConten({
+export default function EventCardContent({
 	event,
 	showGetTicket,
 	onGetTicketClick,
 }: EventCardContentProps) {
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				height: "100%", // Take full height of the 168px container
-				justifyContent: "space-between", // Distribute content and button
-			}}
-		>
+		<div className="flex flex-col h-full justify-between">
 			{/* Main content at the top */}
-			<Box
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					gap: "4px", // Same as original
-				}}
-			>
+			<div className="flex flex-col gap-1">
 				<EventCardStatus status={event.status} />
 				<EventCardTitle title={event.title} />
 				<EventCardDetails event={event} />
 				<EventCardTags tags={event.tags} />
-			</Box>
+			</div>
 
 			{/* Button at bottom left */}
-			<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+			<div className="flex justify-start">
 				<EventCardTicketButton
 					showGetTicket={showGetTicket}
 					onGetTicketClick={onGetTicketClick}
 				/>
-			</Box>
-		</Box>
+			</div>
+		</div>
 	);
 }

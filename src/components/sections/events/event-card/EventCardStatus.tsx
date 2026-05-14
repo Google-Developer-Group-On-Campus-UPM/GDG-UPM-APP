@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Event } from "@/constants/types/events.type";
 import getGradientTextStyle from "./functions/util/getGradientTextStyle";
 
@@ -8,18 +7,11 @@ interface EventCardStatusProps {
 
 export default function EventCardStatus({ status }: EventCardStatusProps) {
 	return (
-		<Typography
-			sx={{
-				...getGradientTextStyle(0.9),
-				fontWeight: 400,
-				fontSize: "12px",
-				lineHeight: "140%",
-				letterSpacing: "0%",
-				textTransform: "capitalize",
-				textAlign: "left", // Ensure left alignment
-			}}
+		<span
+			className="font-normal text-[12px] leading-[140%] tracking-normal capitalize text-left"
+			style={getGradientTextStyle(0.9)}
 		>
 			{status} Event
-		</Typography>
+		</span>
 	);
 }
