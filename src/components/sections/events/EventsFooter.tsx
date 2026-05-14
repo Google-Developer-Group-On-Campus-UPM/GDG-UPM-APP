@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import CTAButton from "@/components/ui/CTAButton";
 
 export default function EventsFooter({
@@ -6,45 +5,24 @@ export default function EventsFooter({
 }: {
 	onCTAClick: () => void;
 }) {
-	/**
-	 * Events Footer Logic:
-	 * 1. Handle CTA button click
-	 * 2. Fetch more events or navigate to event creation page
-	 * 3. Display footer content
-	 */
-
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: { xs: "column", md: "row" },
-				alignItems: "center",
-				justifyContent: "center",
-				gap: { xs: "20px", md: "24px" },
-				py: { xs: "24px", md: "32px" },
-				width: "100%",
-				maxWidth: "800px",
-				mx: "auto",
-			}}
-		>
-			<Typography
-				sx={{
-					width: "100%",
-					maxWidth: "523px",
-					height: "auto",
-					fontFamily: "Poppins",
-					fontWeight: 400,
-					fontSize: { xs: "16px", sm: "18px", md: "20px" },
-					lineHeight: "1.5",
-					textAlign: "center",
-					color: "rgba(255, 255, 255, 1)",
-				}}
-			>
-				What kind of event do you expect from GDGoC UPM? Share your idea with us!
-			</Typography>
-			<Box sx={{ flexShrink: 0 }}>
-				<CTAButton text="Suggest Event" onClick={onCTAClick} />
-			</Box>
-		</Box>
+		<div className="w-full flex justify-center items-center py-16 px-4 sm:px-6 md:px-12">
+			<div className="w-full max-w-5xl rounded-[2rem] bg-gradient-to-b from-white/[0.08] to-transparent border border-white/[0.08] backdrop-blur-xl p-8 sm:p-10 md:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 shadow-2xl relative overflow-hidden">
+				{/* Subtle glow effect inside the card */}
+				<div className="absolute inset-0 bg-gradient-to-tr from-[#4285f4]/10 via-transparent to-[#0f9d58]/10 pointer-events-none" />
+				
+				<div className="flex-1 text-center md:text-left z-10">
+					<h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight mb-4 leading-tight">
+						Have an idea for our next event?
+					</h3>
+					<p className="text-gray-400 text-base sm:text-lg font-light max-w-2xl mx-auto md:mx-0">
+						What kind of event do you expect from GDGoC UPM? Share your idea with us and let's bring it to life together.
+					</p>
+				</div>
+				<div className="shrink-0 z-10">
+					<CTAButton text="Suggest Event" onClick={onCTAClick} />
+				</div>
+			</div>
+		</div>
 	);
 }
