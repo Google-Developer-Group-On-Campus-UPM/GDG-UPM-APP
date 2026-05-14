@@ -13,6 +13,8 @@ export default function FooterLinksSection() {
 		<Stack
 			direction={{ xs: "column", sm: "row" }}
 			flexWrap="wrap"
+			spacing={3}
+			useFlexGap
 			sx={{
 				flex: "1 1 auto",
 				maxWidth: { lg: "70%" },
