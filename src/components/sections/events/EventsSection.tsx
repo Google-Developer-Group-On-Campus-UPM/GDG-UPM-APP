@@ -1,6 +1,5 @@
 "use client";
 
-import { Box } from "@mui/material";
 import { Event } from "@/constants/types/events.type";
 import EventsBody from "./EventsBody";
 import EventsFooter from "./EventsFooter";
@@ -129,21 +128,15 @@ export default function EventsSection() {
 	};
 
 	return (
-		<Box
+		<section
 			id="events"
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				alignItems: "center",
-				gap: "48px",
-				py: "64px",
-				width: "100%",
-				overflowX: "hidden",
-			}}
+			className="w-full py-16 px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden"
 		>
-			<EventsHeader />
-			<EventsBody events={events} />
-			<EventsFooter onCTAClick={handleOnCTAClick} />
-		</Box>
+			<div className="mx-auto w-full max-w-7xl flex flex-col items-center gap-12 lg:gap-16">
+				<EventsHeader />
+				<EventsBody events={events} />
+				<EventsFooter onCTAClick={handleOnCTAClick} />
+			</div>
+		</section>
 	);
 }

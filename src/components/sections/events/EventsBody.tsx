@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Poppins } from "next/font/google";
 import { useCallback, useEffect, useState } from "react";
 import { Event } from "@/constants/types/events.type";
@@ -91,79 +91,58 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
 	const displayEvents = isSortActive ? sortedEvents : filteredEvents;
 
 	return (
-		<Box
-			sx={{
-				width: "1204px",
-				height: "458px",
-				gap: "34px",
-				display: "flex",
-				flexDirection: "column",
-				maxWidth: "100%",
-				margin: "0 auto",
-			}}
-		>
+		<div className="flex flex-col gap-8 w-full max-w-[1204px] mx-auto min-h-[458px]">
 			{/* Control Bar */}
-			<Box
-				sx={{
-					display: "flex",
-					alignItems: "center",
-					gap: "16px",
-					width: "100%",
-					justifyContent: "space-between",
-				}}
-			>
+			<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 w-full">
 				{/* Left Side - Filter Buttons */}
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						gap: "16px",
-					}}
-				>
-					{/* Past Events Button (inactive) */}
+				<div className="flex items-center gap-4 w-full lg:w-auto overflow-x-auto overflow-y-hidden pb-2 lg:pb-0 hide-scrollbar shrink-0">
+					{/* Past Events Button */}
 					<EventButton
 						active={activeFilter === "past"}
 						onClick={() => handleFilterChange("past")}
 					>
-						Past Events
+						<span className="hidden sm:inline">Past Events</span>
+						<span className="inline sm:hidden">Past</span>
 					</EventButton>
 
-					{/* Upcoming Events Button (inactive) */}
+					{/* Upcoming Events Button */}
 					<EventButton
 						active={activeFilter === "upcoming"}
 						onClick={() => handleFilterChange("upcoming")}
 					>
-						Upcoming Events
+						<span className="hidden sm:inline">Upcoming Events</span>
+						<span className="inline sm:hidden">Upcoming</span>
 					</EventButton>
+				</div>
 
+				{/* Right Side - Search and Sort */}
+				<div className="flex flex-col sm:flex-row items-start sm:items-center justify-start lg:justify-end gap-4 w-full lg:w-auto flex-1">
 					{/* Search Bar */}
-					<SearchBar
-						events={events}
-						onSearchResults={handleSearchResults}
-						placeholder="Search by event name..."
-						sx={{ width: "100%" }}
-					/>
-				</Box>
+					<div className="w-full sm:w-auto flex-1 sm:max-w-[350px]">
+						<SearchBar
+							events={events}
+							onSearchResults={handleSearchResults}
+							placeholder="Search by event name..."
+							width={undefined}
+							sx={{ width: "100%" }}
+						/>
+					</div>
 
-				{/* Right Side - Sort Button */}
-				<SortRecentButton
-					events={displayEvents}
-					onSortedEvents={handleSort}
-					active={isSortActive}
-					sort={sortOrder}
-					sx={{ minWidth: "180px" }}
-				/>
-			</Box>
+					{/* Sort Button */}
+					<div className="w-full sm:w-auto shrink-0">
+						<SortRecentButton
+							events={displayEvents}
+							onSortedEvents={handleSort}
+							active={isSortActive}
+							sort={sortOrder}
+							sx={{ width: { xs: "100%", sm: "180px" } }}
+						/>
+					</div>
+				</div>
+			</div>
 
 			{/* Events Carousel or Empty State */}
-			<Box
-				sx={{
-					flex: 1,
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-				}}
-			>
+			<div className="flex-1 flex items-center justify-center w-full min-h-[329px]">
 				{displayEvents.length > 0 ? (
 					<EventCarousel
 						events={displayEvents}
@@ -179,17 +158,7 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
 						}}
 					/>
 				) : (
-					<Box
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							justifyContent: "center",
-							gap: "16px",
-							height: "329px",
-							textAlign: "center",
-						}}
-					>
+					<div className="flex flex-col items-center justify-center gap-4 h-[329px] text-center w-full">
 						<Typography
 							sx={{
 								fontFamily: poppins.style.fontFamily,
@@ -215,9 +184,9 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
 							There are currently no events available. Check back later for
 							exciting workshops and meetups!
 						</Typography>
-					</Box>
+					</div>
 				)}
-			</Box>
-		</Box>
+			</div>
+		</div>
 	);
 }

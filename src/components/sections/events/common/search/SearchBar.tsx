@@ -1,8 +1,6 @@
-"use client";
-
+import { Search } from "lucide-react";
 import { Box, InputBase, SxProps, Theme } from "@mui/material";
 import { Poppins } from "next/font/google";
-import Image from "next/image";
 import { useCallback, useState } from "react";
 import { Event } from "@/constants/types/events.type";
 import searchEvents from "@/services/events/functions/searchEvents";
@@ -28,21 +26,6 @@ interface SearchBarProps {
  *
  * Search input with gradient border effect using two-layer approach.
  * Filters events in real-time as user types and invokes searchEvents function.
- *
- * @example
- * <SearchBar
- *   events={events}
- *   onSearchResults={(filtered) => setFilteredEvents(filtered)}
- *   placeholder="Search events..."
- * />
- *
- * @example
- * <SearchBar
- *   events={events}
- *   onSearchResults={(filtered) => setFilteredEvents(filtered)}
- *   width={400}
- *   height={50}
- * />
  */
 export default function SearchBar({
 	events,
@@ -137,17 +120,7 @@ export default function SearchBar({
 	return (
 		<Box sx={baseLayerStyles}>
 			<Box sx={innerLayerStyles}>
-				<Image
-					src="/icons/search.svg"
-					alt="Search Icon"
-					width={24}
-					height={24}
-					style={{
-						color: "#FFFFFF",
-						opacity: 0.7,
-						flexShrink: 0,
-					}}
-				/>
+				<Search size={24} className="text-white/70 shrink-0" />
 				<InputBase
 					value={searchTerm}
 					onChange={handleInputChange}

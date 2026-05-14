@@ -17,30 +17,34 @@ export default function EventsFooter({
 		<Box
 			sx={{
 				display: "flex",
-				flexDirection: "row",
-				alignItems: "flex",
-				gap: "24px",
-				py: "32px",
+				flexDirection: { xs: "column", md: "row" },
+				alignItems: "center",
+				justifyContent: "center",
+				gap: { xs: "20px", md: "24px" },
+				py: { xs: "24px", md: "32px" },
+				width: "100%",
+				maxWidth: "800px",
+				mx: "auto",
 			}}
 		>
 			<Typography
 				sx={{
-					width: "523px",
-					height: "52px",
+					width: "100%",
+					maxWidth: "523px",
+					height: "auto",
 					fontFamily: "Poppins",
 					fontWeight: 400,
-					fontSize: "20px",
-					lineHeight: "130%",
-					letterSpacing: "0px",
+					fontSize: { xs: "16px", sm: "18px", md: "20px" },
+					lineHeight: "1.5",
 					textAlign: "center",
-					verticalAlign: "middle",
 					color: "rgba(255, 255, 255, 1)",
-					maxWidth: "100%",
 				}}
 			>
-				What kind of event do you expect from GDGoCUPM? Share your idea with us!
+				What kind of event do you expect from GDGoC UPM? Share your idea with us!
 			</Typography>
-			<CTAButton text="Suggest Event" onClick={onCTAClick} />
+			<Box sx={{ flexShrink: 0 }}>
+				<CTAButton text="Suggest Event" onClick={onCTAClick} />
+			</Box>
 		</Box>
 	);
 }
