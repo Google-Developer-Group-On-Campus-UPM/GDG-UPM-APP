@@ -60,7 +60,7 @@ export default function HeroSection() {
 	}, [displayed, typing, wordIndex]);
 
 	return (
-		<div className="relative w-full min-h-[100svh] overflow-hidden font-sans flex justify-center">
+		<div className="h-screen min-h-[700px] max-h-[1080px] relative overflow-hidden font-sans flex justify-center">
 			{/* Background Container (max width 2560px to prevent infinite zoom scaling) */}
 			<div className="absolute inset-0 w-full h-full max-w-[2560px] mx-auto -z-10">
 				{/* Background Image */}
@@ -70,13 +70,13 @@ export default function HeroSection() {
 				<div className="absolute inset-0 w-full h-full" style={{ background: 'linear-gradient(to right, black 0%, black calc(50% - 1200px), transparent calc(50% - 960px), transparent calc(50% + 960px), black calc(50% + 1200px), black 100%)' }} />
 			</div>
 
-			<div className="min-h-[100svh] w-full relative z-10 flex flex-col">
+			<div className="h-screen min-h-[700px] max-h-[1080px] w-full relative space-y-10 z-10 flex flex-col">
 				<MaskedBackground template="template1" />
 
-				<div className="flex-1 flex flex-col justify-center relative z-10 w-full max-w-7xl mx-auto px-4 py-24 sm:py-32 space-y-16 lg:space-y-20">
+				<div className="relative z-10 space-y-20 max-w-7xl mx-auto w-full">
 					<div className="space-y-10">
 						<div className="flex justify-center w-full">
-							<div className="flex justify-center w-full">
+							<div className="mt-32 sm:mt-40 md:mt-48 lg:mt-52 flex justify-center w-full">
 								<div
 									className="rounded-[68.1px] px-[20px] py-[5px] flex items-center justify-center gap-[8.8px] border-[1.36px] border-muted"
 									style={{
@@ -174,9 +174,7 @@ export default function HeroSection() {
 					</div>
 				</div>
 
-				<div className="pb-8">
-					<ScrollDownArrow />
-				</div>
+				<ScrollDownArrow />
 			</div>
 		</div>
 	);
