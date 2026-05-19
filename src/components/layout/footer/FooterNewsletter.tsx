@@ -12,7 +12,7 @@ export default function FooterNewsletter() {
 		<Stack
 			direction={{ xs: "column", sm: "row" }}
 			alignItems="center"
-			gap={{ xs: "20px", sm: "28px" }}
+			gap={{ xs: "0.5rem", sm: "1rem" }}
 		>
 			<Box
 				sx={{

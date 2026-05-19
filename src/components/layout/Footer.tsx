@@ -41,37 +41,37 @@ export default function Footer() {
 					margin: "0 auto",
 				}}
 			>
-				{/* Header Section */}
-				<Stack
-					direction={{ xs: "column", md: "row" }}
-					alignItems={{ xs: "flex-start", md: "center" }}
-					justifyContent={{ xs: "center", md: "space-between" }}
-					sx={{
-						mb: { xs: "60px", md: "100px" },
-						gap: { xs: "40px", md: "32px" },
-					}}
-				>
-					<FooterHeader />
-					<FooterNewsletter />
-				</Stack>
+				<Stack gap="5rem">
+					{/* Header Section */}
+					<Stack
+						direction={{ xs: "column", md: "row" }}
+						alignItems="center"
+						justifyContent={{ xs: "center", md: "space-between" }}
+						sx={{
+							gap: { xs: "40px", md: "32px" },
+						}}
+					>
+						<FooterHeader />
+						<FooterNewsletter />
+					</Stack>
 
-				{/* Links & Mascot Section */}
-				<Stack
-					direction={{ xs: "column", lg: "row" }}
-					justifyContent="space-between"
-					alignItems={{ xs: "center", lg: "flex-start" }}
-					sx={{
-						width: "100%",
-						mb: { xs: "60px", md: "80px" },
-						gap: { xs: "60px", md: "80px", lg: "100px" },
-					}}
-				>
-					<FooterLinksSection />
-					<FooterMascot />
-				</Stack>
+					{/* Links & Mascot Section */}
+					<Stack
+						direction={{ xs: "column", lg: "row" }}
+						justifyContent="space-between"
+						alignItems={{ xs: "center", lg: "flex-start" }}
+						sx={{
+							width: "100%",
+							gap: { xs: "60px", md: "80px", lg: "100px" },
+						}}
+					>
+						<FooterLinksSection />
+						<FooterMascot />
+					</Stack>
 
-				{/* Footer Bottom Section */}
-				<FooterBottom />
+					{/* Footer Bottom Section */}
+					<FooterBottom />
+				</Stack>
 			</Container>
 		</Box>
 	);
