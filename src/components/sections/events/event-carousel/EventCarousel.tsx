@@ -58,7 +58,7 @@ export default function EventCarousel({
 				opts={{
 					align: "start",
 					loop: false,
-					dragFree: true, // Apple style: drag free with snap
+					dragFree: false, // Apple style: drag free with snap
 				}}
 				className="w-full relative"
 				style={{ maxWidth: "100%" }}

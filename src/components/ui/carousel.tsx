@@ -187,8 +187,8 @@ function CarouselPrevious({
       className={cn(
         "absolute touch-manipulation rounded-full",
         orientation === "horizontal"
-          ? "top-1/2 -left-12"
-          : "-top-12 left-1/2 rotate-90",
+          ? "top-1/2 -left-12 -mt-6"
+          : "-top-12 left-1/2 -mb-6 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
@@ -217,8 +217,8 @@ function CarouselNext({
       className={cn(
         "absolute touch-manipulation rounded-full",
         orientation === "horizontal"
-          ? "top-1/2 -right-12"
-          : "-bottom-12 left-1/2 rotate-90",
+          ? "top-1/2 -right-12 -mt-6"
+          : "-bottom-12 left-1/2 -mb-6 rotate-90",
         className
       )}
       disabled={!canScrollNext}
