@@ -11,7 +11,11 @@ type SortOrder = "newest" | "oldest";
 
 interface SortRecentButtonProps {
 	events: Event[];
-	onSortedEvents: (sortedEvents: Event[]) => void;
+	onSortedEvents: (
+		sortedEvents: Event[],
+		nextActive: boolean,
+		nextSort: SortOrder,
+	) => void;
 	active?: boolean;
 	sort?: SortOrder;
 	sx?: SxProps<Theme>;
@@ -53,14 +57,14 @@ export default function SortRecentButton({
 		if (!active) {
 			// Activate and sort newest first
 			const sortedEvents = sortEvents(events, "newest");
-			onSortedEvents(sortedEvents);
+			onSortedEvents(sortedEvents, true, "newest");
 		} else if (sort === "newest") {
 			// Switch to oldest
 			const sortedEvents = sortEvents(events, "oldest");
-			onSortedEvents(sortedEvents);
+			onSortedEvents(sortedEvents, true, "oldest");
 		} else {
 			// Deactivate sorting - return original order
-			onSortedEvents([...events]);
+			onSortedEvents([...events], false, "newest");
 		}
 	};
 

@@ -79,12 +79,14 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
 	};
 
 	// Handle sort
-	const handleSort = (sorted: Event[]) => {
+	const handleSort = (
+		sorted: Event[],
+		nextActive: boolean,
+		nextSort: "newest" | "oldest",
+	) => {
 		setSortedEvents(sorted);
-		setIsSortActive(!isSortActive);
-		if (isSortActive) {
-			setSortOrder(sortOrder === "newest" ? "oldest" : "newest");
-		}
+		setIsSortActive(nextActive);
+		setSortOrder(nextSort);
 	};
 
 	// Get final events to display (use sorted if available, otherwise filtered)
@@ -95,16 +97,7 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
 			{/* Control Bar */}
 			<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 w-full">
 				{/* Left Side - Filter Buttons */}
-				<div className="flex items-center gap-4 w-full lg:w-auto overflow-x-auto overflow-y-hidden pb-2 lg:pb-0 hide-scrollbar shrink-0">
-					{/* Past Events Button */}
-					<EventButton
-						active={activeFilter === "past"}
-						onClick={() => handleFilterChange("past")}
-					>
-						<span className="hidden sm:inline">Past Events</span>
-						<span className="inline sm:hidden">Past</span>
-					</EventButton>
-
+				<div className="flex items-center gap-4 hide-scrollbar">
 					{/* Upcoming Events Button */}
 					<EventButton
 						active={activeFilter === "upcoming"}
@@ -113,29 +106,36 @@ export default function EventsBody({ events = [] }: EventsBodyProps) {
 						<span className="hidden sm:inline">Upcoming Events</span>
 						<span className="inline sm:hidden">Upcoming</span>
 					</EventButton>
+
+					{/* Past Events Button */}
+					<EventButton
+						active={activeFilter === "past"}
+						onClick={() => handleFilterChange("past")}
+					>
+						<span className="hidden sm:inline">Past Events</span>
+						<span className="inline sm:hidden">Past</span>
+					</EventButton>
 				</div>
 
 				{/* Right Side - Search and Sort */}
 				<div className="flex flex-col sm:flex-row items-start sm:items-center justify-start lg:justify-end gap-4 w-full lg:w-auto flex-1">
 					{/* Search Bar */}
-					<div className="w-full sm:w-auto flex-1 sm:max-w-[350px]">
+					<div className="flex-1 sm:max-w-xs">
 						<SearchBar
 							events={events}
 							onSearchResults={handleSearchResults}
-							placeholder="Search by event name..."
-							width={undefined}
+							placeholder="Search"
 							sx={{ width: "100%" }}
 						/>
 					</div>
 
 					{/* Sort Button */}
-					<div className="w-full sm:w-auto shrink-0">
+					<div>
 						<SortRecentButton
 							events={displayEvents}
 							onSortedEvents={handleSort}
 							active={isSortActive}
 							sort={sortOrder}
-							sx={{ width: { xs: "100%", sm: "180px" } }}
 						/>
 					</div>
 				</div>
