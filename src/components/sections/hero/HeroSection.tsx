@@ -65,7 +65,7 @@ export default function HeroSection() {
 			<div className="absolute inset-0 w-full h-full max-w-[2560px] mx-auto -z-10">
 				{/* Background Image */}
 				<div className="absolute inset-0 w-full h-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat" />
-				
+
 				{/* Side Fades to blend with the black background starting outside the 1080p center */}
 				<div className="absolute inset-0 w-full h-full" style={{ background: 'linear-gradient(to right, black 0%, black calc(50% - 1200px), transparent calc(50% - 960px), transparent calc(50% + 960px), black calc(50% + 1200px), black 100%)' }} />
 			</div>
@@ -125,7 +125,7 @@ export default function HeroSection() {
 									for <br className="hidden" />{" "}
 									<span className="italic">
 										{displayed}
-										<span className="border-r-2 border-white animate-pulse ml-1" />
+										<span className="border-r-10 border-white animate-pulse px-2" />
 									</span>
 								</span>
 							</h1>
