@@ -46,6 +46,8 @@ export default function FooterColumn({ title, links }: FooterColumnProps) {
 						key={index}
 						href={link.href}
 						underline="hover"
+						target="_blank"
+						rel="noopener noreferrer"
 						sx={{
 							position: "relative",
 							fontFamily: "Poppins",

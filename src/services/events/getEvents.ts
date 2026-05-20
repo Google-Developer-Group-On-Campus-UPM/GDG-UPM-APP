@@ -7,6 +7,7 @@ import {
 	Timestamp,
 } from "firebase/firestore";
 import { Event } from "@/constants/types/events.type";
+import { LINKS } from "@/constants/links";
 
 /**
  * Firestore document data structure
@@ -72,8 +73,7 @@ export default async function getEvents(
 						}))
 					: undefined,
 				registrationLink:
-					data.registrationLink ||
-					"https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/",
+					data.registrationLink || LINKS.COMMUNITY_PLATFORM,
 				isActive: data.isActive !== undefined ? data.isActive : true,
 				createdAt: data.createdAt?.toDate(),
 				updatedAt: data.updatedAt?.toDate(),

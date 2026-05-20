@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { FloatingNav } from "../ui/floating-navbar";
+import { LINKS } from "@/constants/links";
 
 const GDG_LOGO = <Image
 	src="/images/navbar/gdg-logo.svg"
@@ -10,33 +11,33 @@ const GDG_LOGO = <Image
 	height={40}
 	className="object-contain"
 	priority
-/>
+/>;
 
 const navItems = [
 	{
 		name: "",
-		link: "/",
+		link: LINKS.HOME,
 		icon: GDG_LOGO,
 	},
 	{
 		name: "Home",
-		link: "/#",
+		link: LINKS.HOME,
 	},
 	{
 		name: "About",
-		link: "/#about",
+		link: LINKS.ABOUT,
 	},
 	{
 		name: "Team",
-		link: "/#teams", // TODO?
+		link: LINKS.TEAMS,
 	},
 	{
 		name: "Events",
-		link: "/#events",
+		link: LINKS.EVENTS,
 	},
 	{
 		name: "Partners",
-		link: "/#partners", // TODO?
+		link: LINKS.PARTNERS,
 	},
 ];
 
@@ -44,7 +45,7 @@ export default function Navbar() {
 	return (
 		<FloatingNav
 			navItems={navItems}
-			ctaLink="/" // TODO: Add appropriate href
+			ctaLink={LINKS.COMMUNITY_PLATFORM}
 		/>
 	);
 }

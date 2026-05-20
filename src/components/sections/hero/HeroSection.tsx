@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import MaskedBackground from "@/components/ui/MaskedBackground";
 import ScrollDownArrow from "@/components/ui/ScrollDownArrow";
+import { LINKS } from "@/constants/links";
 
 const words = ["Developers", "Designers"];
 
@@ -93,8 +94,9 @@ export default function HeroSection() {
 									<span className="text-[14px] font-normal leading-[150%] text-[#F2F4F8] font-sans tracking-wide">
 										Student Developer Club -
 										<Link
-											// TODO: Add appropriate href
-											href="/"
+											href={LINKS.COMMUNITY_PLATFORM}
+											target="_blank"
+											rel="noopener noreferrer"
 											className="italic hover:underline ml-1"
 										>
 											Learn More

@@ -1,3 +1,5 @@
+import { LINKS } from "@/constants/links";
+
 export const siteConfig = {
 	name: "GDGoC UPM",
 	description: "Google Developer Group on Campus Universiti Putra Malaysia",
@@ -5,8 +7,8 @@ export const siteConfig = {
 	url: "",
 	ogImage: "/images/navbar/gdg-logo.svg",
 	links: {
-		github: "https://github.com/",
-		instagram: "https://instagram.com/",
+		github: LINKS.GITHUB,
+		instagram: LINKS.INSTAGRAM,
 	},
 };
 

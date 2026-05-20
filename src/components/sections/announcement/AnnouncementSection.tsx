@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CTAButton from "@/components/ui/CTAButton";
 import FlexChip from "@/components/ui/FlexChip";
+import { LINKS } from "@/constants/links";
 
 export default function AnnouncementSection() {
 	return (
@@ -44,8 +45,7 @@ export default function AnnouncementSection() {
 								To nurturing well-rounded developers by offering resources, mentorship, and a collaborative environment that bridges...
 							</p>
 							<div className="flex justify-center md:justify-start">
-								{/* TODO: Add appropriate href */}
-								<CTAButton href="/" />
+								<CTAButton href={LINKS.COMMUNITY_PLATFORM} />
 							</div>
 						</div>
 					</div>

@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 import { Department, Role, TeamMember } from "@/constants/types/team.type";
 import BaseService from "../firebase/baseService";
+import { LINKS } from "@/constants/links";
 import { db } from "../firebase/firebase";
 
 class TeamService extends BaseService {
@@ -76,8 +77,7 @@ class TeamService extends BaseService {
 			role: "member",
 			image: "/images/no-pfp.png",
 			social: {
-				linkedin:
-					"https://www.linkedin.com/company/google-developer-groups-upm/",
+				linkedin: LINKS.LINKEDIN_COMPANY,
 			},
 			interest:
 				"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis nesciunt dolores quisquam suscipit sapiente illo illum, rem saepe ullam vitae eligendi corrupti voluptate officiis aspernatur, sequi velit omnis reiciendis iusto?",
