@@ -6,14 +6,15 @@
 
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { Link } from "@mui/material";
+import { LINKS } from "@/constants/links";
 
 export default function FooterHeader() {
 	return (
 		<Link
-			href="https://github.com/Google-Developer-Group-On-Campus-UPM"
+			href={LINKS.GITHUB_ORG}
 			target="_blank"
 			rel="noopener noreferrer"
-			aria-label="Visit our GitHub organization"
+			aria-label="Visit our GitHub Page"
 			sx={{
 				color: "#ffffff",
 				display: "inline-flex",
@@ -27,7 +28,7 @@ export default function FooterHeader() {
 				},
 			}}
 		>
-			<GitHubIcon sx={{ fontSize: { xs: "48px", sm: "56px", md: "63px" } }} />
+			<GitHubIcon sx={{ fontSize: { xs: "2rem", sm: "3rem", md: "4rem" } }} />
 		</Link>
 	);
 }

@@ -76,7 +76,7 @@ export default function EventButton({
 	logoSize = 20,
 	gap = 8,
 }: EventButtonProps) {
-	const defaultMinWidth = 217;
+	const defaultMinWidth = 128;
 	const buttonMinWidth = width || defaultMinWidth;
 
 	const handleClick = () => {
@@ -116,17 +116,17 @@ export default function EventButton({
 		transition: "all 0.2s ease",
 		"&:hover": !disabled
 			? {
-					transform: "translateY(-1px)",
-					boxShadow: "0 4px 12px rgba(103, 164, 213, 0.3)",
-				}
+				transform: "translateY(-1px)",
+				boxShadow: "0 4px 12px rgba(103, 164, 213, 0.3)",
+			}
 			: {},
 		// Press down effect
 		"&:active": !disabled
 			? {
-					transform: "translateY(1px) scale(0.98)",
-					boxShadow: "0 2px 6px rgba(103, 164, 213, 0.2)",
-					transition: "all 0.1s ease",
-				}
+				transform: "translateY(1px) scale(0.98)",
+				boxShadow: "0 2px 6px rgba(103, 164, 213, 0.2)",
+				transition: "all 0.1s ease",
+			}
 			: {},
 		...sx,
 	};

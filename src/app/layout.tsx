@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 // Fonts
@@ -17,8 +18,28 @@ const geistMono = Geist_Mono({
 
 // SEO metadata for the entire application
 export const metadata: Metadata = {
-	title: "GDGoC UPM",
-	description: "Google Developer Group on Campus Universiti Putra Malaysia",
+	title: siteConfig.name,
+	description: siteConfig.description,
+	icons: {
+		icon: "/images/navbar/gdg-logo.svg",
+		shortcut: "/images/navbar/gdg-logo.svg",
+		apple: "/images/navbar/gdg-logo.svg",
+	},
+	openGraph: {
+		title: siteConfig.name,
+		description: siteConfig.description,
+		siteName: siteConfig.name,
+		images: [
+			{
+				url: siteConfig.ogImage,
+				width: 800,
+				height: 600,
+				alt: siteConfig.name,
+			},
+		],
+		locale: "en_US",
+		type: "website",
+	},
 };
 
 export default function RootLayout({
@@ -28,8 +49,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className={cn("font-sans", geist.variable)}>
-			<body className={`${poppins.variable} ${geistMono.variable} antialiased`}>
-				{children}
+			<body className={`${poppins.variable} ${geistMono.variable} antialiased bg-black overflow-x-hidden`}>
+				<div className="w-full relative flex flex-col min-h-screen">
+					{children}
+				</div>
 			</body>
 		</html>
 	);

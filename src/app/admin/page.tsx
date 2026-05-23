@@ -1,5 +1,8 @@
 "use client";
 
+import Navbar from "@/components/layout/Navbar";
+import AnnouncementSection from "@/components/sections/announcement/AnnouncementSection";
+
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { FirebaseError } from "firebase/app";
 import {

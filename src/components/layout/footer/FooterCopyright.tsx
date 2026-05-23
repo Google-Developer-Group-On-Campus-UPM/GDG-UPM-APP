@@ -18,11 +18,9 @@ export default function FooterCopyright() {
 				lineHeight: "160%",
 				color: "#ffffff",
 				textAlign: { xs: "center", md: "left" },
-				maxWidth: { md: "600px" },
 			}}
 		>
-			© {new Date().getFullYear()} Google Developer Groups on Campus -
-			Universiti Putra Malaysia
+			© {new Date().getFullYear()} GOOGLE DEVELOPER GROUPS ON CAMPUS - UNIVERSITI PUTRA MALAYSIA | MANAGED BY GDGOC UPM R&D
 		</Typography>
 	);
 }

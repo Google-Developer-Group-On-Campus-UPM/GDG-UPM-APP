@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import FlexChip from "@/components/ui/FlexChip";
 
-export default function EventsHeader() {
+export default function TestimonialsHeader() {
 	return (
 		<Box
 			sx={{
@@ -15,11 +15,10 @@ export default function EventsHeader() {
 				mx: "auto",
 			}}
 		>
-			<FlexChip content={[{ text: "events" }]} />
+			<FlexChip content={[{ text: "testimonials" }]} />
 			<Typography
 				sx={{
 					width: "100%",
-					height: "auto",
 					fontFamily: "Poppins",
 					fontWeight: 500,
 					fontSize: { xs: "36px", sm: "44px", md: "55px" },
@@ -33,18 +32,18 @@ export default function EventsHeader() {
 					backgroundClip: "text",
 				}}
 			>
-				Attend our Workshops
+				Stories from the
+				<br />
+				Community
 			</Typography>
 			<Typography
 				sx={{
 					width: "100%",
 					maxWidth: "660px",
-					height: "auto",
 					fontFamily: "Poppins",
 					fontWeight: 400,
 					fontSize: { xs: "16px", sm: "18px", md: "20px" },
 					lineHeight: "1.5",
-					letterSpacing: "0px",
 					textAlign: "center",
 					background: "rgba(255, 255, 255, 1)",
 					WebkitBackgroundClip: "text",
@@ -52,9 +51,7 @@ export default function EventsHeader() {
 					backgroundClip: "text",
 				}}
 			>
-				What we pursue is not just achievement,
-				<br className="hidden sm:block" />
-				but also community impact
+				From Students to Innovators
 			</Typography>
 		</Box>
 	);

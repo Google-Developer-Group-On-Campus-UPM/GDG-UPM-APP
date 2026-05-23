@@ -1,6 +1,5 @@
 "use client";
 
-import { Box, Card } from "@mui/material";
 import { Poppins } from "next/font/google";
 import { Event } from "@/constants/types/events.type";
 import EventCardContent from "./EventCardContent";
@@ -15,7 +14,7 @@ const poppins = Poppins({
 interface EventCardProps {
 	event: Event;
 	showGetTicket?: boolean;
-	onGetTicketClick?: (event: Event) => void;
+	onGetTicketClick?: () => void;
 	width?: number;
 	height?: number;
 	borderRadius?: number;
@@ -24,10 +23,8 @@ interface EventCardProps {
 /**
  * EventCard Component - Built with MUI Card components
  *
- * A responsive card component for displaying event information using Material-UI's
- * built-in Card components. Features automatic scaling and proper responsive behavior.
- * Maintains the same visual appearance as the original EventCard but built with
- * MUI's CardMedia and CardContent for proper layout structure.
+ * A responsive card component for displaying event information. Features Apple-style
+ * glassmorphic design, smooth interactions, and proper responsive behavior.
  */
 export default function EventCard({
 	event,
@@ -35,56 +32,40 @@ export default function EventCard({
 	onGetTicketClick,
 	width = 368,
 	height = 329,
-	borderRadius = 16,
+	borderRadius = 24,
 }: EventCardProps) {
-	// Error handling for invalid event data
 	if (!event) {
 		console.warn("EventCard: No event data provided");
 		return null;
 	}
 
-	// Calculate proportional image height (approximately 36% of total height)
 	const imageHeight = 119;
 
 	return (
-		<Card
-			sx={{
-				width: width,
-				height: height,
+		<div
+			className={`relative overflow-hidden flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20 ${poppins.className}`}
+			style={{
+				width: `${width}px`,
+				height: `${height}px`,
 				borderRadius: `${borderRadius}px`,
-				background: `
-          linear-gradient(90deg, rgba(6, 35, 59, 0.23) 0%, rgba(16, 96, 161, 0.23) 100%),
-          linear-gradient(90deg, rgba(4, 42, 81, 0.096) 19.71%, rgba(2, 28, 64, 0.4) 55.29%)
-        `,
-				backdropFilter: "blur(11.5px)",
-				border: "2px solid rgba(255, 255, 255, 0.1)",
-				display: "flex",
-				flexDirection: "column",
-				fontFamily: poppins.style.fontFamily,
-				overflow: "hidden",
-				position: "relative",
-				// Scale all content proportionally
+				background: "linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)",
+				backdropFilter: "blur(20px)",
+				WebkitBackdropFilter: "blur(20px)",
+				border: "1px solid rgba(255, 255, 255, 0.15)",
+				boxShadow: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
 				fontSize: `${width / 368}rem`,
-				// Ensure proper MUI Card structure without clickable areas
 				cursor: "default",
 			}}
 		>
-			{/* Image using CardMedia for proper MUI structure */}
 			<EventCardImage event={event} height={imageHeight} />
 
-			{/* Content Container - centered like original, positioned below image */}
-			<Box
-				sx={{
-					position: "absolute",
-					top: `${imageHeight + 17}px`, // Image height + 17px spacing like original
-					left: "50%",
-					transform: "translateX(-50%)",
-					width: 298, // Same as original
-					height: 168, // Fixed height as requested
-					display: "flex",
-					flexDirection: "column",
-					gap: "12px", // Same as original
-					zIndex: 3,
+			<div
+				className="absolute left-1/2 -translate-x-1/2 flex flex-col z-10"
+				style={{
+					top: `${imageHeight + 17}px`,
+					width: "298px",
+					height: "168px",
+					gap: "12px",
 				}}
 			>
 				<EventCardContent
@@ -92,7 +73,7 @@ export default function EventCard({
 					showGetTicket={showGetTicket}
 					onGetTicketClick={onGetTicketClick}
 				/>
-			</Box>
-		</Card>
+			</div>
+		</div>
 	);
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, SxProps, Theme } from "@mui/material";
-import Image from "next/image";
+import { ChevronLeft } from "lucide-react";
 
 interface GlassArrowButtonProps {
 	onClick?: () => void;
@@ -19,22 +19,6 @@ interface GlassArrowButtonProps {
  * Features a border that fades from white to transparent towards bottom right,
  * background blur effect, and semi-transparent white background.
  * Contains a centered icon that can be rotated to point in different directions.
- *
- * @example
- * <GlassArrowButton onClick={() => console.log('clicked')} />
- *
- * @example
- * <GlassArrowButton
- *   direction="right"
- *   size={60}
- *   onClick={() => navigate('next')}
- * />
- *
- * @example
- * <GlassArrowButton
- *   direction="up"
- *   icon={<CustomIcon />}
- * />
  */
 export default function GlassArrowButton({
 	onClick,
@@ -50,7 +34,7 @@ export default function GlassArrowButton({
 		}
 	};
 
-	// Get rotation angle based on direction (ArrowBackIosNewSharp points left by default)
+	// Get rotation angle based on direction
 	const getRotation = () => {
 		switch (direction) {
 			case "left":
@@ -121,14 +105,7 @@ export default function GlassArrowButton({
 	};
 
 	// Default icon if none provided
-	const displayIcon = icon || (
-		<Image
-			src="/icons/arrow_left.svg"
-			alt="arrow"
-			width={size * 0.25}
-			height={size * 0.25}
-		/>
-	);
+	const displayIcon = icon || <ChevronLeft size={size * 0.5} className="text-black" />;
 
 	return (
 		<Box component="button" onClick={handleClick} sx={baseLayerStyles}>

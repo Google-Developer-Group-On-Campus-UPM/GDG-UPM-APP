@@ -30,6 +30,8 @@ interface CTAButtonProps {
 	href?: string; // If provided, renders as a link
 	onClick?: () => void;
 	className?: string;
+	target?: string;
+	rel?: string;
 }
 
 const CTAButton: React.FC<CTAButtonProps> = ({
@@ -55,6 +57,8 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 	href,
 	onClick,
 	className = "",
+	target,
+	rel,
 }) => {
 	// Outer background: lighter when no shadow, darker when shadow is enabled
 	const outerBg =
@@ -117,7 +121,13 @@ const CTAButton: React.FC<CTAButtonProps> = ({
 			}}
 		>
             {href ? (
-				<Link href={href} tabIndex={0} style={{ display: "inline-block" }}>
+				<Link
+					href={href}
+					tabIndex={0}
+					style={{ display: "inline-block" }}
+					target={target || (href.startsWith("http") || href.startsWith("//") ? "_blank" : undefined)}
+					rel={rel || (href.startsWith("http") || href.startsWith("//") ? "noopener noreferrer" : undefined)}
+				>
 
                     {buttonContent}
 

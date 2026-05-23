@@ -6,13 +6,14 @@
 
 import { Box, Stack, Typography } from "@mui/material";
 import CTAButton from "../../ui/CTAButton";
+import { LINKS } from "@/constants/links";
 
 export default function FooterNewsletter() {
 	return (
 		<Stack
 			direction={{ xs: "column", sm: "row" }}
 			alignItems="center"
-			gap={{ xs: "20px", sm: "28px" }}
+			gap={{ xs: "0.5rem", sm: "1rem" }}
 		>
 			<Box
 				sx={{
@@ -58,8 +59,7 @@ export default function FooterNewsletter() {
 				DEVSPOTLIGHT NEWSLETTER
 			</Typography>
 
-			{/* TODO: Place correct href link */}
-			<CTAButton text="Subscribe" href="/" />
+			<CTAButton text="Subscribe" href={LINKS.LINKEDIN_COMPANY} />
 		</Stack>
 	);
 }

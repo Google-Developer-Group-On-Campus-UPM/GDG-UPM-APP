@@ -12,32 +12,33 @@ import {
 	YouTube,
 } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
+import { LINKS } from "@/constants/links";
 
 export default function FooterSocialLinks() {
 	const socialLinks = [
 		{
-			href: "https://instagram.com/gdgupm",
-			icon: <Instagram sx={{ fontSize: "24px" }} />,
+			href: LINKS.INSTAGRAM,
+			icon: <Instagram sx={{ fontSize: "3rem" }} />,
 			label: "Instagram",
 		},
 		{
-			href: "https://linkedin.com/company/gdgupm",
-			icon: <LinkedIn sx={{ fontSize: "24px" }} />,
+			href: LINKS.LINKEDIN,
+			icon: <LinkedIn sx={{ fontSize: "3rem" }} />,
 			label: "LinkedIn",
 		},
 		{
-			href: "https://twitter.com/gdgupm",
-			icon: <Twitter sx={{ fontSize: "24px" }} />,
+			href: LINKS.TWITTER,
+			icon: <Twitter sx={{ fontSize: "3rem" }} />,
 			label: "Twitter",
 		},
 		{
-			href: "https://youtube.com/gdgupm",
-			icon: <YouTube sx={{ fontSize: "24px" }} />,
+			href: LINKS.YOUTUBE,
+			icon: <YouTube sx={{ fontSize: "3rem" }} />,
 			label: "YouTube",
 		},
 		{
-			href: "https://facebook.com/gdgupm",
-			icon: <Facebook sx={{ fontSize: "24px" }} />,
+			href: LINKS.FACEBOOK,
+			icon: <Facebook sx={{ fontSize: "3rem" }} />,
 			label: "Facebook",
 		},
 	];
@@ -48,7 +49,7 @@ export default function FooterSocialLinks() {
 			alignItems="center"
 			sx={{
 				flexShrink: 0,
-				gap: { xs: "2px", md: "4px" },
+				gap: { xs: "1rem", md: "1rem" },
 				opacity: 0.8,
 			}}
 		>

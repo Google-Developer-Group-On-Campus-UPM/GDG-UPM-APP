@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import FlexChip from "@/components/ui/FlexChip";
 import { Event } from "@/constants/types/events.type";
 
@@ -10,7 +9,7 @@ export default function EventCardTags({ tags }: EventCardTagsProps) {
 	if (!tags || tags.length === 0) return null;
 
 	return (
-		<Box sx={{ display: "flex", flexWrap: "wrap", padding: "2px 0 4px 0" }}>
+		<div className="flex flex-wrap pt-[2px] pb-[4px]">
 			{tags.map((tagItem, index) =>
 				tagItem ? (
 					<FlexChip
@@ -33,6 +32,6 @@ export default function EventCardTags({ tags }: EventCardTagsProps) {
 					/>
 				) : null,
 			)}
-		</Box>
+		</div>
 	);
 }

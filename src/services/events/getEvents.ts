@@ -73,4 +73,9 @@ export default async function getEvents(
 		console.error("Error fetching events:", error);
 		return [];
 	}
+		return events;
+	} catch (error) {
+		console.error("Error fetching events:", error);
+		return [];
+	}
 }

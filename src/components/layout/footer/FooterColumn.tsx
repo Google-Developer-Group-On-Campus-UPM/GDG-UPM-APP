@@ -16,20 +16,20 @@ export default function FooterColumn({ title, links }: FooterColumnProps) {
 		<Stack
 			sx={{
 				flex: "1 1 auto",
-				minWidth: "180px",
-				gap: "28px",
+				minWidth: "140px",
+				gap: "2rem",
 			}}
 		>
 			{/* Column Header */}
 			<Typography
 				sx={{
 					fontFamily: "Poppins",
-					fontWeight: 600,
-					fontSize: { xs: "16px", md: "18px" },
+					fontWeight: 400,
+					fontSize: "20px",
 					lineHeight: "140%",
 					letterSpacing: "0.1em",
 					color: "#ffffff",
-					opacity: 0.95,
+					opacity: 0.8,
 					mb: "4px",
 					wordWrap: "break-word",
 					overflowWrap: "break-word",
@@ -40,33 +40,29 @@ export default function FooterColumn({ title, links }: FooterColumnProps) {
 			</Typography>
 
 			{/* Column Links */}
-			<Stack
-				sx={{
-					gap: "4px",
-				}}
-			>
+			<Stack gap="1rem">
 				{links.map((link, index) => (
 					<Link
 						key={index}
 						href={link.href}
-						underline="none"
+						underline="hover"
+						target="_blank"
+						rel="noopener noreferrer"
 						sx={{
 							position: "relative",
 							fontFamily: "Poppins",
 							fontWeight: 400,
-							fontSize: { xs: "14px", md: "16px" },
+							fontSize: "20px",
 							lineHeight: "200%",
 							color: "#ffffff",
-							opacity: 0.75,
 							transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
 							wordWrap: "break-word",
 							overflowWrap: "break-word",
 							whiteSpace: "normal",
 							display: "inline-block",
-							width: "fit-content",
+							width: "max-content",
 							"&:hover": {
-								opacity: 1,
-								transform: "translateX(1px)",
+								transform: "translateX(2px)",
 							},
 						}}
 					>
@@ -74,6 +70,6 @@ export default function FooterColumn({ title, links }: FooterColumnProps) {
 					</Link>
 				))}
 			</Stack>
-		</Stack>
+		</Stack >
 	);
 }

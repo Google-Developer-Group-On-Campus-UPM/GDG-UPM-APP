@@ -22,12 +22,13 @@
  * 6. Feature flags and configurations
  */
 
+import { LINKS } from "./links";
+
 // Site Configuration
 export const SITE_NAME = "GDGoC UPM";
 export const SITE_DESCRIPTION =
 	"Google Developer Group on Campus - Universiti Putra Malaysia";
-export const SITE_URL =
-	"https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/";
+export const SITE_URL = LINKS.COMMUNITY_PLATFORM;
 export const ORGANIZATION_NAME = "Google Developer Group on Campus UPM";
 
 // Contact Information
@@ -37,22 +38,22 @@ export const UNIVERSITY_LOCATION = "Serdang, Selangor, Malaysia";
 
 // Social Media Links
 export const SOCIAL_LINKS = {
-	FACEBOOK: "https://facebook.com/gdgupm", // TODO: Update with actual links
-	INSTAGRAM: "https://instagram.com/gdgupm",
-	LINKEDIN: "https://linkedin.com/company/gdgupm",
-	GITHUB: "https://github.com/gdgupm",
-	TWITTER: "https://twitter.com/gdgupm",
+	FACEBOOK: LINKS.FACEBOOK,
+	INSTAGRAM: LINKS.INSTAGRAM,
+	LINKEDIN: LINKS.LINKEDIN,
+	GITHUB: LINKS.GITHUB,
+	TWITTER: LINKS.TWITTER,
 };
 
 // Navigation Routes
 export const ROUTES = {
-	HOME: "/",
-	ABOUT: "/#about",
-	TEAMS: "/#teams",
-	EVENTS: "/#events",
-	PARTNERS: "/#partners",
-	ADMIN: "/admin",
-	LOGIN: "/login",
+	HOME: LINKS.HOME,
+	ABOUT: LINKS.ABOUT,
+	TEAMS: LINKS.TEAMS,
+	EVENTS: LINKS.EVENTS,
+	PARTNERS: LINKS.PARTNERS,
+	ADMIN: LINKS.ADMIN,
+	LOGIN: LINKS.LOGIN,
 };
 
 // Firebase Collection Names

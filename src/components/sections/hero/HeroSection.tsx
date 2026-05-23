@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import MaskedBackground from "@/components/ui/MaskedBackground";
 import ScrollDownArrow from "@/components/ui/ScrollDownArrow";
+import { LINKS } from "@/constants/links";
 
 const words = ["Developers", "Designers"];
 
@@ -60,11 +61,20 @@ export default function HeroSection() {
 	}, [displayed, typing, wordIndex]);
 
 	return (
-		<div className="min-h-screen relative overflow-hidden font-sans">
-			<div className="min-h-screen w-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat relative space-y-10">
+		<div className="h-screen min-h-[700px] max-h-[1080px] relative overflow-hidden font-sans flex justify-center">
+			{/* Background Container (max width 2560px to prevent infinite zoom scaling) */}
+			<div className="absolute inset-0 w-full h-full max-w-[2560px] mx-auto -z-10">
+				{/* Background Image */}
+				<div className="absolute inset-0 w-full h-full bg-[url('/images/hero/Main.webp')] bg-cover bg-center bg-no-repeat" />
+
+				{/* Side Fades to blend with the black background starting outside the 1080p center */}
+				<div className="absolute inset-0 w-full h-full" style={{ background: 'linear-gradient(to right, black 0%, black calc(50% - 1200px), transparent calc(50% - 960px), transparent calc(50% + 960px), black calc(50% + 1200px), black 100%)' }} />
+			</div>
+
+			<div className="h-screen min-h-[700px] max-h-[1080px] w-full relative space-y-10 z-10 flex flex-col">
 				<MaskedBackground template="template1" />
 
-				<div className="relative z-10 space-y-20">
+				<div className="relative z-10 space-y-20 max-w-7xl mx-auto w-full">
 					<div className="space-y-10">
 						<div className="flex justify-center w-full">
 							<div className="mt-32 sm:mt-40 md:mt-48 lg:mt-52 flex justify-center w-full">
@@ -84,8 +94,9 @@ export default function HeroSection() {
 									<span className="text-[14px] font-normal leading-[150%] text-[#F2F4F8] font-sans tracking-wide">
 										Student Developer Club -
 										<Link
-											// TODO: Add appropriate href
-											href="/"
+											href={LINKS.COMMUNITY_PLATFORM}
+											target="_blank"
+											rel="noopener noreferrer"
 											className="italic hover:underline ml-1"
 										>
 											Learn More
@@ -116,7 +127,7 @@ export default function HeroSection() {
 									for <br className="hidden" />{" "}
 									<span className="italic">
 										{displayed}
-										<span className="border-r-2 border-white animate-pulse ml-1" />
+										<span className="border-r-10 border-white animate-pulse px-2" />
 									</span>
 								</span>
 							</h1>
@@ -128,7 +139,7 @@ export default function HeroSection() {
 					</div>
 
 					{/* Cards */}
-					<div className="mx-6 sm:mx-14 md:mx-20 lg:mx-24 xl:mx-54 grid grid-cols-1 lg:grid-cols-3 gap-4">
+					<div className="mx-6 sm:mx-14 md:mx-20 lg:mx-24 xl:max-w-[1000px] xl:mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4">
 						{cards.map((card) => (
 							<div
 								key={card.title}
