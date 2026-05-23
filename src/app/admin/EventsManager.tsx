@@ -96,6 +96,7 @@ export default function EventsManager({ role }: EventsManagerProps) {
 		maxParticipants: number;
 		image: string;
 		status: "upcoming" | "past";
+		tags?: Event["tags"];
 		registrationLink?: string;
 		isActive: boolean;
 	}) => {

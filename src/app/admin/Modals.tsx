@@ -53,6 +53,7 @@ type EditEventModalProps = {
 		maxParticipants: number;
 		image: string;
 		status: "upcoming" | "past";
+		tags?: Event["tags"];
 		registrationLink?: string;
 		isActive: boolean;
 	}) => void;
@@ -517,6 +518,7 @@ export function EditEventModal({
 	const theme = useModalTheme();
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
+	const [tags, setTags] = useState("");
 	const [mode, setMode] = useState<Event["mode"]>("physical");
 	const [location, setLocation] = useState("");
 	const [dateStart, setDateStart] = useState("");
@@ -537,9 +539,27 @@ export function EditEventModal({
 		return new Date(date.getTime() - offset).toISOString().slice(0, 16);
 	}, []);
 
+	const tagsToInputValue = useCallback((value?: Event["tags"]) => {
+		return value?.map((item) => item.tag).join(", ") ?? "";
+	}, []);
+
+	const parseTags = useCallback((value: string) => {
+		const uniqueTags = new Set<string>();
+
+		for (const tag of value
+			.split(",")
+			.map((item) => item.trim())
+			.filter(Boolean)) {
+			uniqueTags.add(tag);
+		}
+
+		return Array.from(uniqueTags).map((tag) => ({ tag }));
+	}, []);
+
 	useEffect(() => {
 		setTitle(eventItem?.title ?? "");
 		setDescription(eventItem?.description ?? "");
+		setTags(tagsToInputValue(eventItem?.tags));
 		setMode(eventItem?.mode ?? "physical");
 		setLocation(eventItem?.location ?? "");
 		setDateStart(toLocalDateTimeInput(eventItem?.dateStart));
@@ -551,7 +571,7 @@ export function EditEventModal({
 		setRegistrationLink(eventItem?.registrationLink ?? "");
 		setIsActive(eventItem?.isActive ?? true);
 		setErrors({});
-	}, [eventItem, toLocalDateTimeInput]);
+	}, [eventItem, tagsToInputValue, toLocalDateTimeInput]);
 
 	const handleSave = () => {
 		const newErrors: Record<string, string> = {};
@@ -581,6 +601,7 @@ export function EditEventModal({
 			maxParticipants,
 			image: image.trim(),
 			status,
+			tags: parseTags(tags),
 			registrationLink: registrationLink.trim() || undefined,
 			isActive,
 		});
@@ -721,6 +742,18 @@ export function EditEventModal({
 							minRows={3}
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
+							sx={{
+								"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+									{ borderColor: "#026cba" },
+							}}
+						/>
+
+						<TextField
+							label="Tags"
+							fullWidth
+							value={tags}
+							onChange={(e) => setTags(e.target.value)}
+							helperText="Separate tags with commas, for example: AI, Workshop, Networking"
 							sx={{
 								"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
 									{ borderColor: "#026cba" },
