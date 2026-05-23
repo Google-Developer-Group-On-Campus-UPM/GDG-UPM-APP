@@ -1,12 +1,12 @@
-import { FirebaseApp } from "firebase/app";
 import {
 	collection,
 	Firestore,
 	getDocs,
-	getFirestore,
 	Timestamp,
 } from "firebase/firestore";
 import { Event } from "@/constants/types/events.type";
+
+import { db } from "../firebase/firebase";
 
 interface FirestoreEventData {
 	title?: string;
@@ -33,10 +33,8 @@ interface FirestoreEventData {
 }
 
 export default async function getEvents(
-	firebaseApp: FirebaseApp,
 ): Promise<Event[]> {
 	try {
-		const db: Firestore = getFirestore(firebaseApp);
 		const eventsCollection = collection(db, "events");
 		const eventsSnapshot = await getDocs(eventsCollection);
 

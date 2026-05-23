@@ -9,7 +9,7 @@ import EventCardTitle from "./EventCardTitle";
 interface EventCardContentProps {
 	event: Event;
 	showGetTicket: boolean;
-	onGetTicketClick?: () => void;
+	onGetTicketClick?: (event: Event) => void;
 }
 
 export default function EventCardConten({
@@ -44,6 +44,7 @@ export default function EventCardConten({
 			<Box sx={{ display: "flex", justifyContent: "flex-start" }}>
 				<EventCardTicketButton
 					showGetTicket={showGetTicket}
+					event={event}
 					onGetTicketClick={onGetTicketClick}
 				/>
 			</Box>

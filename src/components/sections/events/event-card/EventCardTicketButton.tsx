@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { Poppins } from "next/font/google";
+import { Event } from "@/constants/types/events.type";
 
 const poppins = Poppins({
 	weight: ["400", "700"],
@@ -9,20 +10,38 @@ const poppins = Poppins({
 
 interface EventCardTicketButtonProps {
 	showGetTicket: boolean;
-	onGetTicketClick?: () => void;
+	event: Event;
+	onGetTicketClick?: (event: Event) => void;
 }
 
 export default function EventCardTicketButton({
 	showGetTicket,
+	event,
 	onGetTicketClick,
 }: EventCardTicketButtonProps) {
 	if (!showGetTicket) return null;
+
+	const href = event.registrationLink?.trim();
+	const isExternalLink = Boolean(href);
 	return (
 		<Button
 			variant="text"
 			size="small"
-			onClick={onGetTicketClick}
+			component={isExternalLink ? "a" : "button"}
+			href={isExternalLink ? href : undefined}
+			target={isExternalLink ? "_blank" : undefined}
+			rel={isExternalLink ? "noreferrer" : undefined}
+			onClick={
+				isExternalLink
+					? undefined
+					: () => {
+						if (onGetTicketClick) {
+							onGetTicketClick(event);
+						}
+					}
+			}
 			disableRipple
+			disabled={!isExternalLink && !onGetTicketClick}
 			sx={{
 				fontFamily: poppins.style.fontFamily,
 				fontWeight: 700,

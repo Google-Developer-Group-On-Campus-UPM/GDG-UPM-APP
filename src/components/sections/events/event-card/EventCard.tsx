@@ -15,7 +15,7 @@ const poppins = Poppins({
 interface EventCardProps {
 	event: Event;
 	showGetTicket?: boolean;
-	onGetTicketClick?: () => void;
+	onGetTicketClick?: (event: Event) => void;
 	width?: number;
 	height?: number;
 	borderRadius?: number;
