@@ -531,10 +531,37 @@ export function EditEventModal({
 	const [isActive, setIsActive] = useState(true);
 	const [errors, setErrors] = useState<Record<string, string>>({});
 
-	const toLocalDateTimeInput = useCallback((value?: Date) => {
+	const toLocalDateTimeInput = useCallback((value?: unknown) => {
 		if (!value) return "";
-		const date = value instanceof Date ? value : new Date(value);
-		if (Number.isNaN(date.getTime())) return "";
+
+		let date: Date | null = null;
+
+		if (value instanceof Date) {
+			date = value;
+		} else if (
+			typeof value === "object" &&
+			value !== null &&
+			"toDate" in value &&
+			typeof (value as { toDate: () => Date }).toDate === "function"
+		) {
+			date = (value as { toDate: () => Date }).toDate();
+		} else if (
+			typeof value === "object" &&
+			value !== null &&
+			"seconds" in value &&
+			typeof (value as { seconds?: number }).seconds === "number"
+		) {
+			const timestamp = value as { seconds: number; nanoseconds?: number };
+			date = new Date(
+				timestamp.seconds * 1000 + (timestamp.nanoseconds ?? 0) / 1_000_000,
+			);
+		} else if (typeof value === "string" || typeof value === "number") {
+			const parsedDate = new Date(value);
+			date = Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+		}
+
+		if (!date || Number.isNaN(date.getTime())) return "";
+
 		const offset = date.getTimezoneOffset() * 60000;
 		return new Date(date.getTime() - offset).toISOString().slice(0, 16);
 	}, []);
