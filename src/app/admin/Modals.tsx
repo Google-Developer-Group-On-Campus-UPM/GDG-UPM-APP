@@ -49,7 +49,6 @@ type EditEventModalProps = {
 		location: string;
 		dateStart: Date;
 		dateEnd?: Date;
-		ticketType: string;
 		maxParticipants: number;
 		image: string;
 		status: "upcoming" | "past";
@@ -523,7 +522,6 @@ export function EditEventModal({
 	const [location, setLocation] = useState("");
 	const [dateStart, setDateStart] = useState("");
 	const [dateEnd, setDateEnd] = useState("");
-	const [ticketType, setTicketType] = useState("");
 	const [maxParticipants, setMaxParticipants] = useState(100);
 	const [image, setImage] = useState("");
 	const [status, setStatus] = useState<"upcoming" | "past">("upcoming");
@@ -591,7 +589,6 @@ export function EditEventModal({
 		setLocation(eventItem?.location ?? "");
 		setDateStart(toLocalDateTimeInput(eventItem?.dateStart));
 		setDateEnd(toLocalDateTimeInput(eventItem?.dateEnd));
-		setTicketType(eventItem?.ticketType ?? "");
 		setMaxParticipants(eventItem?.maxParticipants ?? 100);
 		setImage(eventItem?.image ?? "/images/test.png");
 		setStatus(eventItem?.status ?? "upcoming");
@@ -606,7 +603,6 @@ export function EditEventModal({
 		if (!title.trim()) newErrors.title = "Event title is required";
 		if (!location.trim()) newErrors.location = "Location is required";
 		if (!dateStart) newErrors.dateStart = "Start date and time are required";
-		if (!ticketType.trim()) newErrors.ticketType = "Ticket type is required";
 		if (!image.trim()) newErrors.image = "Image path is required";
 		if (!Number.isFinite(maxParticipants) || maxParticipants < 1) {
 			newErrors.maxParticipants = "Max participants must be at least 1";
@@ -624,7 +620,6 @@ export function EditEventModal({
 			location: location.trim(),
 			dateStart: new Date(dateStart),
 			dateEnd: dateEnd ? new Date(dateEnd) : undefined,
-			ticketType: ticketType.trim(),
 			maxParticipants,
 			image: image.trim(),
 			status,
@@ -716,19 +711,6 @@ export function EditEventModal({
 							InputLabelProps={{ shrink: true }}
 							value={dateEnd}
 							onChange={(e) => setDateEnd(e.target.value)}
-							sx={{
-								"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-									{ borderColor: "#026cba" },
-							}}
-						/>
-
-						<TextField
-							label="Ticket Type"
-							fullWidth
-							value={ticketType}
-							onChange={(e) => setTicketType(e.target.value)}
-							error={Boolean(errors.ticketType)}
-							helperText={errors.ticketType}
 							sx={{
 								"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
 									{ borderColor: "#026cba" },

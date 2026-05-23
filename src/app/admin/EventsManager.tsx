@@ -92,7 +92,6 @@ export default function EventsManager({ role }: EventsManagerProps) {
 		location: string;
 		dateStart: Date;
 		dateEnd?: Date;
-		ticketType: string;
 		maxParticipants: number;
 		image: string;
 		status: "upcoming" | "past";

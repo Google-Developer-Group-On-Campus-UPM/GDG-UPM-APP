@@ -14,7 +14,6 @@ interface FirestoreEventData {
 	location?: string;
 	dateStart?: Timestamp;
 	dateEnd?: Timestamp;
-	ticketType?: string;
 	maxParticipants?: number;
 	image?: string;
 	status?: "upcoming" | "past";
@@ -50,7 +49,6 @@ export default async function getEvents(
 				location: data.location || "",
 				dateStart: data.dateStart?.toDate() || new Date(),
 				dateEnd: data.dateEnd?.toDate(),
-				ticketType: data.ticketType || "Free",
 				maxParticipants: data.maxParticipants || 0,
 				image: data.image || "/images/test.png",
 				status: data.status || "upcoming",

@@ -74,8 +74,8 @@ export default function EventCardDetails({ event }: EventCardDetailsProps) {
 				</Typography>
 			</Box>
 
-			{/* Organizer/Participants Row */}
-			{(event.ticketType || event.maxParticipants) && (
+			{/* Participants Row */}
+			{event.maxParticipants > 0 && (
 				<Box sx={detailItemStyle}>
 					<Image
 						src="/icons/people.svg"
@@ -85,8 +85,6 @@ export default function EventCardDetails({ event }: EventCardDetailsProps) {
 						style={iconStyle}
 					/>
 					<Typography sx={textStyle}>
-						{event.ticketType}
-						{event.ticketType && event.maxParticipants && ", "}
 						{event.maxParticipants > 0 &&
 							`${event.maxParticipants} participants`}
 					</Typography>
