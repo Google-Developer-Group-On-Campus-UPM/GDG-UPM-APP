@@ -25,14 +25,6 @@ export default function FooterLinksSection() {
 				links={footerLinks.community.links}
 			/>
 			<FooterColumn
-				title={footerLinks.programs.title}
-				links={footerLinks.programs.links}
-			/>
-			<FooterColumn
-				title={footerLinks.resources.title}
-				links={footerLinks.resources.links}
-			/>
-			<FooterColumn
 				title={footerLinks.support.title}
 				links={footerLinks.support.links}
 			/>

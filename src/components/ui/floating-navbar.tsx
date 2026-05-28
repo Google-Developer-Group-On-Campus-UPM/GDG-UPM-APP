@@ -14,6 +14,7 @@ export const FloatingNav = ({
   className,
   ctaLink = "#",
   ctaText = "Join Us",
+  variant = "floating",
 }: {
   navItems: {
     name: string;
@@ -23,6 +24,7 @@ export const FloatingNav = ({
   className?: string;
   ctaLink?: string;
   ctaText?: string;
+  variant?: "floating" | "full-width";
 }) => {
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true); // Default true to show at top
@@ -105,16 +107,17 @@ export const FloatingNav = ({
             ease: [0.19, 1, 0.22, 1],
           }}
           className={cn(
-            "fixed inset-x-0 mx-auto z-5000 flex items-center justify-center font-sans",
-            "top-0 md:top-8 w-full md:w-fit md:min-w-[700px]",
+            variant === "floating"
+              ? "fixed inset-x-0 mx-auto z-5000 flex items-center justify-center font-sans top-0 md:top-8 w-full md:w-fit"
+              : "fixed inset-x-0 top-0 w-full z-5000 flex items-center justify-center font-sans border-b border-white/10 bg-black/60 backdrop-blur-md",
             className
           )}
         >
           <div
             className={cn(
-              "flex w-full items-center justify-between md:justify-center md:gap-6 px-5 py-3 md:py-2 transition-colors duration-300 backdrop-blur-md",
-              "rounded-none md:rounded-full shadow-none md:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]",
-              "bg-black/60 md:bg-black/40"
+              variant === "floating"
+                ? "flex w-full items-center justify-between md:justify-center md:gap-6 px-6 py-3 md:px-5 md:py-2.5 transition-colors duration-300 backdrop-blur-md rounded-none md:rounded-full shadow-none md:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] bg-black/60 md:bg-black/40"
+                : "flex w-full max-w-7xl mx-auto items-center justify-between px-5 md:px-16 lg:px-24 xl:px-32 py-3 md:py-4 transition-colors duration-300"
             )}
           >
             {/* Logo */}
