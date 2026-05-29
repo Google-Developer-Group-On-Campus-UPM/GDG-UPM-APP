@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Event } from "@/constants/types/events.type";
 
 interface EventCardImageProps {
@@ -14,9 +15,11 @@ export default function EventCardImage({
       className="relative w-full shrink-0 overflow-hidden"
       style={{ height: `${height}px` }}
     >
-      <img
+      <Image
         src={event.image || "/images/test.png"}
         alt={event.title}
+        width={800}
+        height={height}
         className="w-full h-full object-cover object-center"
       />
       {/* Soft gradient overlay for better text readability and apple-style depth */}

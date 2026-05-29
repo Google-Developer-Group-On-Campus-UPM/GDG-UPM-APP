@@ -3,6 +3,7 @@
 import { Play } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { Poppins } from "next/font/google";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { Testimonial } from "@/constants/types/testimonials.type";
 import { cn } from "@/lib/utils";
@@ -166,9 +167,11 @@ function CardBody({
       {/* Author */}
       <div className="flex items-center gap-3 pt-1">
         {!isVideo && testimonial.avatarSrc && (
-          <img
+          <Image
             src={testimonial.avatarSrc}
             alt={testimonial.author}
+            width={36}
+            height={36}
             className="w-9 h-9 rounded-full object-cover border border-white/20"
           />
         )}
