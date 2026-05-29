@@ -11,6 +11,9 @@ interface FirestoreEventData {
   dateEnd?: Timestamp;
   maxParticipants?: number;
   image?: string;
+  imageGoogleDriveLink?: string;
+  googleDriveLink?: string;
+  ticketType?: string;
   status?: "upcoming" | "past";
   tags?: (
     | string
@@ -34,7 +37,8 @@ export default async function getEvents(): Promise<Event[]> {
 
     const events: Event[] = eventsSnapshot.docs.map((doc) => {
       const data = doc.data() as FirestoreEventData;
-      return {
+      const status = data.status || "upcoming";
+      const baseEvent = {
         id: doc.id,
         title: data.title || "",
         mode: data.mode || "physical",
@@ -43,7 +47,7 @@ export default async function getEvents(): Promise<Event[]> {
         dateEnd: data.dateEnd?.toDate(),
         maxParticipants: data.maxParticipants || 0,
         image: data.image || "/images/test.png",
-        status: data.status || "upcoming",
+        ticketType: data.ticketType || "",
         tags: data.tags
           ? data.tags.map((tag) => ({
               tag: typeof tag === "string" ? tag : tag.tag || tag.name || "",
@@ -60,6 +64,20 @@ export default async function getEvents(): Promise<Event[]> {
         createdAt: data.createdAt?.toDate(),
         updatedAt: data.updatedAt?.toDate(),
       };
+
+      if (status === "upcoming") {
+        return {
+          ...baseEvent,
+          status: "upcoming" as const,
+        } as Event;
+      } else {
+        return {
+          ...baseEvent,
+          status: "past" as const,
+          imageGoogleDriveLink: data.imageGoogleDriveLink || data.image || "",
+          googleDriveLink: data.googleDriveLink || "#",
+        } as Event;
+      }
     });
 
     return events;
