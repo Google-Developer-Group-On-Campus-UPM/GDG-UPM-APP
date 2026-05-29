@@ -4,6 +4,8 @@ import { Box, SxProps, Theme } from "@mui/material";
 import { useMemo, useState } from "react";
 import { Event } from "@/constants/types/events.type";
 import EventCard from "../event-card/EventCard";
+import AppleEventCard from "../event-card/AppleEventCard";
+import SeeMoreCard from "../event-card/SeeMoreCard";
 import {
 	Carousel,
 	CarouselContent,
@@ -22,6 +24,8 @@ interface EventCarouselProps {
 	gap?: number;
 	containerHeight?: number;
 	className?: string;
+	variant?: "standard" | "apple";
+	showSeeMoreCard?: boolean;
 }
 
 /**
@@ -35,11 +39,13 @@ export default function EventCarousel({
 	eventsPerPage = 3,
 	showGetTicket = false,
 	onGetTicketClick,
-	eventCardWidth = 368,
-	eventCardHeight = 329,
+	eventCardWidth = 384,
+	eventCardHeight = 340,
 	gap = 20,
-	containerHeight = 400,
+	containerHeight = 410,
 	className = "",
+	variant = "standard",
+	showSeeMoreCard = false,
 }: EventCarouselProps) {
 	if (events.length === 0) {
 		return (
@@ -51,6 +57,9 @@ export default function EventCarousel({
 			</div>
 		);
 	}
+
+	// Limit to 8 items if see-more is active, to fit exactly 9 slots (3 slides of 3)
+	const displayList = showSeeMoreCard ? events.slice(0, 8) : events;
 
 	return (
 		<div
@@ -68,22 +77,42 @@ export default function EventCarousel({
 				<CarouselContent
 					className="-ml-4 md:-ml-6" // Use negative margin to offset the padding of items
 				>
-					{events.map((event) => (
+					{displayList.map((event) => (
 						<CarouselItem
 							key={event.id}
 							className="pl-4 md:pl-6 basis-auto" // Control the spacing
 						>
 							<div className="py-4"> {/* Padding to prevent shadow clipping */}
-								<EventCard
-									event={event}
-									showGetTicket={showGetTicket}
-									onGetTicketClick={() => onGetTicketClick?.(event)}
+								{variant === "apple" ? (
+									<AppleEventCard
+										event={event}
+										width={eventCardWidth}
+										height={eventCardHeight}
+									/>
+								) : (
+									<EventCard
+										event={event}
+										showGetTicket={showGetTicket}
+										onGetTicketClick={() => onGetTicketClick?.(event)}
+										width={eventCardWidth}
+										height={eventCardHeight}
+									/>
+								)}
+							</div>
+						</CarouselItem>
+					))}
+
+					{/* Append See More card as the final slot if active */}
+					{showSeeMoreCard && (
+						<CarouselItem className="pl-4 md:pl-6 basis-auto">
+							<div className="py-4">
+								<SeeMoreCard
 									width={eventCardWidth}
 									height={eventCardHeight}
 								/>
 							</div>
 						</CarouselItem>
-					))}
+					)}
 				</CarouselContent>
 
 				{/* Navigation arrows hidden on touch devices, visible on hover/desktop */}
