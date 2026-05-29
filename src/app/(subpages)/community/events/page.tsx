@@ -1,7 +1,20 @@
 import EventsBody from "@/components/sections/events/EventsBody";
 import { MOCK_EVENTS } from "@/constants/mockEvents";
+import { Event } from "@/constants/types/events.type";
+import EventService from "@/services/events/eventService";
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  let eventsToDisplay: Event[] = [];
+
+  try {
+    const eventService = new EventService();
+    const fetchedEvents = await eventService.getEvents();
+    eventsToDisplay = fetchedEvents;
+  } catch (err) {
+    console.error("Failed to fetch events:", err);
+    eventsToDisplay = MOCK_EVENTS;
+  }
+
   return (
     <div className="w-full py-16 px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden bg-black text-white">
       <div className="mx-auto w-full max-w-7xl flex flex-col gap-10">
@@ -17,7 +30,7 @@ export default function EventsPage() {
         </div>
 
         {/* Events Explorer Grid */}
-        <EventsBody events={MOCK_EVENTS} layout="grid" />
+        <EventsBody events={eventsToDisplay} layout="grid" />
       </div>
     </div>
   );
