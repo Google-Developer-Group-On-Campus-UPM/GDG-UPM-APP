@@ -1,12 +1,6 @@
-/**
- * FooterNewsletter Component
- *
- * Renders the newsletter subscription section in the footer.
- */
-
 import { Box, Stack, Typography } from "@mui/material";
-import CTAButton from "../../ui/CTAButton";
 import { LINKS } from "@/constants/links";
+import CTAButton from "../../ui/CTAButton";
 
 export default function FooterNewsletter() {
   return (

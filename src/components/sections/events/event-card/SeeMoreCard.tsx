@@ -1,9 +1,8 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { Poppins } from "next/font/google";
 import { ArrowRight } from "lucide-react";
+import { Poppins } from "next/font/google";
+import Link from "next/link";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],

@@ -7,9 +7,9 @@ import { Event } from "@/constants/types/events.type";
 import EventButton from "./common/buttons/EventButton";
 import SortRecentButton from "./common/buttons/SortRecentButton";
 import SearchBar from "./common/search/SearchBar";
-import EventCarousel from "./event-carousel/EventCarousel";
-import EventCard from "./event-card/EventCard";
 import AppleEventCard from "./event-card/AppleEventCard";
+import EventCard from "./event-card/EventCard";
+import EventCarousel from "./event-carousel/EventCarousel";
 
 const poppins = Poppins({
   weight: ["400", "500", "600"],

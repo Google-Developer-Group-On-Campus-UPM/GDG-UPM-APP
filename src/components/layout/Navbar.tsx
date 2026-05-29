@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { FloatingNav } from "../ui/floating-navbar";
 import { LINKS } from "@/constants/links";
+import { FloatingNav } from "../ui/floating-navbar";
 
 const GDG_LOGO = (
   <Image

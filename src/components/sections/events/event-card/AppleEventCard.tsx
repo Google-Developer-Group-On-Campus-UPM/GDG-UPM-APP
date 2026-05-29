@@ -1,9 +1,9 @@
 "use client";
 
-import { Event } from "@/constants/types/events.type";
+import { Poppins } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
-import { Poppins } from "next/font/google";
+import { Event } from "@/constants/types/events.type";
 
 const poppins = Poppins({
   weight: ["600", "700"],

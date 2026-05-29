@@ -1,10 +1,10 @@
-import AppShell from "@/components/layout/AppShell";
 import React from "react";
+import AppShell from "@/components/layout/AppShell";
 
 export default function SubpagesLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return <AppShell>{children}</AppShell>;
+  return <AppShell>{children}</AppShell>;
 }

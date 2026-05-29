@@ -1,13 +1,14 @@
 "use client";
-import { cn } from "@/lib/utils";
+
+import { Menu, X } from "lucide-react";
 import {
   AnimatePresence,
   motion,
   useMotionValueEvent,
   useScroll,
 } from "motion/react";
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export const FloatingNav = ({
   navItems,
@@ -49,7 +50,8 @@ export const FloatingNav = ({
   // Handle window resizing (close mobile menu if user resizes to desktop)
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) { // md breakpoint
+      if (window.innerWidth >= 768) {
+        // md breakpoint
         setIsMobileMenuOpen(false);
       }
     };
@@ -110,14 +112,14 @@ export const FloatingNav = ({
             variant === "floating"
               ? "fixed inset-x-0 mx-auto z-5000 flex items-center justify-center font-sans top-0 md:top-8 w-full md:w-fit"
               : "fixed inset-x-0 top-0 w-full z-5000 flex items-center justify-center font-sans border-b border-white/10 bg-black/60 backdrop-blur-md",
-            className
+            className,
           )}
         >
           <div
             className={cn(
               variant === "floating"
                 ? "flex w-full items-center justify-between md:justify-center md:gap-6 px-6 py-3 md:px-5 md:py-2.5 transition-colors duration-300 backdrop-blur-md rounded-none md:rounded-full shadow-none md:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] bg-black/60 md:bg-black/40"
-                : "flex w-full max-w-7xl mx-auto items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 py-3 md:py-4 transition-colors duration-300"
+                : "flex w-full max-w-7xl mx-auto items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 py-3 md:py-4 transition-colors duration-300",
             )}
           >
             {/* Logo */}
@@ -127,7 +129,9 @@ export const FloatingNav = ({
                 className="relative flex items-center gap-2 px-1 py-1"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {logoItem.icon && <span className="shrink-0">{logoItem.icon}</span>}
+                {logoItem.icon && (
+                  <span className="shrink-0">{logoItem.icon}</span>
+                )}
               </a>
             )}
 
@@ -139,7 +143,9 @@ export const FloatingNav = ({
                   href={navItem.link}
                   className={cn(
                     "relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all hover:bg-transparent",
-                    navItem.name === "Home" ? "text-white" : "text-white/80 hover:text-white"
+                    navItem.name === "Home"
+                      ? "text-white"
+                      : "text-white/80 hover:text-white",
                   )}
                 >
                   <span>{navItem.name}</span>
@@ -151,7 +157,9 @@ export const FloatingNav = ({
             <a
               href={ctaLink}
               target={ctaLink.startsWith("http") ? "_blank" : undefined}
-              rel={ctaLink.startsWith("http") ? "noopener noreferrer" : undefined}
+              rel={
+                ctaLink.startsWith("http") ? "noopener noreferrer" : undefined
+              }
               className="hidden md:flex h-[34px] w-[140px] items-center justify-center rounded-full bg-white text-[13px] font-semibold text-black transition-all duration-200 hover:bg-white/90 hover:cursor-pointer active:scale-[1.1]"
             >
               {ctaText}
@@ -193,7 +201,9 @@ export const FloatingNav = ({
                   className="relative flex items-center gap-2 px-1 py-1"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {logoItem.icon && <span className="shrink-0">{logoItem.icon}</span>}
+                  {logoItem.icon && (
+                    <span className="shrink-0">{logoItem.icon}</span>
+                  )}
                 </a>
               )}
               {/* Close Button */}
@@ -227,7 +237,11 @@ export const FloatingNav = ({
                 <motion.a
                   href={ctaLink}
                   target={ctaLink.startsWith("http") ? "_blank" : undefined}
-                  rel={ctaLink.startsWith("http") ? "noopener noreferrer" : undefined}
+                  rel={
+                    ctaLink.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}

@@ -1,9 +1,3 @@
-/**
- * FooterSocialLinks Component
- *
- * Renders the social media icon buttons in the footer.
- */
-
 import { GitHub, Instagram, LinkedIn, WhatsApp } from "@mui/icons-material";
 import { IconButton, Stack } from "@mui/material";
 import Image from "next/image";

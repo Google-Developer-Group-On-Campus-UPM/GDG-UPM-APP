@@ -1,9 +1,3 @@
-/**
- * Footer Components Index
- *
- * Exports all footer-related components for easy importing.
- */
-
 export { default as FooterBackground } from "./FooterBackground";
 export { default as FooterBottom } from "./FooterBottom";
 export { default as FooterColumn } from "./FooterColumn";

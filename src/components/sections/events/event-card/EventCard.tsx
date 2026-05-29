@@ -20,12 +20,6 @@ interface EventCardProps {
   borderRadius?: number;
 }
 
-/**
- * EventCard Component - Built with MUI Card components
- *
- * A responsive card component for displaying event information. Features Apple-style
- * glassmorphic design, smooth interactions, and proper responsive behavior.
- */
 export default function EventCard({
   event,
   showGetTicket = false,

@@ -1,12 +1,5 @@
-/**
- * Footer Data
- *
- * Contains all the footer links organized by section.
- */
-
 import { LINKS } from "@/constants/links";
 
-// TODO: Make sure all links exists
 export const footerLinks = {
   community: {
     title: "COMMUNITY",

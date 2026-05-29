@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { motion } from "motion/react";
-import FlexChip from "@/components/ui/FlexChip";
 import { ArrowLeft } from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+import FlexChip from "@/components/ui/FlexChip";
 
 interface ComingSoonProps {
   title: string;
