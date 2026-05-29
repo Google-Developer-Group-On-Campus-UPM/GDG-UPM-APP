@@ -25,6 +25,7 @@ export default function FooterHeader() {
         width={200}
         height={54}
         style={{ objectFit: "contain" }}
+        className="w-auto h-auto"
         priority
       />
     </Link>

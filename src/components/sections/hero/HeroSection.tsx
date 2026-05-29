@@ -96,6 +96,7 @@ export default function HeroSection() {
                     alt="Hat Icon"
                     width={24}
                     height={24}
+                    className="w-auto h-auto"
                   />
                   <span className="text-[14px] font-normal leading-[150%] text-[#F2F4F8] font-sans tracking-wide">
                     Student Developer Club -
@@ -158,6 +159,7 @@ export default function HeroSection() {
                       alt="Hover Action"
                       width={20}
                       height={20}
+                      className="w-auto h-auto"
                     />
                   </div>
                   <div className="pb-6 pr-6 pl-6">

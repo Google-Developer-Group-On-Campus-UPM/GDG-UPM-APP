@@ -10,7 +10,7 @@ const GDG_LOGO = (
     alt="GDG Logo"
     width={64}
     height={40}
-    className="object-contain"
+    className="object-contain w-auto h-auto"
     priority
   />
 );
