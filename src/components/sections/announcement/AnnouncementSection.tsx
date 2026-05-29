@@ -45,7 +45,7 @@ export default function AnnouncementSection() {
 								To nurturing well-rounded developers by offering resources, mentorship, and a collaborative environment that bridges...
 							</p>
 							<div className="flex justify-center md:justify-start">
-								<CTAButton href={LINKS.COMMUNITY_PLATFORM} />
+								<CTAButton href={LINKS.MEDIUM} />
 							</div>
 						</div>
 					</div>
