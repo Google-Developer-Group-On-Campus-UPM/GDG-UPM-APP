@@ -1,4 +1,4 @@
-import { Event } from "@/constants/types/events.type";
+import { Event, UpcomingEvent } from "@/constants/types/events.type";
 import EventCardDetails from "./EventCardDetails";
 import EventCardStatus from "./EventCardStatus";
 import EventCardTags from "./EventCardTags";
@@ -6,7 +6,7 @@ import EventCardTicketButton from "./EventCardTicketButton";
 import EventCardTitle from "./EventCardTitle";
 
 interface EventCardContentProps {
-  event: Event;
+  event: UpcomingEvent;
   showGetTicket: boolean;
   onGetTicketClick?: () => void;
 }

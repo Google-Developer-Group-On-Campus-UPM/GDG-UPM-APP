@@ -1,10 +1,10 @@
 import { Clock, MapPin, Users } from "lucide-react";
-import { Event } from "@/constants/types/events.type";
+import { UpcomingEvent } from "@/constants/types/events.type";
 import formatDateWithTime from "./functions/util/formatDateWithTime";
 import getGradientTextStyle from "./functions/util/getGradientTextStyle";
 
 interface EventCardDetailsProps {
-  event: Event;
+  event: UpcomingEvent;
 }
 
 export default function EventCardDetails({ event }: EventCardDetailsProps) {
@@ -57,8 +57,7 @@ export default function EventCardDetails({ event }: EventCardDetailsProps) {
           >
             {event.ticketType}
             {event.ticketType && event.maxParticipants && ", "}
-            {event.maxParticipants > 0 &&
-              `${event.maxParticipants} participants`}
+            {event.maxParticipants ?? `${event.maxParticipants} participants`}
           </span>
         </div>
       )}
