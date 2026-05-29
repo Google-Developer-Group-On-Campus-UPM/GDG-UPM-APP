@@ -50,9 +50,8 @@
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
-      "eslint --cache --fix",
-      "prettier --write --ignore-unknown"
+      "biome check --write"
     ],
-    "**/*.{css,md}": "prettier --write"
+    "**/*.{css,md}": "biome check --write"
   }
 }
