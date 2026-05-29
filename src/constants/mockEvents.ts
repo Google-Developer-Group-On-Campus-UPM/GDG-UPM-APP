@@ -118,6 +118,7 @@ export const MOCK_EVENTS: Event[] = [
     maxParticipants: 150,
     image: "/images/events/figma.png",
     status: "past",
+    imageGoogleDriveLink: "https://picsum.photos/400/500",
     googleDriveLink:
       "https://drive.google.com/drive/folders/1a2b3c4d5e6f7g8h9i0j_devfest",
     description:
@@ -141,6 +142,7 @@ export const MOCK_EVENTS: Event[] = [
     maxParticipants: 80,
     image: "/images/events/flutter.png",
     status: "past",
+    imageGoogleDriveLink: "https://picsum.photos/400/500",
     googleDriveLink:
       "https://drive.google.com/drive/folders/2b3c4d5e6f7g8h9i0j1k_flutter",
     description:
@@ -164,6 +166,7 @@ export const MOCK_EVENTS: Event[] = [
     maxParticipants: 50,
     image: "/images/events/mobileAI.png",
     status: "past",
+    imageGoogleDriveLink: "https://picsum.photos/400/500",
     googleDriveLink:
       "https://drive.google.com/drive/folders/3c4d5e6f7g8h9i0j1k2l_cloud",
     description:
@@ -186,6 +189,7 @@ export const MOCK_EVENTS: Event[] = [
     maxParticipants: 60,
     image: "/images/events/uiux.png",
     status: "past",
+    imageGoogleDriveLink: "https://picsum.photos/400/500",
     googleDriveLink:
       "https://drive.google.com/drive/folders/4d5e6f7g8h9i0j1k2l3m_uiux",
     description:
@@ -208,6 +212,7 @@ export const MOCK_EVENTS: Event[] = [
     maxParticipants: 70,
     image: "/images/events/tailwindcss.png",
     status: "past",
+    imageGoogleDriveLink: "https://picsum.photos/400/500",
     googleDriveLink:
       "https://drive.google.com/drive/folders/5e6f7g8h9i0j1k2l3m4n_agm",
     description:

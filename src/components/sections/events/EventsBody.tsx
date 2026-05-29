@@ -7,8 +7,8 @@ import { Event } from "@/constants/types/events.type";
 import EventButton from "./common/buttons/EventButton";
 import SortRecentButton from "./common/buttons/SortRecentButton";
 import SearchBar from "./common/search/SearchBar";
-import AppleEventCard from "./event-card/AppleEventCard";
-import EventCard from "./event-card/EventCard";
+import PastEventCard from "./event-card/PastEventCard";
+import UpcomingEventCard from "./event-card/UpcomingEventCard";
 import EventCarousel from "./event-carousel/EventCarousel";
 
 const poppins = Poppins({
@@ -213,8 +213,10 @@ export default function EventsBody({
                                 key={event.id}
                                 className="transition-all duration-300"
                               >
-                                <AppleEventCard
-                                  event={event}
+                                <PastEventCard
+                                  event={
+                                    event as Extract<Event, { status: "past" }>
+                                  }
                                   width={400}
                                   height={500}
                                 />
@@ -233,8 +235,8 @@ export default function EventsBody({
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-center w-full py-4">
                   {displayEvents.map((event) => (
                     <div key={event.id}>
-                      <EventCard
-                        event={event}
+                      <UpcomingEventCard
+                        event={event as Extract<Event, { status: "upcoming" }>}
                         showGetTicket={true}
                         onGetTicketClick={() => {
                           if (event?.registrationLink) {

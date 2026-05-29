@@ -8,9 +8,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Event } from "@/constants/types/events.type";
-import AppleEventCard from "../event-card/AppleEventCard";
-import EventCard from "../event-card/EventCard";
+import PastEventCard from "../event-card/PastEventCard";
 import SeeMoreCard from "../event-card/SeeMoreCard";
+import UpcomingEventCard from "../event-card/UpcomingEventCard";
 
 interface EventCarouselProps {
   events: Event[];
@@ -84,14 +84,14 @@ export default function EventCarousel({
                 {" "}
                 {/* Padding to prevent shadow clipping */}
                 {variant === "apple" ? (
-                  <AppleEventCard
-                    event={event}
+                  <PastEventCard
+                    event={event as Extract<Event, { status: "past" }>}
                     width={eventCardWidth}
                     height={eventCardHeight}
                   />
                 ) : (
-                  <EventCard
-                    event={event}
+                  <UpcomingEventCard
+                    event={event as Extract<Event, { status: "upcoming" }>}
                     showGetTicket={showGetTicket}
                     onGetTicketClick={() => onGetTicketClick?.(event)}
                     width={eventCardWidth}
