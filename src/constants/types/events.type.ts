@@ -14,53 +14,97 @@ import { DocumentReference } from "firebase/firestore";
  * Represents a single event in the GDG UPM system.
  * Used for displaying events on the website and managing event data.
  */
-export interface Event {
-	/** Unique identifier for the event */
-	id?: string;
+export interface UpcomingEvent {
+  /** Unique identifier for the event */
+  id?: string;
 
-	ref?: DocumentReference;
+  ref?: DocumentReference;
 
-	/** Event title/name */
-	title: string;
+  /** Event title/name */
+  title: string;
 
-	/** Event mode */
-	mode: "online" | "physical" | "hybrid";
+  /** Event mode */
+  mode: "online" | "physical" | "hybrid";
 
-	/** Event location (physical or online) */
-	location: string;
+  /** Event location (physical or online) */
+  location: string;
 
-	/** Event start date and time */
-	dateStart: Date;
+  /** Event start date and time */
+  dateStart: Date;
 
-	/** Event end date and time (optional) */
-	dateEnd?: Date;
+  /** Event end date and time (optional) */
+  dateEnd?: Date;
 
-	/** Ticket information */
-	ticketType: string;
+  /** Ticket information */
+  ticketType: string;
 
-	/** Maximum number of participants */
-	maxParticipants: number;
+  /** Maximum number of participants */
+  maxParticipants: number;
 
-	/** Event banner/poster image filename (optional) */
-	image: string; // Default: "/images/test.png"
+  /** Event banner/poster image filename (optional) */
+  image: string; // Default: "/images/test.png"
 
-	/** Event status */
-	status: "upcoming" | "past";
-	/** Tags for categorizing and filtering events */
-	tags?: {
-		tag: string;
-		presetColor?: "red" | "indigo"; // Optional color for the tag
-	}[];
+  /** Event status */
+  status: "upcoming";
 
-	/** Registration or event page URL (optional) */
-	registrationLink?: string; // Default: https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/
+  /** Tags for categorizing and filtering events */
+  tags?: {
+    tag: string;
+    presetColor?: "red" | "indigo"; // Optional color for the tag
+  }[];
 
-	/** Whether the event is currently active/visible */
-	isActive?: boolean;
+  /** Registration or event page URL (optional) */
+  registrationLink?: string; // Default: https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/
 
-	/** Timestamp when the event was created */
-	createdAt?: Date;
+  /** Whether the event is currently active/visible */
+  isActive?: boolean;
 
-	/** Timestamp when the event was last updated */
-	updatedAt?: Date;
+  /** Timestamp when the event was created */
+  createdAt?: Date;
+
+  /** Timestamp when the event was last updated */
+  updatedAt?: Date;
+
+  /** Description text */
+  description?: string;
 }
+
+export interface PastEvent {
+  /** Unique identifier for the event */
+  id?: string;
+
+  ref?: DocumentReference;
+
+  /** Event title/name */
+  title: string;
+
+  /** Event banner/poster image filename */
+  image: string;
+
+  /** Google Drive link for media or files */
+  googleDriveLink: string;
+
+  /** Event start date and time */
+  dateStart: Date;
+
+  /** Event status */
+  status: "past";
+
+  // Optional fields for flexibility/backward compatibility with existing systems
+  mode?: "online" | "physical" | "hybrid";
+  location?: string;
+  dateEnd?: Date;
+  ticketType?: string;
+  maxParticipants?: number;
+  tags?: {
+    tag: string;
+    presetColor?: "red" | "indigo";
+  }[];
+  registrationLink?: string;
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+  description?: string;
+}
+
+export type Event = UpcomingEvent | PastEvent;

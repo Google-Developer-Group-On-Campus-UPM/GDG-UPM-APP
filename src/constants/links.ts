@@ -24,12 +24,12 @@ const DEFAULT_LINKS = {
 
   // Core Navigation Routes
   HOME: "/",
-  ABOUT: "/#about",
-  EVENTS: "/#events",
+  ABOUT: "/community/about",
+  EVENTS: "/community/events",
   ADMIN: "/admin",
 
   // Footer Subpages - Community
-  FOOTER_COMMUNITY_ABOUT: "/community/info",
+  FOOTER_COMMUNITY_ABOUT: "/community/about",
   FOOTER_COMMUNITY_EVENTS: "/community/events",
   FOOTER_COMMUNITY_TEAM: "/community/team",
   FOOTER_COMMUNITY_JOIN: "https://docs.google.com/forms/d/e/1FAIpQLSdKS7Wdr7NoP_9aIgWONBWoSH1h3UCwUCvejKIWvm1LDV8aPQ/viewform",
