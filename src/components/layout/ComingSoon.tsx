@@ -22,7 +22,7 @@ export default function ComingSoon({
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-7xl mx-auto px-5 md:px-16 lg:px-24 xl:px-32 py-12 md:py-24 flex flex-col items-center text-center space-y-8"
+        className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 md:py-24 flex flex-col items-center text-center space-y-8"
       >
         {/* Section Chip */}
         <div className="flex justify-center">

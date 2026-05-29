@@ -8,7 +8,7 @@
 const DEFAULT_LINKS = {
   // Site & Registration Links
   COMMUNITY_PLATFORM:
-    "https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/",
+    "https://docs.google.com/forms/d/e/1FAIpQLSdKS7Wdr7NoP_9aIgWONBWoSH1h3UCwUCvejKIWvm1LDV8aPQ/viewform",
 
   // Social & Developer Media Links
   FACEBOOK: "https://facebook.com/gdgupm",
@@ -18,6 +18,9 @@ const DEFAULT_LINKS = {
   GITHUB_ORG: "https://github.com/Google-Developer-Group-On-Campus-UPM",
   TWITTER: "https://twitter.com/gdgupm",
   YOUTUBE: "https://youtube.com/gdgupm",
+  WHATSAPP: "https://chat.whatsapp.com/Cgb1swm8p5t5xqKahaV2nR",
+  MEDIUM: "https://medium.com/@gdgocupm",
+  SUGGEST_EVENT: "https://docs.google.com/forms/d/e/1FAIpQLSeRx-kBCYQ5I0_Roab5hqVT8M1kGWsBRHYQ-jFz_KZEL_fUXg/viewform",
 
   // Core Navigation Routes
   HOME: "/",
@@ -29,7 +32,7 @@ const DEFAULT_LINKS = {
   FOOTER_COMMUNITY_ABOUT: "/community/info",
   FOOTER_COMMUNITY_EVENTS: "/community/events",
   FOOTER_COMMUNITY_TEAM: "/community/team",
-  FOOTER_COMMUNITY_JOIN: "/community/join",
+  FOOTER_COMMUNITY_JOIN: "https://docs.google.com/forms/d/e/1FAIpQLSdKS7Wdr7NoP_9aIgWONBWoSH1h3UCwUCvejKIWvm1LDV8aPQ/viewform",
 
   // Footer Subpages - Programs
   FOOTER_PROGRAMS_JAMS: "/programs/jams",

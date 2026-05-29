@@ -11,8 +11,7 @@ import FooterBackground from "./footer/FooterBackground";
 import FooterBottom from "./footer/FooterBottom";
 import FooterHeader from "./footer/FooterHeader";
 import FooterLinksSection from "./footer/FooterLinksSection";
-import FooterMascot from "./footer/FooterMascot";
-import FooterNewsletter from "./footer/FooterNewsletter";
+import FooterSocialLinks from "./footer/FooterSocialLinks";
 
 /**
  * Footer Component
@@ -35,7 +34,7 @@ export default function Footer() {
         sx={{
           position: "relative",
           zIndex: 1,
-          px: { xs: "20px", md: "64px", lg: "96px", xl: "128px" },
+          px: { xs: "16px", sm: "24px", md: "32px", lg: "48px" },
           py: { xs: "60px", sm: "80px", md: "100px" },
           maxWidth: "1280px", // Equivalent to Tailwind max-w-7xl (80rem) for visual grid consistency
           width: "100%",
@@ -43,20 +42,7 @@ export default function Footer() {
         }}
       >
         <Stack gap="5rem">
-          {/* Header Section */}
-          <Stack
-            direction={{ xs: "column", md: "row" }}
-            alignItems="center"
-            justifyContent={{ xs: "center", md: "space-between" }}
-            sx={{
-              gap: { xs: "40px", md: "32px" },
-            }}
-          >
-            <FooterHeader />
-            <FooterNewsletter />
-          </Stack>
-
-          {/* Links & Mascot Section */}
+          {/* Main Content: Links on Left, Brand + Socmed on Right (where dinosaur was) */}
           <Stack
             direction={{ xs: "column", lg: "row" }}
             justifyContent="space-between"
@@ -66,11 +52,22 @@ export default function Footer() {
               gap: { xs: "60px", md: "80px", lg: "100px" },
             }}
           >
+            {/* Left Column: Footer Link Columns */}
             <FooterLinksSection />
-            <FooterMascot />
+
+            {/* Right Column: Brand Logo + Social Stack (replacing Mascot) */}
+            <Stack
+              direction="column"
+              alignItems="center"
+              gap="1.5rem"
+              sx={{ flexShrink: 0 }}
+            >
+              <FooterHeader />
+              <FooterSocialLinks />
+            </Stack>
           </Stack>
 
-          {/* Footer Bottom Section */}
+          {/* Footer Bottom Copyright Section */}
           <FooterBottom />
         </Stack>
       </Container>

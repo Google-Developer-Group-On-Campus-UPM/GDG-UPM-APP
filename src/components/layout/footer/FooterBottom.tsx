@@ -11,15 +11,11 @@ import FooterSocialLinks from "./FooterSocialLinks";
 export default function FooterBottom() {
 	return (
 		<Stack
-			direction={{ xs: "column", md: "row" }}
-			justifyContent={{ xs: "center", md: "space-between" }}
+			direction="row"
+			justifyContent={{ xs: "center", md: "flex-start" }}
 			alignItems="center"
-			sx={{
-				gap: { xs: "28px", md: "32px" },
-			}}
 		>
 			<FooterCopyright />
-			<FooterSocialLinks />
 		</Stack>
 	);
 }

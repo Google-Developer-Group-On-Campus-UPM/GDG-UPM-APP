@@ -117,7 +117,7 @@ export const FloatingNav = ({
             className={cn(
               variant === "floating"
                 ? "flex w-full items-center justify-between md:justify-center md:gap-6 px-6 py-3 md:px-5 md:py-2.5 transition-colors duration-300 backdrop-blur-md rounded-none md:rounded-full shadow-none md:shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] bg-black/60 md:bg-black/40"
-                : "flex w-full max-w-7xl mx-auto items-center justify-between px-5 md:px-16 lg:px-24 xl:px-32 py-3 md:py-4 transition-colors duration-300"
+                : "flex w-full max-w-7xl mx-auto items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 py-3 md:py-4 transition-colors duration-300"
             )}
           >
             {/* Logo */}

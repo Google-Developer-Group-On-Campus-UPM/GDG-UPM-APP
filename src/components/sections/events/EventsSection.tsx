@@ -116,17 +116,6 @@ export default function EventsSection() {
 		},
 	];
 
-	// TODO: Implement CTA button logic
-	const handleOnCTAClick = () => {
-		/**
-		 * Handle CTA button click
-		 * 1. Navigate to event creation page
-		 * 2. Open modal for event suggestion
-		 * 3. Fetch more events from Firebase
-		 */
-		console.log("CTA Button Clicked");
-	};
-
 	return (
 		<section
 			id="events"
@@ -135,7 +124,7 @@ export default function EventsSection() {
 			<div className="mx-auto w-full max-w-7xl flex flex-col items-center gap-12 lg:gap-16">
 				<EventsHeader />
 				<EventsBody events={events} />
-				<EventsFooter onCTAClick={handleOnCTAClick} />
+				<EventsFooter />
 			</div>
 		</section>
 	);

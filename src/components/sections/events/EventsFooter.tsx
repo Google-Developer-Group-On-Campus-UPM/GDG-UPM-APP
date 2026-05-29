@@ -1,10 +1,7 @@
 import CTAButton from "@/components/ui/CTAButton";
+import { LINKS } from "@/constants/links";
 
-export default function EventsFooter({
-	onCTAClick,
-}: {
-	onCTAClick: () => void;
-}) {
+export default function EventsFooter() {
 	return (
 		<div className="w-full flex justify-center items-center py-16 px-4 sm:px-6 md:px-12">
 			<div className="w-full max-w-5xl rounded-[2rem] bg-gradient-to-b from-white/[0.08] to-transparent border border-white/[0.08] backdrop-blur-xl p-8 sm:p-10 md:p-12 lg:p-16 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 shadow-2xl relative overflow-hidden">
@@ -20,7 +17,7 @@ export default function EventsFooter({
 					</p>
 				</div>
 				<div className="shrink-0 z-10">
-					<CTAButton text="Suggest Event" onClick={onCTAClick} />
+					<CTAButton text="Suggest Event" href={LINKS.SUGGEST_EVENT} />
 				</div>
 			</div>
 		</div>
