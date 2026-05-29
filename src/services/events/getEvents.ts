@@ -1,24 +1,19 @@
-import { FirebaseApp } from "firebase/app";
 import {
 	collection,
 	Firestore,
 	getDocs,
-	getFirestore,
 	Timestamp,
 } from "firebase/firestore";
 import { Event } from "@/constants/types/events.type";
-import { LINKS } from "@/constants/links";
 
-/**
- * Firestore document data structure
- */
+import { db } from "../firebase/firebase";
+
 interface FirestoreEventData {
 	title?: string;
 	mode?: "online" | "physical" | "hybrid";
 	location?: string;
 	dateStart?: Timestamp;
 	dateEnd?: Timestamp;
-	ticketType?: string;
 	maxParticipants?: number;
 	image?: string;
 	status?: "upcoming" | "past";
@@ -37,16 +32,9 @@ interface FirestoreEventData {
 	updatedAt?: Timestamp;
 }
 
-/**
- * Fetches all events from Firebase
- * @param firebaseApp - The Firebase app instance
- * @returns Promise<Event[]> - Array of all events
- */
 export default async function getEvents(
-	firebaseApp: FirebaseApp,
 ): Promise<Event[]> {
 	try {
-		const db: Firestore = getFirestore(firebaseApp);
 		const eventsCollection = collection(db, "events");
 		const eventsSnapshot = await getDocs(eventsCollection);
 
@@ -59,7 +47,6 @@ export default async function getEvents(
 				location: data.location || "",
 				dateStart: data.dateStart?.toDate() || new Date(),
 				dateEnd: data.dateEnd?.toDate(),
-				ticketType: data.ticketType || "Free",
 				maxParticipants: data.maxParticipants || 0,
 				image: data.image || "/images/test.png",
 				status: data.status || "upcoming",
@@ -73,13 +60,19 @@ export default async function getEvents(
 						}))
 					: undefined,
 				registrationLink:
-					data.registrationLink || LINKS.COMMUNITY_PLATFORM,
+					data.registrationLink ||
+					"https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/",
 				isActive: data.isActive !== undefined ? data.isActive : true,
 				createdAt: data.createdAt?.toDate(),
 				updatedAt: data.updatedAt?.toDate(),
 			};
 		});
 
+		return events;
+	} catch (error) {
+		console.error("Error fetching events:", error);
+		return [];
+	}
 		return events;
 	} catch (error) {
 		console.error("Error fetching events:", error);

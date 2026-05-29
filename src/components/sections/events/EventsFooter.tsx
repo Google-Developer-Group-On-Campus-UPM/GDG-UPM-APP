@@ -1,3 +1,4 @@
+import { Box, Typography } from "@mui/material";
 import CTAButton from "@/components/ui/CTAButton";
 import { LINKS } from "@/constants/links";
 

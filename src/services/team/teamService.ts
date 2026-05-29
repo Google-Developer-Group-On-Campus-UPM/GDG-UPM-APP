@@ -8,8 +8,8 @@ import {
 } from "firebase/firestore";
 import { Department, Role, TeamMember } from "@/constants/types/team.type";
 import BaseService from "../firebase/baseService";
-import { LINKS } from "@/constants/links";
 import { db } from "../firebase/firebase";
+import { LINKS } from "@/constants/links";
 
 class TeamService extends BaseService {
   usersCollection: CollectionReference<DocumentData>;

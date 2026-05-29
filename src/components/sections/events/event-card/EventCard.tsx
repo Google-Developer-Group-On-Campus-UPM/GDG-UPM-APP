@@ -21,7 +21,7 @@ interface EventCardProps {
 }
 
 /**
- * EventCard Component
+ * EventCard Component - Built with MUI Card components
  *
  * A responsive card component for displaying event information. Features Apple-style
  * glassmorphic design, smooth interactions, and proper responsive behavior.

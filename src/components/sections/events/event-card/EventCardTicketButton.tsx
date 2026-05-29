@@ -1,4 +1,5 @@
 import { Poppins } from "next/font/google";
+import { Event } from "@/constants/types/events.type";
 
 const poppins = Poppins({
 	weight: ["400", "700"],

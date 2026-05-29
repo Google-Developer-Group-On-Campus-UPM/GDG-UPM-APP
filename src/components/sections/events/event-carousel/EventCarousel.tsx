@@ -1,5 +1,7 @@
 "use client";
 
+import { Box, SxProps, Theme } from "@mui/material";
+import { useMemo, useState } from "react";
 import { Event } from "@/constants/types/events.type";
 import EventCard from "../event-card/EventCard";
 import AppleEventCard from "../event-card/AppleEventCard";
@@ -27,7 +29,7 @@ interface EventCarouselProps {
 }
 
 /**
- * EventCarousel Component
+ * EventCarousel Component - Built with EventCard
  *
  * A carousel component that displays EventCard components in a horizontal scrolling layout.
  * Built with Shadcn UI (Embla Carousel) for smooth, Apple-like swiping and snapping.
