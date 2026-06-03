@@ -5,8 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Event } from "@/constants/types/events.type";
 import EventService from "@/services/events/eventService";
-import { handleDelete } from "./eventHandlers";
-import { EditEventModal } from "./Modals";
+import { EditEventModal, DeleteConfirmationDialog } from "./Modals";
 
 type EventsManagerProps = {
   role: string;
@@ -53,6 +52,7 @@ export default function EventsManager({ role }: EventsManagerProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -80,11 +80,6 @@ export default function EventsManager({ role }: EventsManagerProps) {
     loadData();
   };
 
-  const handleDeleteAndRefresh = async (event: Event) => {
-    const deleted = await handleDelete(event);
-    if (deleted) refreshData();
-  };
-
   const handleSaveEvent = async (updated: {
     title: string;
     description: string;
@@ -98,6 +93,8 @@ export default function EventsManager({ role }: EventsManagerProps) {
     tags?: Event["tags"];
     registrationLink?: string;
     isActive: boolean;
+    googleDriveLink?: string;
+    imageGoogleDriveLink?: string;
   }) => {
     try {
       if (isAdding) {
@@ -202,7 +199,7 @@ export default function EventsManager({ role }: EventsManagerProps) {
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => handleDeleteAndRefresh(event)}
+                      onClick={() => setEventToDelete(event)}
                       className="text-rose-600 hover:cursor-pointer hover:text-rose-800 dark:text-rose-400 dark:hover:text-rose-300"
                       aria-label={`Delete ${event.title}`}
                     >
@@ -223,6 +220,23 @@ export default function EventsManager({ role }: EventsManagerProps) {
         }}
         eventItem={selectedEvent}
         onSave={handleSaveEvent}
+      />
+      <DeleteConfirmationDialog
+        open={!!eventToDelete}
+        title="Delete Event"
+        itemName={eventToDelete?.title ?? ""}
+        onClose={() => setEventToDelete(null)}
+        onConfirm={async () => {
+          if (eventToDelete) {
+            try {
+              if (eventToDelete.ref) await service.deleteEvent(eventToDelete.ref);
+              toast.success("Event deleted successfully.");
+              refreshData();
+            } catch (err: any) {
+              toast.error("Failed to delete event: " + err.message);
+            }
+          }
+        }}
       />
     </div>
   );

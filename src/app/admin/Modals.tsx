@@ -55,6 +55,8 @@ type EditEventModalProps = {
     tags?: Event["tags"];
     registrationLink?: string;
     isActive: boolean;
+    googleDriveLink?: string;
+    imageGoogleDriveLink?: string;
   }) => void;
 };
 
@@ -527,6 +529,8 @@ export function EditEventModal({
   const [status, setStatus] = useState<"upcoming" | "past">("upcoming");
   const [registrationLink, setRegistrationLink] = useState("");
   const [isActive, setIsActive] = useState(true);
+  const [googleDriveLink, setGoogleDriveLink] = useState("");
+  const [imageGoogleDriveLink, setImageGoogleDriveLink] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const toLocalDateTimeInput = useCallback((value?: unknown) => {
@@ -594,6 +598,16 @@ export function EditEventModal({
     setStatus(eventItem?.status ?? "upcoming");
     setRegistrationLink(eventItem?.registrationLink ?? "");
     setIsActive(eventItem?.isActive ?? true);
+    setGoogleDriveLink(
+      eventItem && "googleDriveLink" in eventItem
+        ? (eventItem as any).googleDriveLink
+        : ""
+    );
+    setImageGoogleDriveLink(
+      eventItem && "imageGoogleDriveLink" in eventItem
+        ? (eventItem as any).imageGoogleDriveLink ?? ""
+        : ""
+    );
     setErrors({});
   }, [eventItem, tagsToInputValue, toLocalDateTimeInput]);
 
@@ -606,6 +620,50 @@ export function EditEventModal({
     if (!image.trim()) newErrors.image = "Image path is required";
     if (!Number.isFinite(maxParticipants) || maxParticipants < 1) {
       newErrors.maxParticipants = "Max participants must be at least 1";
+    }
+
+    // URL Validator helper
+    const isValidUrl = (url: string) => {
+      try {
+        new URL(url);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    };
+
+    // Date range validation
+    if (dateStart && dateEnd && new Date(dateEnd) <= new Date(dateStart)) {
+      newErrors.dateEnd = "End date and time must be after start date and time";
+    }
+
+    // Image URL validation if it starts with http
+    if (image.trim() && image.trim().startsWith("http") && !isValidUrl(image.trim())) {
+      newErrors.image = "Please enter a valid image URL";
+    }
+
+    // Registration link validation if provided
+    if (registrationLink.trim() && !isValidUrl(registrationLink.trim())) {
+      newErrors.registrationLink = "Please enter a valid URL (e.g. https://...)";
+    }
+
+    // Past event link validations
+    if (status === "past") {
+      if (!googleDriveLink.trim()) {
+        newErrors.googleDriveLink = "Google Drive media link is required for past events";
+      } else if (!isValidUrl(googleDriveLink.trim())) {
+        newErrors.googleDriveLink = "Please enter a valid URL (e.g. https://...)";
+      } else if (!googleDriveLink.includes("drive.google.com")) {
+        newErrors.googleDriveLink = "Link must be from drive.google.com";
+      }
+
+      if (!imageGoogleDriveLink.trim()) {
+        newErrors.imageGoogleDriveLink = "Image Google Drive link is required for past events";
+      } else if (!isValidUrl(imageGoogleDriveLink.trim())) {
+        newErrors.imageGoogleDriveLink = "Please enter a valid URL (e.g. https://...)";
+      } else if (!imageGoogleDriveLink.includes("drive.google.com")) {
+        newErrors.imageGoogleDriveLink = "Link must be from drive.google.com";
+      }
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -626,6 +684,11 @@ export function EditEventModal({
       tags: parseTags(tags),
       registrationLink: registrationLink.trim() || undefined,
       isActive,
+      googleDriveLink: status === "past" ? googleDriveLink.trim() : undefined,
+      imageGoogleDriveLink:
+        status === "past" && imageGoogleDriveLink.trim()
+          ? imageGoogleDriveLink.trim()
+          : undefined,
     });
     onClose();
   };
@@ -698,6 +761,14 @@ export function EditEventModal({
               onChange={(e) => setDateStart(e.target.value)}
               error={Boolean(errors.dateStart)}
               helperText={errors.dateStart}
+              onClick={(e) => {
+                const input = e.currentTarget.querySelector("input");
+                if (input) {
+                  try {
+                    input.showPicker();
+                  } catch (_) {}
+                }
+              }}
               sx={{
                 "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   { borderColor: "#026cba" },
@@ -711,6 +782,16 @@ export function EditEventModal({
               InputLabelProps={{ shrink: true }}
               value={dateEnd}
               onChange={(e) => setDateEnd(e.target.value)}
+              error={Boolean(errors.dateEnd)}
+              helperText={errors.dateEnd}
+              onClick={(e) => {
+                const input = e.currentTarget.querySelector("input");
+                if (input) {
+                  try {
+                    input.showPicker();
+                  } catch (_) {}
+                }
+              }}
               sx={{
                 "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   { borderColor: "#026cba" },
@@ -784,11 +865,44 @@ export function EditEventModal({
               <MenuItem value="past">past</MenuItem>
             </TextField>
 
+            {status === "past" && (
+              <>
+                <TextField
+                  label="Google Drive Media Link"
+                  fullWidth
+                  value={googleDriveLink}
+                  onChange={(e) => setGoogleDriveLink(e.target.value)}
+                  error={Boolean(errors.googleDriveLink)}
+                  helperText={errors.googleDriveLink}
+                  placeholder="https://drive.google.com/..."
+                  sx={{
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                      { borderColor: "#026cba" },
+                  }}
+                />
+                <TextField
+                  label="Image Google Drive Link (Optional)"
+                  fullWidth
+                  value={imageGoogleDriveLink}
+                  onChange={(e) => setImageGoogleDriveLink(e.target.value)}
+                  error={Boolean(errors.imageGoogleDriveLink)}
+                  helperText={errors.imageGoogleDriveLink}
+                  placeholder="https://drive.google.com/..."
+                  sx={{
+                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                      { borderColor: "#026cba" },
+                  }}
+                />
+              </>
+            )}
+
             <TextField
               label="Registration Link"
               fullWidth
               value={registrationLink}
               onChange={(e) => setRegistrationLink(e.target.value)}
+              error={Boolean(errors.registrationLink)}
+              helperText={errors.registrationLink}
               sx={{
                 "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   { borderColor: "#026cba" },
@@ -830,6 +944,65 @@ export function EditEventModal({
               sx={{ bgcolor: "#026cba", "&:hover": { bgcolor: "#015b9b" } }}
             >
               Save Changes
+            </Button>
+          </Stack>
+        </Box>
+      </ThemeProvider>
+    </Modal>
+  );
+}
+
+type DeleteConfirmationDialogProps = {
+  open: boolean;
+  title: string;
+  itemName: string;
+  onClose: () => void;
+  onConfirm: () => void;
+};
+
+export function DeleteConfirmationDialog({
+  open,
+  title,
+  itemName,
+  onClose,
+  onConfirm,
+}: DeleteConfirmationDialogProps) {
+  const theme = useModalTheme();
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <ThemeProvider theme={theme}>
+        <Box
+          sx={{
+            ...modalStyle,
+            width: { xs: "90vw", sm: 400 },
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6" mb={2} fontWeight="600">
+            {title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={4}>
+            Are you sure you want to delete <strong>{itemName}</strong>? This action cannot be undone.
+          </Typography>
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button
+              onClick={onClose}
+              variant="outlined"
+              sx={{ borderColor: "divider", color: "text.primary" }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                onConfirm();
+                onClose();
+              }}
+              variant="contained"
+              color="error"
+              sx={{ bgcolor: "#d32f2f", "&:hover": { bgcolor: "#c62828" } }}
+            >
+              Delete
             </Button>
           </Stack>
         </Box>

@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import { PastEvent } from "@/constants/types/events.type";
+import { getGoogleDriveDirectLink } from "@/lib/utils";
 
 const poppins = Poppins({
   weight: ["600", "700"],
@@ -47,7 +48,7 @@ export default function PastEventCard({
       {/* Background Image - spans the entire card, absolutely positioned in the background */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={event.imageGoogleDriveLink || "/images/test.png"}
+          src={getGoogleDriveDirectLink(event.imageGoogleDriveLink) || "/images/test.png"}
           alt={event.title}
           fill
           sizes="(max-width: 768px) 100vw, 400px"

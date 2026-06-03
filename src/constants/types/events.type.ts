@@ -29,7 +29,7 @@ export interface UpcomingEvent extends EventBase {
 
 export interface PastEvent extends EventBase {
   /** Google Drive link for card image */
-  imageGoogleDriveLink?: string;
+  imageGoogleDriveLink: string;
 
   /** Google Drive link for media or files */
   googleDriveLink: string;

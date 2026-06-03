@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Event } from "@/constants/types/events.type";
+import { getGoogleDriveDirectLink } from "@/lib/utils";
 
 interface EventCardImageProps {
   event: Event;
@@ -16,7 +17,7 @@ export default function EventCardImage({
       style={{ height: `${height}px` }}
     >
       <Image
-        src={event.image || "/images/test.png"}
+        src={getGoogleDriveDirectLink(event.image) || "/images/test.png"}
         alt={event.title}
         width={800}
         height={height}
