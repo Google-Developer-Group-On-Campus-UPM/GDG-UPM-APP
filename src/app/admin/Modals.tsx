@@ -100,6 +100,33 @@ function useModalTheme() {
             main: "#026cba",
           },
         },
+        shape: {
+          borderRadius: 12,
+        },
+        components: {
+          MuiTextField: {
+            defaultProps: {
+              variant: "outlined",
+              size: "small",
+            },
+          },
+          MuiOutlinedInput: {
+            styleOverrides: {
+              root: {
+                borderRadius: 12,
+              },
+            },
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                borderRadius: 12,
+                textTransform: "none",
+                fontWeight: 600,
+              },
+            },
+          },
+        },
       }),
     [isDarkMode],
   );
@@ -615,12 +642,7 @@ export function EditEventModal({
     const newErrors: Record<string, string> = {};
 
     if (!title.trim()) newErrors.title = "Event title is required";
-    if (!location.trim()) newErrors.location = "Location is required";
     if (!dateStart) newErrors.dateStart = "Start date and time are required";
-    if (!image.trim()) newErrors.image = "Image path is required";
-    if (!Number.isFinite(maxParticipants) || maxParticipants < 1) {
-      newErrors.maxParticipants = "Max participants must be at least 1";
-    }
 
     // URL Validator helper
     const isValidUrl = (url: string) => {
@@ -632,19 +654,27 @@ export function EditEventModal({
       }
     };
 
-    // Date range validation
-    if (dateStart && dateEnd && new Date(dateEnd) <= new Date(dateStart)) {
-      newErrors.dateEnd = "End date and time must be after start date and time";
-    }
+    if (status === "upcoming") {
+      if (!location.trim()) newErrors.location = "Location is required";
+      if (!image.trim()) newErrors.image = "Image path is required";
+      if (!Number.isFinite(maxParticipants) || maxParticipants < 1) {
+        newErrors.maxParticipants = "Max participants must be at least 1";
+      }
 
-    // Image URL validation if it starts with http
-    if (image.trim() && image.trim().startsWith("http") && !isValidUrl(image.trim())) {
-      newErrors.image = "Please enter a valid image URL";
-    }
+      // Image URL validation if it starts with http
+      if (image.trim() && image.trim().startsWith("http") && !isValidUrl(image.trim())) {
+        newErrors.image = "Please enter a valid image URL";
+      }
 
-    // Registration link validation if provided
-    if (registrationLink.trim() && !isValidUrl(registrationLink.trim())) {
-      newErrors.registrationLink = "Please enter a valid URL (e.g. https://...)";
+      // Registration link validation if provided
+      if (registrationLink.trim() && !isValidUrl(registrationLink.trim())) {
+        newErrors.registrationLink = "Please enter a valid URL (e.g. https://...)";
+      }
+
+      // Date range validation
+      if (dateStart && dateEnd && new Date(dateEnd) <= new Date(dateStart)) {
+        newErrors.dateEnd = "End date and time must be after start date and time";
+      }
     }
 
     // Past event link validations
@@ -674,21 +704,20 @@ export function EditEventModal({
     onSave?.({
       title: title.trim(),
       description: description.trim(),
-      mode,
-      location: location.trim(),
       dateStart: new Date(dateStart),
-      dateEnd: dateEnd ? new Date(dateEnd) : undefined,
-      maxParticipants,
-      image: image.trim(),
+      isActive,
       status,
       tags: parseTags(tags),
-      registrationLink: registrationLink.trim() || undefined,
-      isActive,
+      // Fields specific to upcoming events
+      mode: status === "upcoming" ? mode : undefined,
+      location: status === "upcoming" ? location.trim() : "",
+      dateEnd: (status === "upcoming" && dateEnd) ? new Date(dateEnd) : undefined,
+      maxParticipants: status === "upcoming" ? maxParticipants : 0,
+      image: status === "upcoming" ? image.trim() : "",
+      registrationLink: (status === "upcoming" && registrationLink.trim()) ? registrationLink.trim() : undefined,
+      // Fields specific to past events
       googleDriveLink: status === "past" ? googleDriveLink.trim() : undefined,
-      imageGoogleDriveLink:
-        status === "past" && imageGoogleDriveLink.trim()
-          ? imageGoogleDriveLink.trim()
-          : undefined,
+      imageGoogleDriveLink: status === "past" ? imageGoogleDriveLink.trim() : undefined,
     });
     onClose();
   };
@@ -699,226 +728,211 @@ export function EditEventModal({
         <Box
           sx={{
             ...modalStyle,
-            width: { xs: "92vw", sm: 520 },
-            maxHeight: "80vh",
+            width: { xs: "92vw", sm: 640 },
+            maxHeight: "85vh",
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <Typography variant="h6" mb={3}>
+          <Typography variant="h6" mb={2} fontWeight="600">
             {eventItem?.ref ? "Edit Event" : "Add Event"}
           </Typography>
 
-          <Stack spacing={3} sx={{ overflowY: "auto", pr: 1, flex: 1 }}>
-            <TextField
-              label="Event Title"
-              fullWidth
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              error={Boolean(errors.title)}
-              helperText={errors.title}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
+          <Grid container spacing={2} sx={{ overflowY: "auto", pr: 1, pb: 1, flex: 1 }}>
+            {/* Common Fields */}
+            <Grid size={12}>
+              <TextField
+                required
+                label="Event Title"
+                fullWidth
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                error={Boolean(errors.title)}
+                helperText={errors.title}
+              />
+            </Grid>
 
-            <TextField
-              select
-              label="Mode"
-              value={mode}
-              onChange={(e) => setMode(e.target.value as Event["mode"])}
-              fullWidth
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            >
-              <MenuItem value="online">online</MenuItem>
-              <MenuItem value="physical">physical</MenuItem>
-              <MenuItem value="hybrid">hybrid</MenuItem>
-            </TextField>
+            <Grid size={4}>
+              <TextField
+                select
+                label="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value as "upcoming" | "past")}
+                fullWidth
+              >
+                <MenuItem value="upcoming">upcoming</MenuItem>
+                <MenuItem value="past">past</MenuItem>
+              </TextField>
+            </Grid>
 
-            <TextField
-              label="Location"
-              fullWidth
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              error={Boolean(errors.location)}
-              helperText={errors.location}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
+            <Grid size={5}>
+              <TextField
+                required
+                label="Start Date & Time"
+                type="datetime-local"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                value={dateStart}
+                onChange={(e) => setDateStart(e.target.value)}
+                error={Boolean(errors.dateStart)}
+                helperText={errors.dateStart}
+                onClick={(e) => {
+                  const input = e.currentTarget.querySelector("input");
+                  if (input) {
+                    try {
+                      input.showPicker();
+                    } catch (_) {}
+                  }
+                }}
+              />
+            </Grid>
 
-            <TextField
-              label="Start Date & Time"
-              type="datetime-local"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              value={dateStart}
-              onChange={(e) => setDateStart(e.target.value)}
-              error={Boolean(errors.dateStart)}
-              helperText={errors.dateStart}
-              onClick={(e) => {
-                const input = e.currentTarget.querySelector("input");
-                if (input) {
-                  try {
-                    input.showPicker();
-                  } catch (_) {}
+            <Grid size={3} display="flex" alignItems="center" justifyContent="center">
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={isActive}
+                    onChange={(e) => setIsActive(e.target.checked)}
+                  />
                 }
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
+                label="Active"
+              />
+            </Grid>
 
-            <TextField
-              label="End Date & Time"
-              type="datetime-local"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              value={dateEnd}
-              onChange={(e) => setDateEnd(e.target.value)}
-              error={Boolean(errors.dateEnd)}
-              helperText={errors.dateEnd}
-              onClick={(e) => {
-                const input = e.currentTarget.querySelector("input");
-                if (input) {
-                  try {
-                    input.showPicker();
-                  } catch (_) {}
-                }
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
-
-            <TextField
-              label="Max Participants"
-              type="number"
-              fullWidth
-              value={maxParticipants}
-              onChange={(e) => setMaxParticipants(Number(e.target.value))}
-              error={Boolean(errors.maxParticipants)}
-              helperText={errors.maxParticipants}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
-
-            <TextField
-              label="Image URL/Path"
-              fullWidth
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              error={Boolean(errors.image)}
-              helperText={errors.image}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
-
-            <TextField
-              label="Description"
-              fullWidth
-              multiline
-              minRows={3}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
-
-            <TextField
-              label="Tags"
-              fullWidth
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              helperText="Separate tags with commas, for example: AI, Workshop, Networking"
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
-
-            <TextField
-              select
-              label="Status"
-              value={status}
-              onChange={(e) => setStatus(e.target.value as "upcoming" | "past")}
-              fullWidth
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            >
-              <MenuItem value="upcoming">upcoming</MenuItem>
-              <MenuItem value="past">past</MenuItem>
-            </TextField>
-
-            {status === "past" && (
+            {/* Upcoming Event Specific Fields */}
+            {status === "upcoming" && (
               <>
-                <TextField
-                  label="Google Drive Media Link"
-                  fullWidth
-                  value={googleDriveLink}
-                  onChange={(e) => setGoogleDriveLink(e.target.value)}
-                  error={Boolean(errors.googleDriveLink)}
-                  helperText={errors.googleDriveLink}
-                  placeholder="https://drive.google.com/..."
-                  sx={{
-                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                      { borderColor: "#026cba" },
-                  }}
-                />
-                <TextField
-                  label="Image Google Drive Link (Optional)"
-                  fullWidth
-                  value={imageGoogleDriveLink}
-                  onChange={(e) => setImageGoogleDriveLink(e.target.value)}
-                  error={Boolean(errors.imageGoogleDriveLink)}
-                  helperText={errors.imageGoogleDriveLink}
-                  placeholder="https://drive.google.com/..."
-                  sx={{
-                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                      { borderColor: "#026cba" },
-                  }}
-                />
+                <Grid size={6}>
+                  <TextField
+                    select
+                    label="Mode"
+                    value={mode}
+                    onChange={(e) => setMode(e.target.value as Event["mode"])}
+                    fullWidth
+                  >
+                    <MenuItem value="online">online</MenuItem>
+                    <MenuItem value="physical">physical</MenuItem>
+                    <MenuItem value="hybrid">hybrid</MenuItem>
+                  </TextField>
+                </Grid>
+                <Grid size={6}>
+                  <TextField
+                    label="End Date & Time"
+                    type="datetime-local"
+                    fullWidth
+                    InputLabelProps={{ shrink: true }}
+                    value={dateEnd}
+                    onChange={(e) => setDateEnd(e.target.value)}
+                    error={Boolean(errors.dateEnd)}
+                    helperText={errors.dateEnd}
+                    onClick={(e) => {
+                      const input = e.currentTarget.querySelector("input");
+                      if (input) {
+                        try {
+                          input.showPicker();
+                        } catch (_) {}
+                      }
+                    }}
+                  />
+                </Grid>
+                <Grid size={6}>
+                  <TextField
+                    required
+                    label="Max Participants"
+                    type="number"
+                    fullWidth
+                    value={maxParticipants}
+                    onChange={(e) => setMaxParticipants(Number(e.target.value))}
+                    error={Boolean(errors.maxParticipants)}
+                    helperText={errors.maxParticipants}
+                  />
+                </Grid>
+                <Grid size={12}>
+                  <TextField
+                    required
+                    label="Location"
+                    fullWidth
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    error={Boolean(errors.location)}
+                    helperText={errors.location}
+                  />
+                </Grid>
+                <Grid size={12}>
+                  <TextField
+                    required
+                    label="Image URL/Path"
+                    fullWidth
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    error={Boolean(errors.image)}
+                    helperText={errors.image}
+                  />
+                </Grid>
+                <Grid size={12}>
+                  <TextField
+                    label="Registration Link"
+                    fullWidth
+                    value={registrationLink}
+                    onChange={(e) => setRegistrationLink(e.target.value)}
+                    error={Boolean(errors.registrationLink)}
+                    helperText={errors.registrationLink}
+                  />
+                </Grid>
               </>
             )}
 
-            <TextField
-              label="Registration Link"
-              fullWidth
-              value={registrationLink}
-              onChange={(e) => setRegistrationLink(e.target.value)}
-              error={Boolean(errors.registrationLink)}
-              helperText={errors.registrationLink}
-              sx={{
-                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                  { borderColor: "#026cba" },
-              }}
-            />
+            {/* Past Event Specific Fields */}
+            {status === "past" && (
+              <>
+                <Grid size={12}>
+                  <TextField
+                    required
+                    label="Google Drive Media Link"
+                    fullWidth
+                    value={googleDriveLink}
+                    onChange={(e) => setGoogleDriveLink(e.target.value)}
+                    error={Boolean(errors.googleDriveLink)}
+                    helperText={errors.googleDriveLink}
+                    placeholder="https://drive.google.com/..."
+                  />
+                </Grid>
+                <Grid size={12}>
+                  <TextField
+                    required
+                    label="Image Google Drive Link"
+                    fullWidth
+                    value={imageGoogleDriveLink}
+                    onChange={(e) => setImageGoogleDriveLink(e.target.value)}
+                    error={Boolean(errors.imageGoogleDriveLink)}
+                    helperText={errors.imageGoogleDriveLink}
+                    placeholder="https://drive.google.com/..."
+                  />
+                </Grid>
+              </>
+            )}
 
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isActive}
-                  onChange={(e) => setIsActive(e.target.checked)}
-                />
-              }
-              label="Active"
-            />
-          </Stack>
+            {/* Common descriptive fields */}
+            <Grid size={12}>
+              <TextField
+                label="Tags"
+                fullWidth
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                helperText="Separate tags with commas, for example: AI, Workshop, Networking"
+              />
+            </Grid>
+            <Grid size={12}>
+              <TextField
+                label="Description"
+                fullWidth
+                multiline
+                minRows={3}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Grid>
+          </Grid>
 
           <Stack
             direction="row"

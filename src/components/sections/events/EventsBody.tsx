@@ -2,8 +2,10 @@
 
 import { Typography } from "@mui/material";
 import { Poppins } from "next/font/google";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Event } from "@/constants/types/events.type";
+import searchEvents from "@/services/events/functions/searchEvents";
+import sortEvents from "@/services/events/functions/sortEvents";
 import EventButton from "./common/buttons/EventButton";
 import SortRecentButton from "./common/buttons/SortRecentButton";
 import SearchBar from "./common/search/SearchBar";
@@ -26,77 +28,64 @@ export default function EventsBody({
   events = [],
   layout = "carousel",
 }: EventsBodyProps) {
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
-  const [sortedEvents, setSortedEvents] = useState<Event[]>(events);
   const [activeFilter, setActiveFilter] = useState<string>("upcoming");
   const [isSortActive, setIsSortActive] = useState(false);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
   const [searchTerm, setSearchTerm] = useState<string>(""); // Track search term
-  const [allSearchResults, setAllSearchResults] = useState<Event[]>(events); // Store all search results
 
-  // Apply both search and filter
-  const applyFilters = useCallback(
-    (searchResults: Event[], filterType: string) => {
-      return searchResults.filter((event) => {
-        if (filterType === "past") {
-          return event.status === "past";
-        } else if (filterType === "upcoming") {
-          return event.status === "upcoming";
-        }
-        return true; // Show all events for any other filter
-      });
-    },
-    [],
-  );
-
-  // Initialize filtered events when component mounts or events change
+  // Handle back button / BFCache restore to prevent empty page states
   useEffect(() => {
-    // If there's a search term, use search results, otherwise use all events
-    const eventsToFilter = searchTerm ? allSearchResults : events;
-    const filtered = applyFilters(eventsToFilter, activeFilter);
-
-    setFilteredEvents(filtered);
-    setSortedEvents([]);
-    setIsSortActive(false);
-  }, [events, activeFilter, allSearchResults, searchTerm, applyFilters]);
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, []);
 
   // Handle filter changes
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
-    // Don't reset search - let useEffect handle the filtering
+    setIsSortActive(false); // Reset sort when filter changes
   };
 
   // Handle search results
   const handleSearchResults = (
-    searchResults: Event[],
+    _searchResults: Event[],
     searchQuery?: string,
   ) => {
-    // Store the search term and all search results
     setSearchTerm(searchQuery || "");
-    setAllSearchResults(searchResults);
-
-    // Filter search results based on active filter
-    const filteredSearchResults = applyFilters(searchResults, activeFilter);
-
-    setFilteredEvents(filteredSearchResults);
-    // Reset sort when search changes
-    setSortedEvents([]);
-    setIsSortActive(false);
+    setIsSortActive(false); // Reset sort when search changes
   };
 
   // Handle sort
   const handleSort = (
-    sorted: Event[],
+    _sorted: Event[],
     nextActive: boolean,
     nextSort: "newest" | "oldest",
   ) => {
-    setSortedEvents(sorted);
     setIsSortActive(nextActive);
     setSortOrder(nextSort);
   };
 
-  // Get final events to display (use sorted if available, otherwise filtered)
-  const displayEvents = isSortActive ? sortedEvents : filteredEvents;
+  // 1. First apply search query
+  const searchedEvents = useMemo(() => {
+    return searchEvents(events, searchTerm);
+  }, [events, searchTerm]);
+
+  // 2. Then apply category filter (upcoming vs past)
+  const categoryFilteredEvents = useMemo(() => {
+    return searchedEvents.filter((event) => event.status === activeFilter);
+  }, [searchedEvents, activeFilter]);
+
+  // 3. Finally apply sorting if active
+  const displayEvents = useMemo(() => {
+    if (!isSortActive) return categoryFilteredEvents;
+    return sortEvents(categoryFilteredEvents, sortOrder);
+  }, [categoryFilteredEvents, isSortActive, sortOrder]);
 
   return (
     <div className="flex flex-col gap-8 w-full max-w-7xl mx-auto min-h-[458px]">
@@ -165,7 +154,7 @@ export default function EventsBody({
               containerHeight={activeFilter === "past" ? 520 : 360}
               onGetTicketClick={(event) => {
                 if (event?.registrationLink) {
-                  window.location.href = event.registrationLink;
+                  window.open(event.registrationLink, "_blank", "noopener,noreferrer");
                 } else {
                   console.warn("No registration link for event:", event);
                 }
@@ -240,7 +229,7 @@ export default function EventsBody({
                         showGetTicket={true}
                         onGetTicketClick={() => {
                           if (event?.registrationLink) {
-                            window.location.href = event.registrationLink;
+                            window.open(event.registrationLink, "_blank", "noopener,noreferrer");
                           } else {
                             console.warn(
                               "No registration link for event:",

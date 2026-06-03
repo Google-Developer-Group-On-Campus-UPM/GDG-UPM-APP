@@ -21,16 +21,18 @@ export default async function EventsPage() {
       return new Date(dateValue);
     };
 
-    eventsToDisplay = fetchedEvents.map((event) => {
-      const { ref, ...rest } = event;
-      return {
-        ...rest,
-        dateStart: convertToDate(event.dateStart) || new Date(),
-        dateEnd: convertToDate(event.dateEnd),
-        createdAt: convertToDate(event.createdAt),
-        updatedAt: convertToDate(event.updatedAt),
-      };
-    }) as Event[];
+    eventsToDisplay = fetchedEvents
+      .filter((event) => event.isActive !== false)
+      .map((event) => {
+        const { ref, ...rest } = event;
+        return {
+          ...rest,
+          dateStart: convertToDate(event.dateStart) || new Date(),
+          dateEnd: convertToDate(event.dateEnd),
+          createdAt: convertToDate(event.createdAt),
+          updatedAt: convertToDate(event.updatedAt),
+        };
+      }) as Event[];
   } catch (err) {
     console.error("Failed to fetch events:", err);
     eventsToDisplay = MOCK_EVENTS;

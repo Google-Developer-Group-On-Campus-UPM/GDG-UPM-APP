@@ -3,6 +3,7 @@
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { deleteField } from "firebase/firestore";
 import { Event } from "@/constants/types/events.type";
 import EventService from "@/services/events/eventService";
 import { EditEventModal, DeleteConfirmationDialog } from "./Modals";
@@ -97,11 +98,31 @@ export default function EventsManager({ role }: EventsManagerProps) {
     imageGoogleDriveLink?: string;
   }) => {
     try {
+      // Clean undefined values
+      const cleanData: any = {};
+      for (const [key, value] of Object.entries(updated)) {
+        if (value !== undefined) {
+          cleanData[key] = value;
+        }
+      }
+
       if (isAdding) {
-        await service.createEvent(updated as Event);
+        await service.createEvent(cleanData as Event);
         toast.success("Event created successfully.");
       } else if (selectedEvent?.ref) {
-        await service.updateEvent(updated, selectedEvent.ref);
+        // If we are updating an existing event, we must delete fields that are specific to the other status
+        if (cleanData.status === "upcoming") {
+          cleanData.googleDriveLink = deleteField();
+          cleanData.imageGoogleDriveLink = deleteField();
+        } else if (cleanData.status === "past") {
+          cleanData.mode = deleteField();
+          cleanData.location = deleteField();
+          cleanData.dateEnd = deleteField();
+          cleanData.maxParticipants = deleteField();
+          cleanData.image = deleteField();
+          cleanData.registrationLink = deleteField();
+        }
+        await service.updateEvent(cleanData as any, selectedEvent.ref);
         toast.success("Event updated successfully.");
       }
 
@@ -180,15 +201,26 @@ export default function EventsManager({ role }: EventsManagerProps) {
                     })()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        event.status === "upcoming"
-                          ? "bg-[#026cba]/10 text-[#026cba] dark:bg-[#026cba]/20 dark:text-sky-200"
-                          : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
-                      }`}
-                    >
-                      {event.status}
-                    </span>
+                    <div className="flex flex-col gap-1 items-start">
+                      <span
+                        className={`px-2 inline-flex text-[10px] leading-4 font-semibold rounded-full ${
+                          event.status === "upcoming"
+                            ? "bg-[#026cba]/10 text-[#026cba] dark:bg-[#026cba]/20 dark:text-sky-200"
+                            : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                        }`}
+                      >
+                        {event.status}
+                      </span>
+                      <span
+                        className={`px-2 inline-flex text-[10px] leading-4 font-semibold rounded-full ${
+                          event.isActive !== false
+                            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400"
+                            : "bg-slate-100 text-slate-600 dark:bg-slate-800/60 dark:text-slate-400"
+                        }`}
+                      >
+                        {event.isActive !== false ? "Active" : "Draft"}
+                      </span>
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button
