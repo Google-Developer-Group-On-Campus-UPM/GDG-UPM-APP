@@ -9,7 +9,28 @@ export default async function EventsPage() {
   try {
     const eventService = new EventService();
     const fetchedEvents = await eventService.getEvents();
-    eventsToDisplay = fetchedEvents;
+
+    const convertToDate = (dateValue: any): Date | undefined => {
+      if (!dateValue) return undefined;
+      if (dateValue.toDate && typeof dateValue.toDate === "function") {
+        return dateValue.toDate();
+      }
+      if (dateValue instanceof Date) {
+        return dateValue;
+      }
+      return new Date(dateValue);
+    };
+
+    eventsToDisplay = fetchedEvents.map((event) => {
+      const { ref, ...rest } = event;
+      return {
+        ...rest,
+        dateStart: convertToDate(event.dateStart) || new Date(),
+        dateEnd: convertToDate(event.dateEnd),
+        createdAt: convertToDate(event.createdAt),
+        updatedAt: convertToDate(event.updatedAt),
+      };
+    }) as Event[];
   } catch (err) {
     console.error("Failed to fetch events:", err);
     eventsToDisplay = MOCK_EVENTS;
