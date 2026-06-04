@@ -8,7 +8,7 @@
 const DEFAULT_LINKS = {
   // Site & Registration Links
   COMMUNITY_PLATFORM:
-    "https://docs.google.com/forms/d/e/1FAIpQLSdKS7Wdr7NoP_9aIgWONBWoSH1h3UCwUCvejKIWvm1LDV8aPQ/viewform",
+    "https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/",
 
   // Social & Developer Media Links
   FACEBOOK: "https://facebook.com/gdgupm",
@@ -22,8 +22,8 @@ const DEFAULT_LINKS = {
   MEDIUM: "https://medium.com/@gdgocupm",
   SUGGEST_EVENT:
     "https://docs.google.com/forms/d/e/1FAIpQLSeRx-kBCYQ5I0_Roab5hqVT8M1kGWsBRHYQ-jFz_KZEL_fUXg/viewform",
-  GDG_COMMUNITY:
-    "https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/",
+  JOIN_COMMITEE:
+    "https://docs.google.com/forms/d/e/1FAIpQLSdKS7Wdr7NoP_9aIgWONBWoSH1h3UCwUCvejKIWvm1LDV8aPQ/viewform",
 
   // Core Navigation Routes
   HOME: "/",

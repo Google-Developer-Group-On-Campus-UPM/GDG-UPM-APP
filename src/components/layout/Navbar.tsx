@@ -43,7 +43,7 @@ export default function Navbar({
   return (
     <FloatingNav
       navItems={navItems}
-      ctaLink={LINKS.COMMUNITY_PLATFORM}
+      ctaLink={LINKS.JOIN_COMMITEE}
       variant={variant}
     />
   );

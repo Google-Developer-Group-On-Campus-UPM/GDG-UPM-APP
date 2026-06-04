@@ -5,7 +5,7 @@ import { LINKS } from "@/constants/links";
 export default function FooterHeader() {
   return (
     <Link
-      href={LINKS.GDG_COMMUNITY}
+      href={LINKS.COMMUNITY_PLATFORM}
       aria-label="GDG on Campus UPM Home"
       sx={{
         display: "inline-flex",
