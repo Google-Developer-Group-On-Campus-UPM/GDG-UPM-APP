@@ -9,16 +9,28 @@ import {
   signOut,
   User,
 } from "firebase/auth";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { auth, db } from "@/services/firebase/firebase";
 import AdminSidebar from "./AdminSidebar";
 import { type AdminRole, resolveAdminRole } from "./auth";
-import DepartmentsManager from "./DepartmentsManager";
-import EditorsManager from "./EditorsManager";
-import EventsManager from "./EventsManager";
-import RolesManager from "./RolesManger";
-import UsersManager from "./UsersManager";
+
+const DepartmentsManager = dynamic(() => import("./DepartmentsManager"), {
+  ssr: false,
+});
+const EditorsManager = dynamic(() => import("./EditorsManager"), {
+  ssr: false,
+});
+const EventsManager = dynamic(() => import("./EventsManager"), {
+  ssr: false,
+});
+const RolesManager = dynamic(() => import("./RolesManger"), {
+  ssr: false,
+});
+const UsersManager = dynamic(() => import("./UsersManager"), {
+  ssr: false,
+});
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
