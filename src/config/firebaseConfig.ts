@@ -20,8 +20,8 @@ if (!firebaseConfig.messagingSenderId)
   missingEnvVars.push("NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID");
 if (!firebaseConfig.appId) missingEnvVars.push("NEXT_PUBLIC_FIREBASE_APP_ID");
 
-if (missingEnvVars.length > 0) {
-  throw new Error(
+if (missingEnvVars.length > 0 && typeof window !== "undefined") {
+  console.warn(
     `Missing required Firebase environment variables: ${missingEnvVars.join(
       ", ",
     )}. Please check your .env file or production environment settings.`,
