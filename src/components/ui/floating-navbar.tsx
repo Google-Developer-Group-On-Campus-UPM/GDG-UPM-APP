@@ -7,8 +7,12 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "motion/react";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+
+const isInternalLink = (url: string) =>
+  url.startsWith("/") && !url.startsWith("//");
 
 export const FloatingNav = ({
   navItems,
@@ -123,47 +127,78 @@ export const FloatingNav = ({
             )}
           >
             {/* Logo */}
-            {logoItem && (
-              <a
-                href={logoItem.link}
-                className="relative flex items-center gap-2 px-1 py-1"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {logoItem.icon && (
-                  <span className="shrink-0">{logoItem.icon}</span>
-                )}
-              </a>
-            )}
+            {logoItem &&
+              (isInternalLink(logoItem.link) ? (
+                <Link
+                  href={logoItem.link}
+                  className="relative flex items-center gap-2 px-1 py-1"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {logoItem.icon && (
+                    <span className="shrink-0">{logoItem.icon}</span>
+                  )}
+                </Link>
+              ) : (
+                <a
+                  href={logoItem.link}
+                  className="relative flex items-center gap-2 px-1 py-1"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {logoItem.icon && (
+                    <span className="shrink-0">{logoItem.icon}</span>
+                  )}
+                </a>
+              ))}
 
             {/* Desktop Nav Items */}
             <div className="hidden md:flex items-center gap-1">
-              {linkItems.map((navItem) => (
-                <a
-                  key={navItem.link}
-                  href={navItem.link}
-                  className={cn(
-                    "relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all hover:bg-transparent",
-                    navItem.name === "Home"
-                      ? "text-white"
-                      : "text-white/80 hover:text-white",
-                  )}
-                >
-                  <span>{navItem.name}</span>
-                </a>
-              ))}
+              {linkItems.map((navItem) => {
+                const className = cn(
+                  "relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-all hover:bg-transparent",
+                  navItem.name === "Home"
+                    ? "text-white"
+                    : "text-white/80 hover:text-white",
+                );
+                return isInternalLink(navItem.link) ? (
+                  <Link
+                    key={navItem.link}
+                    href={navItem.link}
+                    className={className}
+                  >
+                    <span>{navItem.name}</span>
+                  </Link>
+                ) : (
+                  <a
+                    key={navItem.link}
+                    href={navItem.link}
+                    className={className}
+                  >
+                    <span>{navItem.name}</span>
+                  </a>
+                );
+              })}
             </div>
 
             {/* Desktop CTA Button */}
-            <a
-              href={ctaLink}
-              target={ctaLink.startsWith("http") ? "_blank" : undefined}
-              rel={
-                ctaLink.startsWith("http") ? "noopener noreferrer" : undefined
-              }
-              className="hidden md:flex h-[34px] w-[140px] items-center justify-center rounded-full bg-white text-[13px] font-semibold text-black transition-all duration-200 hover:bg-white/90 hover:cursor-pointer active:scale-[1.1]"
-            >
-              {ctaText}
-            </a>
+            {isInternalLink(ctaLink) ? (
+              <Link
+                href={ctaLink}
+                className="hidden md:flex h-[34px] w-[140px] items-center justify-center rounded-full bg-white text-[13px] font-semibold text-black transition-all duration-200 hover:bg-white/90 hover:cursor-pointer active:scale-[1.1]"
+              >
+                {ctaText}
+              </Link>
+            ) : (
+              <a
+                href={ctaLink}
+                target={ctaLink.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  ctaLink.startsWith("http") ? "noopener noreferrer" : undefined
+                }
+                className="hidden md:flex h-[34px] w-[140px] items-center justify-center rounded-full bg-white text-[13px] font-semibold text-black transition-all duration-200 hover:bg-white/90 hover:cursor-pointer active:scale-[1.1]"
+              >
+                {ctaText}
+              </a>
+            )}
 
             {/* Mobile Hamburger Button */}
             <button
@@ -195,17 +230,28 @@ export const FloatingNav = ({
             {/* Top Bar for Overlay (Matches original mobile bar layout) */}
             <div className="flex w-full items-center justify-between px-5 py-3 border-b border-white/30 bg-transparent">
               {/* Logo in overlay */}
-              {logoItem && (
-                <a
-                  href={logoItem.link}
-                  className="relative flex items-center gap-2 px-1 py-1"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {logoItem.icon && (
-                    <span className="shrink-0">{logoItem.icon}</span>
-                  )}
-                </a>
-              )}
+              {logoItem &&
+                (isInternalLink(logoItem.link) ? (
+                  <Link
+                    href={logoItem.link}
+                    className="relative flex items-center gap-2 px-1 py-1"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {logoItem.icon && (
+                      <span className="shrink-0">{logoItem.icon}</span>
+                    )}
+                  </Link>
+                ) : (
+                  <a
+                    href={logoItem.link}
+                    className="relative flex items-center gap-2 px-1 py-1"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {logoItem.icon && (
+                      <span className="shrink-0">{logoItem.icon}</span>
+                    )}
+                  </a>
+                ))}
               {/* Close Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -219,38 +265,74 @@ export const FloatingNav = ({
             {/* Scrollable Nav Content */}
             <div className="flex-1 overflow-y-auto w-full">
               <div className="flex min-h-full flex-col items-center justify-start gap-10 px-6 py-16">
-                {linkItems.map((navItem, idx) => (
+                {linkItems.map((navItem, idx) => {
+                  const motionProps = {
+                    initial: { opacity: 0, y: 20 },
+                    animate: { opacity: 1, y: 0 },
+                    exit: { opacity: 0, y: 20 },
+                    transition: { delay: idx * 0.05, duration: 0.3 },
+                    onClick: () => setIsMobileMenuOpen(false),
+                    className:
+                      "text-4xl font-semibold tracking-tight text-white/90 transition-colors hover:text-white",
+                  };
+                  return isInternalLink(navItem.link) ? (
+                    <Link
+                      key={navItem.link}
+                      href={navItem.link}
+                      passHref
+                      legacyBehavior
+                    >
+                      <motion.a {...motionProps}>{navItem.name}</motion.a>
+                    </Link>
+                  ) : (
+                    <motion.a
+                      key={navItem.link}
+                      href={navItem.link}
+                      {...motionProps}
+                    >
+                      {navItem.name}
+                    </motion.a>
+                  );
+                })}
+
+                {isInternalLink(ctaLink) ? (
+                  <Link href={ctaLink} passHref legacyBehavior>
+                    <motion.a
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 20 }}
+                      transition={{
+                        delay: linkItems.length * 0.05,
+                        duration: 0.3,
+                      }}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="mt-8 flex h-14 w-full max-w-[280px] items-center justify-center rounded-full bg-white text-xl font-semibold text-black transition-all hover:bg-white/90 active:scale-95"
+                    >
+                      {ctaText}
+                    </motion.a>
+                  </Link>
+                ) : (
                   <motion.a
-                    key={navItem.link}
-                    href={navItem.link}
+                    href={ctaLink}
+                    target={ctaLink.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      ctaLink.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
-                    transition={{ delay: idx * 0.05, duration: 0.3 }}
+                    transition={{
+                      delay: linkItems.length * 0.05,
+                      duration: 0.3,
+                    }}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-4xl font-semibold tracking-tight text-white/90 transition-colors hover:text-white"
+                    className="mt-8 flex h-14 w-full max-w-[280px] items-center justify-center rounded-full bg-white text-xl font-semibold text-black transition-all hover:bg-white/90 active:scale-95"
                   >
-                    {navItem.name}
+                    {ctaText}
                   </motion.a>
-                ))}
-
-                <motion.a
-                  href={ctaLink}
-                  target={ctaLink.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    ctaLink.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: linkItems.length * 0.05, duration: 0.3 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="mt-8 flex h-14 w-full max-w-[280px] items-center justify-center rounded-full bg-white text-xl font-semibold text-black transition-all hover:bg-white/90 active:scale-95"
-                >
-                  {ctaText}
-                </motion.a>
+                )}
               </div>
             </div>
           </motion.div>
