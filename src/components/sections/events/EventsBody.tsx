@@ -154,7 +154,11 @@ export default function EventsBody({
               containerHeight={activeFilter === "past" ? 520 : 360}
               onGetTicketClick={(event) => {
                 if (event?.registrationLink) {
-                  window.open(event.registrationLink, "_blank", "noopener,noreferrer");
+                  window.open(
+                    event.registrationLink,
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
                 } else {
                   console.warn("No registration link for event:", event);
                 }
@@ -229,7 +233,11 @@ export default function EventsBody({
                         showGetTicket={true}
                         onGetTicketClick={() => {
                           if (event?.registrationLink) {
-                            window.open(event.registrationLink, "_blank", "noopener,noreferrer");
+                            window.open(
+                              event.registrationLink,
+                              "_blank",
+                              "noopener,noreferrer",
+                            );
                           } else {
                             console.warn(
                               "No registration link for event:",

@@ -628,12 +628,12 @@ export function EditEventModal({
     setGoogleDriveLink(
       eventItem && "googleDriveLink" in eventItem
         ? (eventItem as any).googleDriveLink
-        : ""
+        : "",
     );
     setImageGoogleDriveLink(
       eventItem && "imageGoogleDriveLink" in eventItem
-        ? (eventItem as any).imageGoogleDriveLink ?? ""
-        : ""
+        ? ((eventItem as any).imageGoogleDriveLink ?? "")
+        : "",
     );
     setErrors({});
   }, [eventItem, tagsToInputValue, toLocalDateTimeInput]);
@@ -662,35 +662,45 @@ export function EditEventModal({
       }
 
       // Image URL validation if it starts with http
-      if (image.trim() && image.trim().startsWith("http") && !isValidUrl(image.trim())) {
+      if (
+        image.trim() &&
+        image.trim().startsWith("http") &&
+        !isValidUrl(image.trim())
+      ) {
         newErrors.image = "Please enter a valid image URL";
       }
 
       // Registration link validation if provided
       if (registrationLink.trim() && !isValidUrl(registrationLink.trim())) {
-        newErrors.registrationLink = "Please enter a valid URL (e.g. https://...)";
+        newErrors.registrationLink =
+          "Please enter a valid URL (e.g. https://...)";
       }
 
       // Date range validation
       if (dateStart && dateEnd && new Date(dateEnd) <= new Date(dateStart)) {
-        newErrors.dateEnd = "End date and time must be after start date and time";
+        newErrors.dateEnd =
+          "End date and time must be after start date and time";
       }
     }
 
     // Past event link validations
     if (status === "past") {
       if (!googleDriveLink.trim()) {
-        newErrors.googleDriveLink = "Google Drive media link is required for past events";
+        newErrors.googleDriveLink =
+          "Google Drive media link is required for past events";
       } else if (!isValidUrl(googleDriveLink.trim())) {
-        newErrors.googleDriveLink = "Please enter a valid URL (e.g. https://...)";
+        newErrors.googleDriveLink =
+          "Please enter a valid URL (e.g. https://...)";
       } else if (!googleDriveLink.includes("drive.google.com")) {
         newErrors.googleDriveLink = "Link must be from drive.google.com";
       }
 
       if (!imageGoogleDriveLink.trim()) {
-        newErrors.imageGoogleDriveLink = "Image Google Drive link is required for past events";
+        newErrors.imageGoogleDriveLink =
+          "Image Google Drive link is required for past events";
       } else if (!isValidUrl(imageGoogleDriveLink.trim())) {
-        newErrors.imageGoogleDriveLink = "Please enter a valid URL (e.g. https://...)";
+        newErrors.imageGoogleDriveLink =
+          "Please enter a valid URL (e.g. https://...)";
       } else if (!imageGoogleDriveLink.includes("drive.google.com")) {
         newErrors.imageGoogleDriveLink = "Link must be from drive.google.com";
       }
@@ -711,13 +721,17 @@ export function EditEventModal({
       // Fields specific to upcoming events
       mode: status === "upcoming" ? mode : undefined,
       location: status === "upcoming" ? location.trim() : "",
-      dateEnd: (status === "upcoming" && dateEnd) ? new Date(dateEnd) : undefined,
+      dateEnd: status === "upcoming" && dateEnd ? new Date(dateEnd) : undefined,
       maxParticipants: status === "upcoming" ? maxParticipants : 0,
       image: status === "upcoming" ? image.trim() : "",
-      registrationLink: (status === "upcoming" && registrationLink.trim()) ? registrationLink.trim() : undefined,
+      registrationLink:
+        status === "upcoming" && registrationLink.trim()
+          ? registrationLink.trim()
+          : undefined,
       // Fields specific to past events
       googleDriveLink: status === "past" ? googleDriveLink.trim() : undefined,
-      imageGoogleDriveLink: status === "past" ? imageGoogleDriveLink.trim() : undefined,
+      imageGoogleDriveLink:
+        status === "past" ? imageGoogleDriveLink.trim() : undefined,
     });
     onClose();
   };
@@ -738,7 +752,11 @@ export function EditEventModal({
             {eventItem?.ref ? "Edit Event" : "Add Event"}
           </Typography>
 
-          <Grid container spacing={2} sx={{ overflowY: "auto", pr: 1, pb: 1, flex: 1 }}>
+          <Grid
+            container
+            spacing={2}
+            sx={{ overflowY: "auto", pr: 1, pb: 1, flex: 1 }}
+          >
             {/* Common Fields */}
             <Grid size={12}>
               <TextField
@@ -757,7 +775,9 @@ export function EditEventModal({
                 select
                 label="Status"
                 value={status}
-                onChange={(e) => setStatus(e.target.value as "upcoming" | "past")}
+                onChange={(e) =>
+                  setStatus(e.target.value as "upcoming" | "past")
+                }
                 fullWidth
               >
                 <MenuItem value="upcoming">upcoming</MenuItem>
@@ -787,7 +807,12 @@ export function EditEventModal({
               />
             </Grid>
 
-            <Grid size={3} display="flex" alignItems="center" justifyContent="center">
+            <Grid
+              size={3}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
               <FormControlLabel
                 control={
                   <Switch
@@ -997,7 +1022,8 @@ export function DeleteConfirmationDialog({
             {title}
           </Typography>
           <Typography variant="body2" color="text.secondary" mb={4}>
-            Are you sure you want to delete <strong>{itemName}</strong>? This action cannot be undone.
+            Are you sure you want to delete <strong>{itemName}</strong>? This
+            action cannot be undone.
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="center">
             <Button

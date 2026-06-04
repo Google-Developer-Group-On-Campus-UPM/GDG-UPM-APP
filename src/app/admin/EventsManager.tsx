@@ -1,12 +1,12 @@
 "use client";
 
 import { Add, Delete, Edit } from "@mui/icons-material";
+import { deleteField } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { deleteField } from "firebase/firestore";
 import { Event } from "@/constants/types/events.type";
 import EventService from "@/services/events/eventService";
-import { EditEventModal, DeleteConfirmationDialog } from "./Modals";
+import { DeleteConfirmationDialog, EditEventModal } from "./Modals";
 
 type EventsManagerProps = {
   role: string;
@@ -261,7 +261,8 @@ export default function EventsManager({ role }: EventsManagerProps) {
         onConfirm={async () => {
           if (eventToDelete) {
             try {
-              if (eventToDelete.ref) await service.deleteEvent(eventToDelete.ref);
+              if (eventToDelete.ref)
+                await service.deleteEvent(eventToDelete.ref);
               toast.success("Event deleted successfully.");
               refreshData();
             } catch (err: any) {
