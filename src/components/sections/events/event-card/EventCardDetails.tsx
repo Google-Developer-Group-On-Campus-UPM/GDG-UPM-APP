@@ -42,7 +42,6 @@ export default function EventCardDetails({ event }: EventCardDetailsProps) {
           style={gradientStyle}
         >
           {event.dateStart &&
-            event.dateEnd &&
             formatDateWithTime(event.dateStart, event.dateEnd)}
         </span>
       </div>
@@ -57,7 +56,9 @@ export default function EventCardDetails({ event }: EventCardDetailsProps) {
           >
             {event.ticketType}
             {event.ticketType && event.maxParticipants && ", "}
-            {event.maxParticipants ?? `${event.maxParticipants} participants`}
+            {event.maxParticipants !== undefined
+              ? `${event.maxParticipants} participants`
+              : ""}
           </span>
         </div>
       )}

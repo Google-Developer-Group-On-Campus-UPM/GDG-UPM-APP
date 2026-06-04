@@ -1,6 +1,6 @@
 export default function formatDateWithTime(
   startDate: Date,
-  endDate: Date,
+  endDate?: Date,
 ): string {
   const startDay = startDate.getDate();
   const startMonth = startDate.toLocaleDateString("en-US", { month: "long" });
@@ -10,6 +10,11 @@ export default function formatDateWithTime(
     minute: "2-digit",
     hour12: true,
   });
+
+  if (!endDate) {
+    return `${startDay} ${startMonth} ${startYear}, ${startTime}`;
+  }
+
   const endTime = endDate.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",

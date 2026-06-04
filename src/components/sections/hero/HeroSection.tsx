@@ -134,7 +134,7 @@ export default function HeroSection() {
                   for <br className="hidden" />{" "}
                   <span className="italic">
                     {displayed}
-                    <span className="border-r-10 border-white animate-pulse px-2" />
+                    <span className="border-r-[10px] border-white animate-pulse px-2" />
                   </span>
                 </span>
               </h1>

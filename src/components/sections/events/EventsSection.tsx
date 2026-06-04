@@ -11,7 +11,6 @@ import EventsHeader from "./EventsHeader";
 export default function EventsSection() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -48,10 +47,8 @@ export default function EventsSection() {
         })) as Event[];
 
         setEvents(convertedEvents);
-        setError(null);
       } catch (err) {
         console.error("Failed to fetch events:", err);
-        setError("Failed to load events. Please try again later.");
         setEvents(MOCK_EVENTS);
       } finally {
         setLoading(false);
@@ -81,22 +78,6 @@ export default function EventsSection() {
           <EventsHeader />
           <div className="w-full flex items-center justify-center py-12">
             <p className="text-lg text-gray-600">Loading events...</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section
-        id="events"
-        className="w-full py-16 px-4 sm:px-6 md:px-8 lg:px-12 overflow-hidden"
-      >
-        <div className="mx-auto w-full max-w-7xl flex flex-col items-center gap-12 lg:gap-16">
-          <EventsHeader />
-          <div className="w-full flex items-center justify-center py-12">
-            <p className="text-lg text-red-600">{error}</p>
           </div>
         </div>
       </section>
