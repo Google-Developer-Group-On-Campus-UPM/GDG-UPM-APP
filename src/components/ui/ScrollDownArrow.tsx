@@ -11,7 +11,6 @@ const ScrollDownArrow: React.FC = () => (
       alt="Scroll Down"
       width={50}
       height={50}
-      className="left-1/2 transform -translate-x-1/2"
     />
   </div>
 );

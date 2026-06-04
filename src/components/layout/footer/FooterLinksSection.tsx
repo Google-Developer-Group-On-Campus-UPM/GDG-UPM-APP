@@ -5,10 +5,10 @@ import { footerLinks } from "./footerData";
 export default function FooterLinksSection() {
   return (
     <Stack
-      direction={{ sm: "column", md: "row" }}
+      direction={{ xs: "column", md: "row" }}
       flexWrap="wrap"
       useFlexGap
-      gap={{ sm: "5rem", md: "1rem" }}
+      gap={{ xs: "3rem", sm: "5rem", md: "1rem" }}
       sx={{
         flex: "1 1 auto",
         maxWidth: { lg: "70%" },

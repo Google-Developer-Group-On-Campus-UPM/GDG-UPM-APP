@@ -61,7 +61,7 @@ export default function HeroSection() {
   }, [displayed, typing, wordIndex]);
 
   return (
-    <div className="h-screen min-h-[700px] max-h-[1080px] relative overflow-hidden font-sans flex justify-center">
+    <div className="h-auto min-h-screen lg:h-screen lg:min-h-[700px] lg:max-h-[1080px] relative overflow-hidden font-sans flex justify-center">
       {/* Background Container (max width 2560px to prevent infinite zoom scaling) */}
       <div className="absolute inset-0 w-full h-full max-w-[2560px] mx-auto -z-10">
         {/* Background Image */}
@@ -77,7 +77,7 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="h-screen min-h-[700px] max-h-[1080px] w-full relative space-y-10 z-10 flex flex-col">
+      <div className="h-auto min-h-screen lg:h-screen lg:min-h-[700px] lg:max-h-[1080px] w-full relative space-y-10 z-10 flex flex-col pb-12 lg:pb-0">
         <MaskedBackground template="template1" />
 
         <div className="relative z-10 space-y-20 max-w-7xl mx-auto w-full">

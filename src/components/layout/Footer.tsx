@@ -23,6 +23,7 @@ export default function Footer() {
         position: "relative",
         background: "#000000",
         overflow: "hidden",
+        borderTop: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
       {/* Background Image */}
