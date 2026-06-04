@@ -8,17 +8,17 @@ A modern web app showcasing team members, events, and partners. Features an admi
 
 ## Tech Stack
 
-- **Next.js 15** + **React 19** + **TypeScript**
+- **Next.js 16** + **React 19** + **TypeScript**
 - **Tailwind CSS** + **Material-UI**
-- **Firebase** (Firestore, Auth, Storage)
-- **NextAuth.js**
+- **Firebase** (Firestore, Auth, Analytics)
+- **Biome** (Formatting and Linting)
 
 ## Quick Start
 
 1. **Install dependencies**
 
    ```bash
-   npm install
+   yarn install
    ```
 
 2. **Environment setup**
@@ -31,14 +31,12 @@ A modern web app showcasing team members, events, and partners. Features an admi
    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
    NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your_nextauth_secret
    ```
 
 3. **Run development server**
 
    ```bash
-   npm run dev
+   yarn dev
    ```
 
 4. **Open [http://localhost:3000](http://localhost:3000)**
@@ -67,10 +65,10 @@ src/
 ## Scripts
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
+yarn dev      # Start development server
+yarn build    # Build for production
+yarn start    # Start production server
+yarn lint     # Run Biome checks
 ```
 
 ## Firebase Setup
@@ -141,8 +139,8 @@ components/
 
 Before committing code:
 
-- [ ] Code formatted with Prettier
-- [ ] No ESLint errors
+- [ ] Code formatted with Biome
+- [ ] No Biome check errors
 - [ ] TypeScript compiles without errors
 - [ ] One default export per file
 - [ ] Single responsibility per file
