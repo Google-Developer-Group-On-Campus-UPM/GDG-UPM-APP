@@ -22,6 +22,8 @@ const DEFAULT_LINKS = {
   MEDIUM: "https://medium.com/@gdgocupm",
   SUGGEST_EVENT:
     "https://docs.google.com/forms/d/e/1FAIpQLSeRx-kBCYQ5I0_Roab5hqVT8M1kGWsBRHYQ-jFz_KZEL_fUXg/viewform",
+  GDG_COMMUNITY:
+    "https://gdg.community.dev/gdg-on-campus-universiti-putra-malaysia-selangor-malaysia/",
 
   // Core Navigation Routes
   HOME: "/",
@@ -33,8 +35,7 @@ const DEFAULT_LINKS = {
   FOOTER_COMMUNITY_ABOUT: "/community/about",
   FOOTER_COMMUNITY_EVENTS: "/community/events",
   FOOTER_COMMUNITY_TEAM: "/community/team",
-  FOOTER_COMMUNITY_JOIN:
-    "https://docs.google.com/forms/d/e/1FAIpQLSdKS7Wdr7NoP_9aIgWONBWoSH1h3UCwUCvejKIWvm1LDV8aPQ/viewform",
+  FOOTER_COMMUNITY_JOIN: "https://chat.whatsapp.com/Cgb1swm8p5t5xqKahaV2nR",
 
   // Footer Subpages - Programs
   FOOTER_PROGRAMS_JAMS: "/programs/jams",
