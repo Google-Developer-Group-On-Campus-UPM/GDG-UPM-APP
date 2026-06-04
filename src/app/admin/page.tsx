@@ -25,7 +25,7 @@ const EditorsManager = dynamic(() => import("./EditorsManager"), {
 const EventsManager = dynamic(() => import("./EventsManager"), {
   ssr: false,
 });
-const RolesManager = dynamic(() => import("./RolesManger"), {
+const RolesManager = dynamic(() => import("./RolesManager"), {
   ssr: false,
 });
 const UsersManager = dynamic(() => import("./UsersManager"), {
