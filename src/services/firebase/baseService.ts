@@ -101,17 +101,6 @@ class BaseService {
       throw error;
     }
   }
-
-  async deleteAll(collectionReference: CollectionReference): Promise<boolean> {
-    try {
-      const documents = (await getDocs(collectionReference)).docs;
-      await Promise.all(documents.map((doc) => deleteDoc(doc.ref)));
-      return true;
-    } catch (error) {
-      console.error("Failed to delete all documents:", error);
-      throw error;
-    }
-  }
 }
 
 export default BaseService;

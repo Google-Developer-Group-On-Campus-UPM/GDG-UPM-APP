@@ -13,9 +13,15 @@ const initFirebase = (): { db: Firestore; auth: Auth } => {
     firestore = getFirestore(app);
     authInit = getAuth(app);
 
-    isSupported().then((result) => {
-      if (result) getAnalytics(app);
-    });
+    if (typeof window !== "undefined") {
+      isSupported()
+        .then((result) => {
+          if (result) getAnalytics(app);
+        })
+        .catch((err) => {
+          console.error("Firebase Analytics initialization failed:", err);
+        });
+    }
   }
 
   return { db: firestore, auth: authInit };
