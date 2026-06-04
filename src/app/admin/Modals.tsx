@@ -194,6 +194,30 @@ export function EditUserModal({
 
           {/* Form */}
           <Stack spacing={3}>
+            {(roles.length === 0 || departments.length === 0) && (
+              <Box
+                sx={{
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(211, 47, 47, 0.15)"
+                      : "rgba(211, 47, 47, 0.08)",
+                  color: theme.palette.mode === "dark" ? "#f87171" : "#b91c1c",
+                  border: "1px solid",
+                  borderColor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(211, 47, 47, 0.3)"
+                      : "rgba(211, 47, 47, 0.15)",
+                  p: 2,
+                  borderRadius: 2,
+                }}
+              >
+                <Typography variant="body2" fontWeight="600">
+                  ⚠️ Attention: You must create Roles and Departments first in
+                  their respective panels before you can assign and save a
+                  member profile.
+                </Typography>
+              </Box>
+            )}
             <Grid container spacing={2}>
               <Grid size={12}>
                 <TextField

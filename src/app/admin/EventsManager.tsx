@@ -180,11 +180,11 @@ export default function EventsManager({ role }: EventsManagerProps) {
                   key={event.id}
                   className="hover:bg-slate-50 dark:hover:bg-slate-800/40"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                  <td className="px-6 py-4 whitespace-nowrap max-w-xs">
+                    <div className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
                       {event.title}
                     </div>
-                    <div className="text-sm text-slate-500 dark:text-slate-400">
+                    <div className="text-sm text-slate-500 dark:text-slate-400 truncate">
                       {event.description}
                     </div>
                   </td>

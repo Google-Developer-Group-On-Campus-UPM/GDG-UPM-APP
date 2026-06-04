@@ -5,8 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Department, Role, TeamMember } from "@/constants/types/team.type";
 import TeamService from "@/services/team/teamService";
-import { handleDelete } from "./eventHandlers";
-import { EditUserModal } from "./Modals";
+import { DeleteConfirmationDialog, EditUserModal } from "./Modals";
 
 type UsersManagerProps = {
   role: string;
@@ -21,6 +20,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const [roles, setRoles] = useState<Role[]>([]);
   const [selectedUser, setSelectedUser] = useState<TeamMember | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<TeamMember | null>(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -50,11 +50,6 @@ export default function UsersManager({ role }: UsersManagerProps) {
   const refreshData = () => {
     setLoading(true);
     loadData();
-  };
-
-  const handleDeleteAndRefresh = async (user: TeamMember) => {
-    const deleted = await handleDelete(user);
-    if (deleted) refreshData();
   };
 
   const handleSaveUser = async (updatedUser: TeamMember) => {
@@ -185,7 +180,7 @@ export default function UsersManager({ role }: UsersManagerProps) {
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => handleDeleteAndRefresh(user)}
+                      onClick={() => setUserToDelete(user)}
                       className="text-rose-600 hover:cursor-pointer hover:text-rose-800 dark:text-rose-400 dark:hover:text-rose-300"
                       aria-label={`Delete ${user.name ?? "user"}`}
                     >
@@ -208,6 +203,25 @@ export default function UsersManager({ role }: UsersManagerProps) {
           setIsAdding(false);
         }}
         onSave={handleSaveUser}
+      />
+      <DeleteConfirmationDialog
+        open={!!userToDelete}
+        title="Delete User"
+        itemName={userToDelete?.name ?? "User"}
+        onClose={() => setUserToDelete(null)}
+        onConfirm={async () => {
+          if (userToDelete) {
+            try {
+              if (userToDelete.ref) {
+                await service.deleteUser(userToDelete.ref);
+                toast.success("User deleted successfully.");
+                refreshData();
+              }
+            } catch (err: any) {
+              toast.error("Failed to delete user: " + err.message);
+            }
+          }
+        }}
       />
     </div>
   );
