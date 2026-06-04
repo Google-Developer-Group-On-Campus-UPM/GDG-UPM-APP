@@ -279,10 +279,18 @@ export const FloatingNav = ({
                     <Link
                       key={navItem.link}
                       href={navItem.link}
-                      passHref
-                      legacyBehavior
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-4xl font-semibold tracking-tight text-white/90 transition-colors hover:text-white"
                     >
-                      <motion.a {...motionProps}>{navItem.name}</motion.a>
+                      <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ delay: idx * 0.05, duration: 0.3 }}
+                        className="inline-block"
+                      >
+                        {navItem.name}
+                      </motion.span>
                     </Link>
                   ) : (
                     <motion.a
@@ -296,8 +304,12 @@ export const FloatingNav = ({
                 })}
 
                 {isInternalLink(ctaLink) ? (
-                  <Link href={ctaLink} passHref legacyBehavior>
-                    <motion.a
+                  <Link
+                    href={ctaLink}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="mt-8 flex h-14 w-full max-w-[280px] items-center justify-center rounded-full bg-white text-xl font-semibold text-black transition-all hover:bg-white/90 active:scale-95"
+                  >
+                    <motion.span
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 20 }}
@@ -305,11 +317,10 @@ export const FloatingNav = ({
                         delay: linkItems.length * 0.05,
                         duration: 0.3,
                       }}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="mt-8 flex h-14 w-full max-w-[280px] items-center justify-center rounded-full bg-white text-xl font-semibold text-black transition-all hover:bg-white/90 active:scale-95"
+                      className="inline-block"
                     >
                       {ctaText}
-                    </motion.a>
+                    </motion.span>
                   </Link>
                 ) : (
                   <motion.a
