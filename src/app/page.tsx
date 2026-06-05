@@ -14,7 +14,7 @@ export default function App() {
       <HeroSection />
       <AnnouncementSection />
       <EventsSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <Footer />
     </>
   );
