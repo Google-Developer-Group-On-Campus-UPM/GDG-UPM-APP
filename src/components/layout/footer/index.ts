@@ -1,0 +1,10 @@
+export { default as FooterBackground } from "./FooterBackground";
+export { default as FooterBottom } from "./FooterBottom";
+export { default as FooterColumn } from "./FooterColumn";
+export { default as FooterCopyright } from "./FooterCopyright";
+export { default as FooterHeader } from "./FooterHeader";
+export { default as FooterLinksSection } from "./FooterLinksSection";
+export { default as FooterMascot } from "./FooterMascot";
+export { default as FooterNewsletter } from "./FooterNewsletter";
+export { default as FooterSocialLinks } from "./FooterSocialLinks";
+export { footerLinks } from "./footerData";
