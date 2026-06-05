@@ -61,7 +61,7 @@ export default function HeroSection() {
   }, [displayed, typing, wordIndex]);
 
   return (
-    <div className="h-auto min-h-screen lg:h-screen lg:min-h-[700px] lg:max-h-[1080px] relative overflow-hidden font-sans flex justify-center">
+    <div className="h-auto relative overflow-hidden font-sans flex justify-center w-full">
       {/* Background Container (max width 2560px to prevent infinite zoom scaling) */}
       <div className="absolute inset-0 w-full h-full max-w-[2560px] mx-auto -z-10">
         {/* Background Image */}
@@ -77,13 +77,13 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="h-auto min-h-screen lg:h-screen lg:min-h-[700px] lg:max-h-[1080px] w-full relative space-y-10 z-10 flex flex-col pb-12 lg:pb-0">
+      <div className="h-auto w-full relative z-10 flex flex-col justify-between pb-8 pt-4 lg:pb-12 lg:pt-8">
         <MaskedBackground template="template1" />
 
-        <div className="relative z-10 space-y-20 max-w-7xl mx-auto w-full">
+        <div className="relative z-10 space-y-8 md:space-y-12 lg:space-y-14 max-w-7xl mx-auto w-full">
           <div className="space-y-10">
             <div className="flex justify-center w-full">
-              <div className="mt-32 sm:mt-40 md:mt-48 lg:mt-52 flex justify-center w-full">
+              <div className="mt-20 sm:mt-24 md:mt-28 lg:mt-32 flex justify-center w-full">
                 <div
                   className="rounded-[68.1px] px-[20px] py-[5px] flex items-center justify-center gap-[8.8px] border-[1.36px] border-muted"
                   style={{
